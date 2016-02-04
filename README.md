@@ -1,13 +1,14 @@
 # Microservice Template #
 ---
-[![Language](https://img.shields.io/badge/language-Javascript%20ECMA2015-blue.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Framework](https://img.shields.io/badge/Framework-NodeJS%205.5.0-blue.svg)](https://nodejs.org/en/)
+[![Language](https://img.shields.io/badge/Language-Javascript%20ECMA2015-lightgrey.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Framework](https://img.shields.io/badge/Framework-NodeJS%205.5.0-blue.svg)](https://nodejs.org/)
+[![Webserver](https://img.shields.io/badge/Webserver-Hapi%2013.0.0-blue.svg)](http://hapijs.com/)
 
 This repository contains the template code for a NodeJS based Microservice of the Slidewiki 2.0 project. Please do **NOT** clone this repository and develop your application in it. Instead fork it (into the Slidewiki Organization) and develop your application there. Continuous Integration and Delivery will be setup automagically for your fork.
 
 ### Install NodeJS ###
 ---
-Plese visit the folder **./Install NodeJS**, located inside this repository.
+Plese visit the folder [**./Install NodeJS**](https://github.com/slidewiki/Microservice-Template/tree/master/Install%20NodeJS), located inside this repository.
 
 ### Where to start developing? ###
 ---

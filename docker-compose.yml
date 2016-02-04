@@ -1,0 +1,17 @@
+app:
+  build: ./
+  restart: always
+#  mem_limit: 500MB
+  volumes:
+#    - ./HOST_DIRECTORY:/CONTAINER_DIRECTORY
+#  links:
+#    - database:db
+
+# Default Mongo Port: 27017
+#database:
+#  image: mongo:3.2
+#  restart: always
+#  mem_limit: 1G
+#  volumes:
+# Save Database to HOST Filesystem
+#    - /my/own/datadir:/data/db

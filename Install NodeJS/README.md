@@ -1,7 +1,8 @@
 # Install NodeJS latest stable #
 ---
-[![Language](https://img.shields.io/badge/language-bash-blue.svg)](https://www.gnu.org/software/bash/)
+[![Language](https://img.shields.io/badge/Language-Bash-lightgrey.svg)](https://www.gnu.org/software/bash/)
 [![Framework](https://img.shields.io/badge/Framework-NodeJS%205.5.0-blue.svg)](https://nodejs.org/en/)
+[![Virtualization](https://img.shields.io/badge/Virtualization-Docker-blue.svg)](https://www.docker.com/)
 
 ### Linux ###
 ---

@@ -1,0 +1,9 @@
+{
+ "id": 2,
+ "title": "Hilarious Title",
+ "body": "the body of a slide",
+ "user_id": 2,
+ "root_deck_id": 56,
+ "parent_deck_id": 5,
+ "no_new_revision": true
+}

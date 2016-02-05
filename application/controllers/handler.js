@@ -8,6 +8,7 @@ const co = require('../common');
 let db = require("../database/dbimitation");
 
 module.exports = {
+  //Get Slide from database or return NOT FOUND
   getSlide: function(request, reply) {
     try {
       reply(db.get(encodeURIComponent(request.params.id)));
@@ -16,6 +17,7 @@ module.exports = {
     }
   },
 
+  //Create Slide with new id and payload or return INTERNAL_SERVER_ERROR
   newSlide: function(request, reply) {
     try {
       let slide = request.payload;
@@ -26,6 +28,7 @@ module.exports = {
     }
   },
 
+  //Update Slide with id id and payload or return INTERNAL_SERVER_ERROR
   updateSlide: function(request, reply) {
     try {
       reply(db.update(request.payload));

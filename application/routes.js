@@ -4,6 +4,7 @@ const Joi = require('joi');
 const server = require('./server');
 const handls = require('./controllers/handler');
 
+//Get slide with id id from database and return it (when not available, return NOT FOUND). Validate id to an integer, greater then 0
 server.route({
   method: 'GET',
   path: '/slide/{id}',
@@ -17,6 +18,7 @@ server.route({
   }
 });
 
+//Create new slide (by payload) and return it (...). Validate payload
 server.route({
   method: 'POST',
   path: '/slide/new',
@@ -36,6 +38,7 @@ server.route({
   }
 });
 
+//Update slide with id id (by payload) and return it (...). Validate payload 
 server.route({
   method: 'PUT',
   path: '/slide/{id}',

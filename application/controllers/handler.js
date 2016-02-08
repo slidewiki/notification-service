@@ -24,7 +24,7 @@ module.exports = {
       slide.id = db.getNewID();
       reply(db.insert(slide));
     } catch (e) {
-      reply(boom.badImplementation('Someting strange happend...try to contact Santa to solve the problem...'));
+      reply(boom.badImplementation('Something strange happend...try to contact Santa to solve the problem...'));
     }
   },
 
@@ -33,7 +33,7 @@ module.exports = {
     try {
       reply(db.update(request.payload));
     } catch (e) {
-      reply(boom.badImplementation('Someting strange happend...try to contact Santa to solve the problem...'));
+      reply(boom.badImplementation('Something strange happend...try to contact Santa to solve the problem...'));
     }
   }
 };

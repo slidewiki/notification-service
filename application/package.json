@@ -11,10 +11,13 @@
   "license": "GPL-3.0",
   "main": "server.js",
   "scripts": {
+    "clean": "rm -R ./node_modules/ ./coverage/",
     "lint": "jshint ./**/*.js --config ../.jshintrc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "unitTest": "tape ./tests/unit.js",
-    "integrationTest": "tape ./tests/integration.js",
+    "pretest": "npm run lint",
+    "test": "npm run test:unit && npm run test:integration",
+    "posttest": "npm run coverage",
+    "test:unit": "tape ./tests/unit.js",
+    "test:integration": "tape ./tests/integration.js",
     "coverage": "istanbul cover ./tests/unit.js"
   },
   "dependencies": {

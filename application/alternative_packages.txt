@@ -1,0 +1,8 @@
+coverage: coverall - https://www.npmjs.com/package/coveralls
+  supports a badge(!), frontend coverage report on coverall.io
+watch: onchange - https://www.npmjs.com/package/onchange
+  supports globs and file constraints
+lint: eslint - https://www.npmjs.com/package/eslint
+  used by ali, more modern, less documentation, plugin support
+testing: tap-spec https://www.npmjs.com/package/tap-spec
+  better tape output format - use in addition

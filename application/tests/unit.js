@@ -25,7 +25,7 @@ test('Save a new slide', function (t) {
     handlers.newSlide({payload: dummySlide}, reply);
   });
 
-  t.equal(0, static__.id);
+  t.equal(0, static__.id, "correct id");
   t.end();
 });
 
@@ -34,8 +34,8 @@ test('Get not existing slide', function (t) {
     handlers.getSlide({params: {id: 1}}, reply);
   });
 
-  t.notEqual(1, static__.id);
-  t.equal(404, static__.output.statusCode);
+  t.notEqual(1, static__.id, "id is not existing");
+  t.equal(404, static__.output.statusCode, "status");
   t.end();
 });
 
@@ -45,13 +45,13 @@ test('Create and get slide', function (t) {
   t.doesNotThrow(function () {
     handlers.newSlide({payload: dummySlide}, reply);
   });
-  t.equal(1, static__.id);
+  t.equal(1, static__.id, "correct new id");
 
   t.doesNotThrow(function () {
     handlers.getSlide({params: {id: 0}}, reply);
   });
-  t.equal(0, static__.id);
-  t.equal(undefined, static__.output);
+  t.equal(0, static__.id, "correct id of getted slide");
+  t.equal(undefined, static__.output, "empty attributes");
   t.end();
 });
 
@@ -59,20 +59,20 @@ test('Update new slide', function (t) {
   //get old one
   t.doesNotThrow(function () {
     handlers.newSlide({payload: {id: 2}}, reply);
-  });
-  t.equal(2, static__.id);
+  }, "get old one without failure");
+  t.equal(2, static__.id, "correct new id");
 
   //update
   t.doesNotThrow(function () {
     handlers.updateSlide({payload: {id: 2, dummy: "null"}}, reply);
-  });
+  }, "update without failure");
 
   //get again
   t.doesNotThrow(function () {
     handlers.getSlide({params: {id: 2}}, reply);
-  });
-  t.equal(2, static__.id);
-  t.equal(undefined, static__.output);
-  t.notEqual(static__.dummy, undefined);
+  }, "get updated one without failure");
+  t.equal(2, static__.id, "id is still correct");
+  t.equal(undefined, static__.output, "empty attributes");
+  t.notEqual(undefined, static__.dummy, "empty attributes #2");
   t.end();
 });

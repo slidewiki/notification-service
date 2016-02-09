@@ -20,7 +20,8 @@
     "test:integration": "tape ./tests/integration.js",
     "coverage": "istanbul cover ./tests/unit.js ./tests/integration.js",
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",
-    "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./"
+    "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./",
+    "start:watch": "watch 'npm start' ./ --ignoreUnreadable --ignoreDotFiles --wait=5"
   },
   "dependencies": {
     "boom": "3.1.x",
@@ -36,6 +37,7 @@
     "istanbul": "^0.4.2",
     "jshint": "^2.9.1",
     "sloc": "^0.1.10",
-    "tape": "^4.4.0"
+    "tape": "^4.4.0",
+    "watch": "^0.17.1"
   }
 }

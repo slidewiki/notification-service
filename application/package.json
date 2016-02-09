@@ -12,13 +12,15 @@
   "main": "server.js",
   "scripts": {
     "clean": "rm -R ./node_modules/ ./coverage/",
-    "lint": "jshint ./**/*.js --config ../.jshintrc",
+    "lint": "jshint ./**/*.js --config .jshintrc",
     "pretest": "npm run lint",
     "test": "npm run test:unit && npm run test:integration",
     "posttest": "npm run coverage",
     "test:unit": "tape ./tests/unit.js",
     "test:integration": "tape ./tests/integration.js",
-    "coverage": "istanbul cover ./tests/unit.js"
+    "coverage": "istanbul cover ./tests/unit.js ./tests/integration.js",
+    "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",
+    "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./"
   },
   "dependencies": {
     "boom": "3.1.x",
@@ -31,8 +33,9 @@
     "node": "5.5.x"
   },
   "devDependencies": {
-    "tape": "^4.4.0",
     "istanbul": "^0.4.2",
-    "jshint": "^2.9.1"
+    "jshint": "^2.9.1",
+    "sloc": "^0.1.10",
+    "tape": "^4.4.0"
   }
 }

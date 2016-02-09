@@ -1,4 +1,4 @@
-FROM node:5.5
+FROM node:5.5-slim
 MAINTAINER Roy Meissner <meissner@informatik.uni-leipzig.de>
 
 RUN apt-get update && apt-get -y upgrade
@@ -9,15 +9,16 @@ WORKDIR /nodeApp
 #   Installation   #
 # ---------------- #
 
-#RUN apt-get -y install
-ADD ./* /nodeApp/
-RUN rm Dockerfile docker-compose.yml
+ADD ./application/package.json ./
+RUN npm install --production
+
+ADD ./application/ ./
 
 # ----------------- #
 #   Configuration   #
 # ----------------- #
 
-EXPOSE 80
+EXPOSE 3000
 
 # ----------- #
 #   Cleanup   #
@@ -30,5 +31,4 @@ RUN apt-get autoremove -y && apt-get -y clean && \
 #   Run!   #
 # -------- #
 
-#ENTRYPOINT []
-CMD node YOUR_APPLICATION.js
+CMD npm start

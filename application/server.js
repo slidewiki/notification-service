@@ -7,6 +7,7 @@ This application demonstrates a serivce which just returns static data. The requ
 
 //This is our webserver framework (instead of express)
 const hapi = require('hapi');
+const myRoutes = require('./routes.js');
 
 //Initiate the webserver
 const server = new hapi.Server();
@@ -41,7 +42,7 @@ server.register(plugins, (err) => {
     server.start(() => {
       server.log('info', 'Server started at ' + server.info.uri);
       //Register routes
-      require('./routes');
+      myRoutes(server);
     });
   }
 });

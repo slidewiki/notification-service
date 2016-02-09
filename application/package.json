@@ -16,8 +16,8 @@
     "pretest": "npm run lint",
     "test": "npm run test:unit && npm run test:integration",
     "posttest": "npm run coverage",
-    "test:unit": "tape ./tests/unit.js",
-    "test:integration": "tape ./tests/integration.js",
+    "test:unit": "node ./tests/unit.js",
+    "test:integration": "node ./tests/integration_newSlide.js",
     "coverage": "istanbul cover ./tests/unit.js ./tests/integration.js",
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",
     "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./",
@@ -28,7 +28,8 @@
     "good": "6.4.x",
     "good-console": "5.3.x",
     "hapi": "13.0.x",
-    "joi": "7.2.x"
+    "joi": "7.2.x",
+    "mongodb": "^2.1.6"
   },
   "engines": {
     "node": "5.5.x"
@@ -38,6 +39,8 @@
     "jshint": "^2.9.1",
     "sloc": "^0.1.10",
     "tape": "^4.4.0",
-    "watch": "^0.17.1"
+    "watch": "^0.17.1",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.4.0"
   }
 }

@@ -1,7 +1,13 @@
 // example unit tests
 
-//includes
+//Small and simple testing module
 var test = require('tape');
+//Improves tape with a nice terminal output
+var tapSpec = require('tap-spec');
+test.createStream()
+  .pipe(tapSpec())
+  .pipe(process.stdout);
+
 var handlers = require('../controllers/handler.js');
 
 //static stuff

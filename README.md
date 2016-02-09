@@ -4,7 +4,7 @@
 [![Framework](https://img.shields.io/badge/Framework-NodeJS%205.5.0-blue.svg)](https://nodejs.org/)
 [![Webserver](https://img.shields.io/badge/Webserver-Hapi%2013.0.0-blue.svg)](http://hapijs.com/)
 [![LinesOfCode](https://img.shields.io/badge/LOC-278-lightgrey.svg)](https://github.com/slidewiki/Microservice-Template/blob/master/application/package.json)
-[![Coverage](https://img.shields.io/badge/Coverage-XX%-green.svg)](https://github.com/slidewiki/Microservice-Template/blob/master/application/package.json)
+[![Coverage Status](https://coveralls.io/repos/github/slidewiki/Microservice-Template/badge.svg?branch=master)](https://coveralls.io/github/slidewiki/Microservice-Template?branch=master)
 
 This repository contains the template code for a NodeJS based Microservice of the Slidewiki 2.0 project. Please do **NOT** clone this repository and develop your application in it. Instead fork it (into the Slidewiki Organization) and develop your application there. Continuous Integration and Delivery will be setup automagically for your fork.
 

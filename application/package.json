@@ -19,6 +19,7 @@
     "test:unit": "tape ./tests/unit.js",
     "test:integration": "tape ./tests/integration.js",
     "coverage": "istanbul cover ./tests/unit.js ./tests/integration.js",
+    "coverall": "npm run coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",
     "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./",
     "start:watch": "watch 'npm start' ./ --ignoreUnreadable --ignoreDotFiles --wait=5"
@@ -34,6 +35,7 @@
     "node": "5.5.x"
   },
   "devDependencies": {
+    "coveralls": "^2.11.6",
     "istanbul": "^0.4.2",
     "jshint": "^2.9.1",
     "sloc": "^0.1.10",

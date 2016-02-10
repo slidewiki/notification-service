@@ -1,15 +1,21 @@
 app:
   build: ./
   restart: always
+  ports:
+    - "3000:3000"
+  links:
+    - database
 #  mem_limit: 500MB
-  volumes:
+#  volumes:
 #    - ./HOST_DIRECTORY:/CONTAINER_DIRECTORY
 #  links:
 #    - database:db
 
 # Default Mongo Port: 27017
-#database:
-#  image: mongo:3.2
+database:
+  image: mongo
+  ports:
+    - "27017:27017"
 #  restart: always
 #  mem_limit: 1G
 #  volumes:

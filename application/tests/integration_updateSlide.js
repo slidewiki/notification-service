@@ -1,6 +1,16 @@
 //simple api tests
 
-var server = require('../server.js');
+const hapi = require('hapi');
+const myRoutes = require('../routes.js');
+
+//Initiate the webserver
+const server = new hapi.Server();
+server.connection({
+  host: 'localhost',
+  port: 3000
+});
+myRoutes(server);
+
 //Small and simple testing module
 var test = require('tape');
 //Improves tape with a nice terminal output

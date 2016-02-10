@@ -1,4 +1,5 @@
 /*This is just a simple database imitation that is only used to showcase capabilities. DO NOT USE THIS IMPLEMENTATION IN ANY OF YOUR CODE!!!*/
+/* eslint eqeqeq: 0 */
 
 'use strict';
 

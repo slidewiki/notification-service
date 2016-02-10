@@ -1,4 +1,5 @@
 //simple api tests
+'use strict';
 
 const hapi = require('hapi');
 const myRoutes = require('../routes.js');

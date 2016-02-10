@@ -1,4 +1,5 @@
 // example unit tests
+'use strict';
 
 //Small and simple testing module
 var test = require('tape');

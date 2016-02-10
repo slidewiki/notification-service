@@ -50,7 +50,7 @@ test('Create and get slide', function (t) {
   t.doesNotThrow(function () {
     handlers.getSlide({params: {id: 0}}, reply);
   });
-  t.equal(0, static__.id, "correct id of getted slide");
+  t.equal(1, static__.id, "correct id of getted slide");
   t.equal(undefined, static__.output, "empty attributes");
   t.end();
 });

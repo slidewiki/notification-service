@@ -11,7 +11,7 @@ module.exports = {
 
   insert: function(slide) {
     if (alreadyPresent(slide.id))
-      throw new Error("Element already there");
+      throw new Error('Element already there');
     else {
       db = db.concat(slide);
       return slide;
@@ -30,7 +30,7 @@ module.exports = {
   get: function(id) {
     let result = db.filter((entry) => entry.id == id);
     if (result.length === 0)
-      throw new Error("Element not found");
+      throw new Error('Element not found');
     else {
       return result[0];
     }

@@ -12,7 +12,7 @@
   "main": "server.js",
   "scripts": {
     "clean": "rm -R ./node_modules/ ./coverage/",
-    "lint": "jshint ./**/*.js --config .jshintrc",
+    "lint": "eslint -c .eslintrc ./**/*.js",
     "pretest": "npm run lint",
     "test": "npm run test:unit && npm run test:integration",
     "posttest": "npm run coverage",
@@ -37,11 +37,12 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.6",
+    "eslint": "^1.10.3",
     "istanbul": "^0.4.2",
     "jshint": "^2.9.1",
     "sloc": "^0.1.10",
+    "tap-spec": "^4.1.1",
     "tape": "^4.4.0",
-    "watch": "^0.17.1",
-    "tap-spec": "^4.1.1"
+    "watch": "^0.17.1"
   }
 }

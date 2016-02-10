@@ -5,7 +5,7 @@ const boom = require('boom');
 //Some self defined common functions
 const co = require('../common');
 //This is a simple database imitation that has to be exchanged in the future
-let db = require("../database/dbimitation");
+let db = require('../database/dbimitation');
 
 //simple database connection
 var MongoClient = require('mongodb').MongoClient;

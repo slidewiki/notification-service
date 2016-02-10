@@ -19,35 +19,35 @@ test.createStream()
   .pipe(tapSpec())
   .pipe(process.stdout);
 
-test("PUT /slide/{id}", function(t) {
+test('PUT /slide/{id}', (t) => {
     //try to update not existing one
     var options = {
-        method: "PUT",
-        url: "/slide/199",
+        method: 'PUT',
+        url: '/slide/199',
         payload: {
           dummy: 0
         }
     };
-    server.inject(options, function(response) {
-        t.equal(response.statusCode, 404, "update not existing - status");
+    server.inject(options, (response) => {
+        t.equal(response.statusCode, 404, 'update not existing - status');
     });
 
     //try to update created one
     var slide = {
-      title: "Dummy",
-      language: "en"
+      title: 'Dummy',
+      language: 'en'
     };
     options = {
-        method: "POST",
-        url: "/slide/new",
+        method: 'POST',
+        url: '/slide/new',
         payload: slide,
         headers: {
           'Content-Type': 'application/json'
         }
     };
     var payload = {};
-    server.inject(options, function(response) {
-        t.equal(response.statusCode, 200, "update - creation of a new one - status");
+    server.inject(options, (response) => {
+        t.equal(response.statusCode, 200, 'update - creation of a new one - status');
         payload = JSON.parse(response.payload);
     });
     console.log(payload);
@@ -55,12 +55,12 @@ test("PUT /slide/{id}", function(t) {
     slide.user_id = 1;
     slide.id = payload.id;
     options = {
-        method: "PUT",
-        url: "/slide/" + payload.id,
+        method: 'PUT',
+        url: '/slide/' + payload.id,
         payload: slide
     };
-    server.inject(options, function(response) {
-        t.equal(response.statusCode, 200, "update - status");
+    server.inject(options, (response) => {
+        t.equal(response.statusCode, 200, 'update - status');
         t.end();
     });
 });

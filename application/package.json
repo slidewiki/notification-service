@@ -18,7 +18,7 @@
     "posttest": "npm run coverage",
     "test:unit": "tape ./tests/unit.js",
     "test:integration": "tape ./tests/integration_newSlide.js",
-    "coverage": "istanbul cover --include-all-sources ./tests/*.js",
+    "coverage": "istanbul cover --include-all-sources ./tests/unit.js",
     "coverall": "npm run coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",
     "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./",
@@ -42,7 +42,6 @@
     "sloc": "^0.1.10",
     "tape": "^4.4.0",
     "watch": "^0.17.1",
-    "tap-spec": "^4.1.1",
-    "tape": "^4.4.0"
+    "tap-spec": "^4.1.1"
   }
 }

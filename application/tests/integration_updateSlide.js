@@ -20,47 +20,47 @@ test.createStream()
   .pipe(process.stdout);
 
 test('PUT /slide/{id}', (t) => {
-    //try to update not existing one
-    var options = {
-        method: 'PUT',
-        url: '/slide/199',
-        payload: {
-          dummy: 0
-        }
-    };
-    server.inject(options, (response) => {
-        t.equal(response.statusCode, 404, 'update not existing - status');
-    });
+  //try to update not existing one
+  var options = {
+    method: 'PUT',
+    url: '/slide/199',
+    payload: {
+      dummy: 0
+    }
+  };
+  server.inject(options, (response) => {
+    t.equal(response.statusCode, 404, 'update not existing - status');
+  });
 
-    //try to update created one
-    var slide = {
-      title: 'Dummy',
-      language: 'en'
-    };
-    options = {
-        method: 'POST',
-        url: '/slide/new',
-        payload: slide,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-    };
-    var payload = {};
-    server.inject(options, (response) => {
-        t.equal(response.statusCode, 200, 'update - creation of a new one - status');
-        payload = JSON.parse(response.payload);
-    });
-    console.log(payload);
+  //try to update created one
+  var slide = {
+    title: 'Dummy',
+    language: 'en'
+  };
+  options = {
+    method: 'POST',
+    url: '/slide/new',
+    payload: slide,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  var payload = {};
+  server.inject(options, (response) => {
+    t.equal(response.statusCode, 200, 'update - creation of a new one - status');
+    payload = JSON.parse(response.payload);
+  });
+  console.log(payload);
 
-    slide.user_id = 1;
-    slide.id = payload.id;
-    options = {
-        method: 'PUT',
-        url: '/slide/' + payload.id,
-        payload: slide
-    };
-    server.inject(options, (response) => {
-        t.equal(response.statusCode, 200, 'update - status');
-        t.end();
-    });
+  slide.user_id = 1;
+  slide.id = payload.id;
+  options = {
+    method: 'PUT',
+    url: '/slide/' + payload.id,
+    payload: slide
+  };
+  server.inject(options, (response) => {
+    t.equal(response.statusCode, 200, 'update - status');
+    t.end();
+  });
 });

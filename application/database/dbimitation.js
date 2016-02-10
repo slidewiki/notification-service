@@ -5,7 +5,7 @@
 let db = [];
 
 module.exports = {
-  getNewID: function(){
+  getNewID: function() {
     return db.length;
   },
 

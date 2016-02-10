@@ -18,20 +18,26 @@ var reply = (a) => {
 };
 
 
-test('Save a new slide',  (t) => {
+test('Save a new slide', (t) => {
   var dummySlide = {};
 
-  t.doesNotThrow( () => {
-    handlers.newSlide({payload: dummySlide}, reply);
+  t.doesNotThrow(() => {
+    handlers.newSlide({
+      payload: dummySlide
+    }, reply);
   });
 
   t.equal(0, static__.id, 'correct id');
   t.end();
 });
 
-test('Get not existing slide',  (t) => {
-  t.doesNotThrow( () => {
-    handlers.getSlide({params: {id: 1}}, reply);
+test('Get not existing slide', (t) => {
+  t.doesNotThrow(() => {
+    handlers.getSlide({
+      params: {
+        id: 1
+      }
+    }, reply);
   });
 
   t.notEqual(1, static__.id, 'id is not existing');
@@ -39,37 +45,56 @@ test('Get not existing slide',  (t) => {
   t.end();
 });
 
-test('Create and get slide',  (t) => {
+test('Create and get slide', (t) => {
   var dummySlide = {};
 
-  t.doesNotThrow( () => {
-    handlers.newSlide({payload: dummySlide}, reply);
+  t.doesNotThrow(() => {
+    handlers.newSlide({
+      payload: dummySlide
+    }, reply);
   });
   t.equal(1, static__.id, 'correct new id');
 
-  t.doesNotThrow( () => {
-    handlers.getSlide({params: {id: 0}}, reply);
+  t.doesNotThrow(() => {
+    handlers.getSlide({
+      params: {
+        id: 0
+      }
+    }, reply);
   });
   t.equal(0, static__.id, 'correct id of getted slide');
   t.equal(undefined, static__.output, 'empty attributes');
   t.end();
 });
 
-test('Update new slide',  (t) => {
+test('Update new slide', (t) => {
   //get old one
-  t.doesNotThrow( () => {
-    handlers.newSlide({payload: {id: 2}}, reply);
+  t.doesNotThrow(() => {
+    handlers.newSlide({
+      payload: {
+        id: 2
+      }
+    }, reply);
   }, 'get old one without failure');
   t.equal(2, static__.id, 'correct new id');
 
   //update
-  t.doesNotThrow( () => {
-    handlers.updateSlide({payload: {id: 2, dummy: 'null'}}, reply);
+  t.doesNotThrow(() => {
+    handlers.updateSlide({
+      payload: {
+        id: 2,
+        dummy: 'null'
+      }
+    }, reply);
   }, 'update without failure');
 
   //get again
-  t.doesNotThrow( () => {
-    handlers.getSlide({params: {id: 2}}, reply);
+  t.doesNotThrow(() => {
+    handlers.getSlide({
+      params: {
+        id: 2
+      }
+    }, reply);
   }, 'get updated one without failure');
   t.equal(2, static__.id, 'id is still correct');
   t.equal(undefined, static__.output, 'empty attributes');

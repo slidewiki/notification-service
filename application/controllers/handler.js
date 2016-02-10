@@ -10,8 +10,8 @@ let db = require('../database/dbimitation');
 //simple database connection
 var MongoClient = require('mongodb').MongoClient;
 var url = require('../configuration.js').MongoDB.connection;
-MongoClient.connect(url, function(err, db) {
-  console.log("Connected correctly to server: ", err);
+MongoClient.connect(url, (err, db) => {
+  console.log('Connected correctly to server: ', err);
   if (db)
     db.close();
 });

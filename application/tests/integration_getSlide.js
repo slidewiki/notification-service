@@ -54,6 +54,6 @@ test("GET /slide/{id}", function(t) {
     };
     server.inject(options, function(response) {
         t.equal(response.statusCode, 200, "get data - status");
-        server.stop(t.end);
+        t.end();
     });
 });

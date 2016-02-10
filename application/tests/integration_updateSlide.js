@@ -61,6 +61,6 @@ test("PUT /slide/{id}", function(t) {
     };
     server.inject(options, function(response) {
         t.equal(response.statusCode, 200, "update - status");
-        server.stop(t.end);
+        t.end();
     });
 });

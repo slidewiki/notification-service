@@ -17,7 +17,7 @@
     "test": "npm run test:unit && npm run test:integration",
     "posttest": "npm run coverage",
     "test:unit": "tape ./tests/unit.js",
-    "test:integration": "tape ./tests/integration_*.js",
+    "test:integration": "tape ./tests/integration_newSlide.js",
     "coverage": "istanbul cover --include-all-sources ./tests/*.js",
     "coverall": "npm run coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",

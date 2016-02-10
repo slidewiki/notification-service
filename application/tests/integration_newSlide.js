@@ -97,6 +97,6 @@ test("POST /slide/new", function(t) {
     t.equal(payload.parent_deck_id, slide.parent_deck_id, "all data - correct response #3");
     t.equal(payload.root_deck_id, slide.root_deck_id, "all data - correct response #4");
     t.notEqual(undefined, payload.id, "all data - correct response #5");
-    server.stop(t.end);
+    t.end();
   });
 });

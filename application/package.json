@@ -30,7 +30,7 @@
     "good-console": "5.3.x",
     "hapi": "13.0.x",
     "joi": "7.2.x",
-    "mongodb": "^2.1.6"
+    "mongodb": "2.1.x"
   },
   "engines": {
     "node": "5.5.x"
@@ -39,7 +39,6 @@
     "coveralls": "^2.11.6",
     "eslint": "^1.10.3",
     "istanbul": "^0.4.2",
-    "jshint": "^2.9.1",
     "sloc": "^0.1.10",
     "tap-spec": "^4.1.1",
     "tape": "^4.4.0",

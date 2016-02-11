@@ -22,7 +22,7 @@
     "coverall": "npm run coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",
     "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./",
-    "start:watch": "watch 'npm start' ./ --ignoreUnreadable --ignoreDotFiles --wait=5"
+    "start:watch": "nodemon"
   },
   "dependencies": {
     "boom": "3.1.x",
@@ -39,9 +39,9 @@
     "coveralls": "^2.11.6",
     "eslint": "^1.10.3",
     "istanbul": "^0.4.2",
+    "nodemon": "^1.8.1",
     "sloc": "^0.1.10",
     "tap-spec": "^4.1.1",
-    "tape": "^4.4.0",
-    "watch": "^0.17.1"
+    "tape": "^4.4.0"
   }
 }

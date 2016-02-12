@@ -2,6 +2,6 @@
 
 module.exports =  {
     MongoDB: {
-      connection: 'mongodb://localhost:27017/test'
+      URL: 'mongodb://localhost:27017/local'
     }
 };

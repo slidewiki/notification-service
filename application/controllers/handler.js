@@ -7,15 +7,6 @@ const co = require('../common');
 //This is a simple database imitation that has to be exchanged in the future
 const db = require('../database/dbimitation');
 
-//simple database connection
-let MongoClient = require('mongodb').MongoClient;
-let url = require('../configuration.js').MongoDB.connection;
-MongoClient.connect(url, (err, db) => {
-  console.log('Connected correctly to server: ', err);
-  if (db)
-    db.close();
-});
-
 module.exports = {
   //Get Slide from database or return NOT FOUND
   getSlide: function(request, reply) {

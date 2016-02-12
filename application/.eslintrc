@@ -21,7 +21,7 @@
     "linebreak-style": [2, "unix"],
     "prefer-arrow-callback": 1,
     "dot-notation": [2, {allowKeywords: false}],
-    "no-use-before-define": 1,
+    "no-use-before-define": 0,
     "no-unused-vars": 1, // see https://github.com/babel/babel-eslint/issues/21
     "semi": [2, "always"],
     "yoda": [2, "never"],"no-alert": 2,

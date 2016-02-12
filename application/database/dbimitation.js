@@ -21,7 +21,7 @@ module.exports = {
 
   update: function(slide) {
     this.remove(slide.id);
-    this.insert(slide);
+    return this.insert(slide);
   },
 
   remove: function(id) {

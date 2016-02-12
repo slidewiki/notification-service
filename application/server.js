@@ -20,18 +20,30 @@ server.connection({
 module.exports = server;
 
 //Plugin for sweet server console output
-let plugins = {
-  register: require('good'),
-  options: {
-    reporters: [{
-      reporter: require('good-console'),
-      events: {
-        response: '*',
-        log: '*'
+let plugins = [
+  require('inert'),
+  require('vision'), {
+    register: require('good'),
+    options: {
+      reporters: [{
+        reporter: require('good-console'),
+        events: {
+          response: '*',
+          log: '*'
+        }
+      }]
+    }
+  }, {
+    register: require('hapi-swagger'),
+    options: {
+      info: {
+        title: 'Example API',
+        description: 'Powered by node, hapi, joi, hapi-swaggered, hapi-swaggered-ui and swagger-ui',
+        version: '1.0'
       }
-    }]
+    }
   }
-};
+];
 
 //Register plugins and start webserver
 server.register(plugins, (err) => {

@@ -14,7 +14,9 @@ module.exports = function(server) {
         params: {
           id: Joi.number().integer().min(0)
         }
-      }
+      },
+      tags: ['api'],
+      description: 'Get slide with id <id>'
     }
   });
 
@@ -34,7 +36,9 @@ module.exports = function(server) {
           root_deck_id: Joi.number().integer().min(0),
           language: Joi.string()
         }).requiredKeys('title', 'language')
-      }
+      },
+      tags: ['api'],
+      description: 'Create a new slide'
     }
   });
 
@@ -57,7 +61,9 @@ module.exports = function(server) {
           parent_deck_id: Joi.number().integer().min(0),
           no_new_revision: Joi.boolean()
         }).requiredKeys('id', 'title', 'body')
-      }
+      },
+      tags: ['api'],
+      description: 'Update a slide'
     }
   });
 };

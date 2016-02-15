@@ -13,7 +13,11 @@ Watch out for any errors or warnings (typically occuring when you've already ins
 
 ```
 sudo ./ubuntu.sh
+node --version
+npm --version
 ```
+
+**Issues**: I've noticed that using `sudo update-alternatives --config node` and `sudo update-alternatives --config npm` helps in many cases. Maybe you have to invest a little more by using update-alternatives. Alternatively re-/moving your node bin (`which node`) can also be helpful.
 
 ### Windows and Mac ###
 ---

@@ -1,7 +1,7 @@
 # Install NodeJS latest stable #
 ---
 [![Language](https://img.shields.io/badge/Language-Bash-lightgrey.svg)](https://www.gnu.org/software/bash/)
-[![Framework](https://img.shields.io/badge/Framework-NodeJS%205.5.0-blue.svg)](https://nodejs.org/en/)
+[![Framework](https://img.shields.io/badge/Framework-NodeJS%205.6.0-blue.svg)](https://nodejs.org/en/)
 [![Virtualization](https://img.shields.io/badge/Virtualization-Docker-blue.svg)](https://www.docker.com/)
 
 ### Linux ###
@@ -17,12 +17,12 @@ sudo ./ubuntu.sh
 
 ### Windows and Mac ###
 ---
-To install NodeJS on Windows or Mac, visit [this page](https://nodejs.org/dist/v5.5.0/), download the appropriate .msi (Windows) or .pkg (Mac) file and execute it on your machine.
+To install NodeJS on Windows or Mac, visit [this page](https://nodejs.org/dist/v5.6.0/), download the appropriate .msi (Windows) or .pkg (Mac) file and execute it on your machine.
 
 ### Docker ###
 ---
 Alternatively you can use the following commands on your commandline to run a Docker container, containing NodeJS, to execute your scripts. Remember to alter paths and variables to match your cases. The Docker container will start your program as a webserver on port 8880 (make sure that this port isn't in use!) or just executes it on commandline.
 
 ```
-docker run -it --rm -v /PATH_TO_YOUR_APP:/usr/src/app -w /usr/src/app -p 8880:80 node:5.5-slim node YOUR_SCRIPT.js
+docker run -it --rm -v /PATH_TO_YOUR_APP:/usr/src/app -w /usr/src/app -p 8880:80 node:5.6-slim node YOUR_SCRIPT.js
 ```

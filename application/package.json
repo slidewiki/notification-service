@@ -36,7 +36,7 @@
     "vision": "4.0.x"
   },
   "engines": {
-    "node": "5.5.x"
+    "node": ">=5.5.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

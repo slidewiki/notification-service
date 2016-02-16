@@ -11,12 +11,12 @@
   "license": "GPL-3.0",
   "main": "server.js",
   "scripts": {
-    "clean": "rm -R ./node_modules/ ./coverage/",
+    "clean": "rm -R ./node_modules/ ./coverage/ && docker stop SlideWikiMongoDBTesting",
     "lint": "eslint -c .eslintrc ./**/*.js",
     "pretest": "npm run lint",
     "test": "npm run test:unit && npm run test:integration",
     "posttest": "npm run coverage",
-    "test:unit": "mocha -C ./tests/unit_*.js",
+    "test:unit": "../mongodb/runMongoDB_testing.sh && mocha -C ./tests/unit_*.js",
     "test:integration": "mocha -C ./tests/integration_*.js",
     "coverage": "istanbul cover _mocha --include-all-sources ./tests/*.js",
     "coverall": "npm run coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "boom": "3.1.x",
+    "database-cleaner": "^0.11.0",
     "good": "6.4.x",
     "good-console": "5.3.x",
     "hapi": "13.0.x",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.11.6",
+    "database-cleaner": "^0.11.0",
     "eslint": "^1.10.3",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",

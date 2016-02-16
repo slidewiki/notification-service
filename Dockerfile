@@ -1,4 +1,4 @@
-FROM node:5.5-slim
+FROM node:5.6-slim
 MAINTAINER Roy Meissner <meissner@informatik.uni-leipzig.de>
 
 RUN apt-get update && apt-get -y upgrade

@@ -8,8 +8,8 @@ func_check_for_root() {
 func_check_for_root
 
 #SETUP PARAMS
-NODE_VERSION="v5.5.0"
-NODE_INT_VERSION="550"
+NODE_VERSION="v5.6.0"
+NODE_INT_VERSION="560"
 NODE_FILE=node-${NODE_VERSION}-linux-x64.tar.gz
 NODE_FOLDER=node-${NODE_VERSION}-linux-x64
 NODE_URI="https://nodejs.org/dist/${NODE_VERSION}/${NODE_FILE}"

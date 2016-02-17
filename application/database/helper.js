@@ -10,7 +10,7 @@ const Db = require('mongodb').Db,
 
 //private functions
 const _createDatabase_ = function(dbname, resolve, reject) {
-  dbname = typeof dbname !== 'undefined' ? dbname : 'slidewikitest';
+  dbname = typeof dbname !== 'undefined' ? dbname : config.SLIDEWIKIDATABASE;
 
   let db = new Db(dbname,
     new Server(config.HOST,
@@ -39,7 +39,7 @@ const _dropDatabase_ = function(db, resolve, reject) {
 };
 
 const _connectToDatabase_ = function(dbname, resolve, reject) {
-  dbname = typeof dbname !== 'undefined' ? dbname : 'slidewikitest';
+  dbname = typeof dbname !== 'undefined' ? dbname : config.SLIDEWIKIDATABASE;
 
   MongoClient.connect('mongodb://' + config.HOST + ':' + config.PORT + '/' + dbname, (err, db) => {
     if (err)

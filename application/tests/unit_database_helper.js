@@ -19,8 +19,7 @@ describe('Database', () => {
   //TODO wait until database is cleaned up
   afterEach((done) => {
     helper.cleanDatabase(null, tempDatabase)
-      .then((db) => {
-        db.close();
+      .then(() => {
         done();
       })
       .catch((error) => {

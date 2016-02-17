@@ -8,7 +8,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       database_helper.connectToDatabase(config.SLIDEWIKIDATABASE)
         .then((db) => {
-          db.collection('slides', function(err, col) {
+          return db.collection('slides', function(err, col) {
             if (err) {
               db.close();
               reject(err);

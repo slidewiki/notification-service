@@ -35,5 +35,17 @@ module.exports = {
     } catch (e) {
       reply(boom.badImplementation('Something strange happend...try to contact Santa to solve the problem...'));
     }
+  },
+
+  //Get all slides from database
+  getSlides: function(request, reply) {
+    const promise = database_helper.getAllSlides();
+    promise.then((docs) => {
+      return reply(docs);
+    })
+    .catch((error) => {
+      console.log('Error', error);
+      reply(boom.badImplementation('Something strange happend...try to contact Santa to solve the problem...'));
+    });
   }
 };

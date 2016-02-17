@@ -8,4 +8,4 @@ docker stop SlideWikiServiceTemplateMongoDB
 
 docker rm SlideWikiServiceTemplateMongoDB
 
-docker run --name SlideWikiServiceTemplateMongoDB -d slidewiki/plainmongodb:latest
+docker run --name SlideWikiServiceTemplateMongoDB -p 27018:27018 -d slidewiki/plainmongodb:latest

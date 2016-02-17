@@ -1,10 +1,14 @@
 'use strict';
 
+//Simple module which provides promises for a basic usage of the MongoDB
+
+//modules
 const Db = require('mongodb').Db,
   Server = require('mongodb').Server,
   MongoClient = require('mongodb').MongoClient,
   config = require('../configuration.js').MongoDB;
 
+//private functions
 const _createDatabase_ = function(dbname, resolve, reject) {
   dbname = typeof dbname !== 'undefined' ? dbname : 'slidewikitest';
 
@@ -15,6 +19,7 @@ const _createDatabase_ = function(dbname, resolve, reject) {
     if (err)
       reject(err);
     else {
+      //insert the first object to know that the database is properly created
       db.collection('test').insertOne({id: 1, data: {}});
       resolve(db);
     }
@@ -48,6 +53,7 @@ const _connectToDatabase_ = function(dbname, resolve, reject) {
   });
 };
 
+//create module as promise collection
 module.exports = {
   createDatabase: function(dbname) {
     return new Promise((resolve, reject) => {
@@ -56,6 +62,7 @@ module.exports = {
   },
   cleanDatabase: function(db, dbname) {
     return new Promise((resolve, reject) => {
+      //use db connection or database name
       if (db)
         _dropDatabase_(db, resolve, reject);
       else {

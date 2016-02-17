@@ -20,10 +20,12 @@ describe('Database', () => {
   afterEach((done) => {
     helper.cleanDatabase(null, tempDatabase)
       .then((db) => {
-        console.log(tempDatabase + ' cleaned');
         db.close();
+        done();
+      })
+      .catch((error) => {
+        done();
       });
-    done();
   });
 
   context('when connecting to an existing database', () => {
@@ -54,7 +56,7 @@ describe('Database', () => {
       return helper.connectToDatabase('AwesomeMoo2000')
         .then((db) => {
           db.collections(function(err, collections) {
-            expect(collections.length).to.equals(0);  //only one collection (standard)
+            expect(collections.length).to.equals(0);
             db.close();
             done();
           });

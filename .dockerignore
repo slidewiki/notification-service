@@ -1,2 +1,3 @@
-node_modules
+/application/node_modules
+/application/coverage
 .git

@@ -13,6 +13,6 @@ database:
   build: ./mongodb/
 #  restart: always
 #  mem_limit: 1G
-  volumes:
+#  volumes:
 # Save Database to HOST Filesystem
-    ./mongodb/database:/data/db
+#    - ./mongodb/database:/data/db:rw

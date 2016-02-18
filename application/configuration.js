@@ -2,9 +2,9 @@
 
 //read mongodb URL from /etc/hosts
 let host = 'localhost';
-var fs = require('fs');
-var lines = fs.readFileSync('/etc/hosts').toString().split("\n");
-for (var i in lines) {
+const fs = require('fs');
+const lines = fs.readFileSync('/etc/hosts').toString().split('\n');
+for (let i in lines) {
   if (lines[i].startsWith('mongodb')) {
     const entrys = lines[i].split(' ');
     host = entrys[entrys.length - 1];
@@ -14,8 +14,7 @@ for (var i in lines) {
 
 module.exports = {
   MongoDB: {
-    URL: 'mongodb://localhost:27018/local',
-    PORT: 27018,
+    PORT: 27017,
     HOST: host,
     NS: 'local',
     SLIDEWIKIDATABASE: 'slidewiki'

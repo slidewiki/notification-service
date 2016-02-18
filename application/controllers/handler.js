@@ -2,8 +2,6 @@
 
 //Boom gives us some predefined http codes and proper responses
 const boom = require('boom');
-//Some self defined common functions
-const co = require('../common');
 //This is a simple database imitation that has to be exchanged in the future
 const db = require('../database/dbimitation');
 

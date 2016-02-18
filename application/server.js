@@ -8,12 +8,16 @@ This application demonstrates a serivce which just returns static data. The requ
 //This is our webserver framework (instead of express)
 const hapi = require('hapi');
 const myRoutes = require('./routes.js');
+const co = require('./common');
 
 //Initiate the webserver
 const server = new hapi.Server();
+let port2 = 3000;
+if (!co.isEmpty(process.env.APPLICATION_PORT))
+  port2 = process.env.APPLICATION_PORT;
 server.connection({
-  host: 'localhost',
-  port: 3000
+  //  host: 'localhost',
+  port: port2
 });
 
 //Export the webserver to be able to use server.log()

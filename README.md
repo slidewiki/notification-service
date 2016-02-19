@@ -35,11 +35,11 @@ npm start
 ...
 ```
 
-You want to **checkout this cool service**? Simply start the service and head over to: [http://localhost:3000/documentation](http://localhost:3000/documentation). We're using swagger to have this super cool API discrovery/documentation tool. BTW.: Did you already discoverd the super easy swagger integration inside [/application/routes.js](https://github.com/slidewiki/Microservice-Template/blob/master/application/routes.js)? Tags 'api' and 'description' were everything we needed to add.
+You want to **checkout this cool service**? Simply start the service and head over to: [http://localhost:3000/documentation](http://localhost:3000/documentation). We're using  [swagger](https://www.npmjs.com/package/hapi-swagger) to have this super cool API discrovery/documentation tool. BTW.: Did you already discoverd the super easy swagger integration inside [/application/routes.js](https://github.com/slidewiki/Microservice-Template/blob/master/application/routes.js)? Tags 'api' and 'description' were everything we needed to add.
 
 ### What's about Continuous Integration/Delivery? ###
 ---
-Continuous Integration (and in the future Continuous Delivery) is currently setup by using the (for OSS projects) free to use web application [Snap-CI](https://snap-ci.com/). By clicking on first badge (see at the top), you will be redirected to Snap-CI. There you can have a look at all the different build stages.
+Continuous Integration (and in the future Continuous Delivery) is currently setup by using the (for OSS projects) free to use web application [Snap-CI](https://snap-ci.com/). By clicking on the first badge (see at the top), you will be redirected to Snap-CI. There you can have a look at all the different build stages.
 
 We've also setup Code Coverage reports. This is done by [Coveralls](https://coveralls.io). Just click on the coverage badge and you'll be redirected to our corresponding Coveralls project.
 
@@ -47,9 +47,15 @@ In the future, we will exchange Snap-CI with our local instance of Bamboo at the
 
 ### Use Docker to run/test your application ###
 ---
-You can use Docker to build, test and run your application locally. Simply edit the Dockerfile and run:
+You can use [Docker](https://www.docker.com/) to build, test and run your application locally. Simply edit the Dockerfile and run:
 
 ```
 docker build -t MY_IMAGE_TAG ./
 docker run -it --rm -p 8880:3000 MY_IMAGE_TAG
+```
+
+Alternatively you can use [docker-compose](https://docs.docker.com/compose/) to run your application in conjunction with a (local) mongodb instance. Simply execute:
+
+```
+docker-compose up -d
 ```

@@ -1,4 +1,4 @@
-/* eslint dot-notation: 0 */
+/* eslint dot-notation: 0, no-unused-vars: 0 */
 'use strict';
 
 //Mocking is missing completely TODO add mocked objects

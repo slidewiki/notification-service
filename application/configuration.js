@@ -1,3 +1,4 @@
+/* This module is used for confugrating the mongodb connection*/
 'use strict';
 
 //read mongodb URL from /etc/hosts

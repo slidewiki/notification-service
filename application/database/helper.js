@@ -1,6 +1,7 @@
 'use strict';
 
 //Simple module which provides promises for a basic usage of the MongoDB
+/* eslint promise/always-return: 0*/
 
 //modules
 const Db = require('mongodb').Db,
@@ -20,7 +21,10 @@ const _createDatabase_ = function(dbname, resolve, reject) {
       reject(err);
     else {
       //insert the first object to know that the database is properly created
-      db.collection('test').insertOne({id: 1, data: {}});
+      db.collection('test').insertOne({
+        id: 1,
+        data: {}
+      });
       resolve(db);
     }
   });
@@ -32,8 +36,7 @@ const _dropDatabase_ = function(db, resolve, reject) {
     const databaseCleaner = new DatabaseCleaner('mongodb');
 
     databaseCleaner.clean(db, resolve);
-  }
-  catch(error) {
+  } catch (error) {
     reject(error);
   }
 };
@@ -67,12 +70,12 @@ module.exports = {
         _dropDatabase_(db, resolve, reject);
       else {
         module.exports.connectToDatabase(dbname)
-        .then((db2) => {
-          _dropDatabase_(db2, resolve, reject);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+          .then((db2) => {
+            _dropDatabase_(db2, resolve, reject);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       }
     });
   },

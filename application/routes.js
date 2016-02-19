@@ -1,6 +1,9 @@
+/* These are routes as defined in https://docs.google.com/document/d/1337m6i7Y0GPULKLsKpyHR4NRzRwhoxJnAZNnDFCigkc/edit#
+Each route implementes a basic parameter/payload validation and a swagger API documentation desription*/
+
 'use strict';
 const Joi = require('joi');
-const handls = require('./controllers/handler');
+const handlers = require('./controllers/handler');
 
 module.exports = function(server) {
 
@@ -8,7 +11,7 @@ module.exports = function(server) {
   server.route({
     method: 'GET',
     path: '/slide/{id}',
-    handler: handls.getSlide,
+    handler: handlers.getSlide,
     config: {
       validate: {
         params: {
@@ -24,7 +27,7 @@ module.exports = function(server) {
   server.route({
     method: 'POST',
     path: '/slide/new',
-    handler: handls.newSlide,
+    handler: handlers.newSlide,
     //TODO validate body
     config: {
       validate: {
@@ -46,7 +49,7 @@ module.exports = function(server) {
   server.route({
     method: 'PUT',
     path: '/slide/{id}',
-    handler: handls.updateSlide,
+    handler: handlers.updateSlide,
     config: {
       validate: {
         params: {

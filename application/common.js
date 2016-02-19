@@ -1,3 +1,4 @@
+/* some common functions that can be used everywhere inside the program*/
 'use strict';
 
 module.exports = {

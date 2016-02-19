@@ -8,18 +8,16 @@ module.exports = {
     return new Promise((resolve, reject) => {
       database_helper.connectToDatabase(config.SLIDEWIKIDATABASE)
         .then((db) => {
-          return db.collection('slides', function(err, col) {
+          return db.collection('slides', (err, col) => {
             if (err) {
               db.close();
               reject(err);
-            }
-            else {
-              col.find().toArray(function(err, docs) {
+            } else {
+              col.find().toArray((err, docs) => {
                 if (err) {
                   db.close();
                   reject(err);
-                }
-                else {
+                } else {
                   db.close();
                   resolve(docs);
                 }
@@ -28,7 +26,10 @@ module.exports = {
           });
         })
         .catch((error) => {
-          reject({cause: 'connection failed', error: error});
+          reject({
+            cause: 'connection failed',
+            error: error
+          });
         });
     });
   }

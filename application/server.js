@@ -1,6 +1,6 @@
 /*
 This is a demo application implementing some interfaces as described in https://docs.google.com/document/d/1337m6i7Y0GPULKLsKpyHR4NRzRwhoxJnAZNnDFCigkc/edit#
-This application demonstrates a serivce which just returns static data. The requests have no sideeffects and there is no database involved.
+This application demonstrates a serivce which returns previously inserted data from a fake database. The requests have no sideeffects and there is no database involved.
  */
 
 'use strict';
@@ -37,7 +37,7 @@ let plugins = [
         }
       }]
     }
-  }, {
+  }, { //Plugin for swagger API documentation
     register: require('hapi-swagger'),
     options: {
       info: {

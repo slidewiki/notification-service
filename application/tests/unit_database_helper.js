@@ -1,5 +1,5 @@
 // example unit tests
-/* eslint dot-notation: 0 */
+/* eslint dot-notation: 0, promise/always-return: 0, no-unused-vars: 0 */
 'use strict';
 
 //Mocking is missing completely TODO add mocked objects
@@ -54,7 +54,7 @@ describe('Database', () => {
     it('should be an empty database', (done) => {
       return helper.connectToDatabase('AwesomeMoo2000')
         .then((db) => {
-          db.collections(function(err, collections) {
+          db.collections((err, collections) => {
             expect(collections.length).to.equals(0);
             db.close();
             done();
@@ -71,7 +71,7 @@ describe('Database', () => {
     it('should contain only one collection with one object', (done) => {
       return helper.createDatabase(tempDatabase)
         .then((db) => {
-          db.collections(function(err, collections) {
+          db.collections((err, collections) => {
             expect(collections.length).to.equals(1);
             db.collection('test').count((err, number) => {
               expect(err).to.equals(null);

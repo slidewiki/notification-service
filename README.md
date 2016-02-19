@@ -1,6 +1,6 @@
 # Microservice Template #
 [![Build Status](https://snap-ci.com/slidewiki/Microservice-Template/branch/master/build_image)](https://snap-ci.com/slidewiki/Microservice-Template/branch/master)
-[![License](https://img.shields.io/badge/License-GPLv3-green.svg)](https://github.com/slidewiki/Microservice-Template/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MPL%202.0-green.svg)](https://github.com/slidewiki/Microservice-Template/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/Language-Javascript%20ECMA2015-lightgrey.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Framework](https://img.shields.io/badge/Framework-NodeJS%205.6.0-blue.svg)](https://nodejs.org/)
 [![Webserver](https://img.shields.io/badge/Webserver-Hapi%2013.0.0-blue.svg)](http://hapijs.com/)

@@ -7,9 +7,28 @@
 [![LinesOfCode](https://img.shields.io/badge/LOC-278-lightgrey.svg)](https://github.com/slidewiki/Microservice-Template/blob/master/application/package.json)
 [![Coverage Status](https://coveralls.io/repos/github/slidewiki/Microservice-Template/badge.svg?branch=master)](https://coveralls.io/github/slidewiki/Microservice-Template?branch=master)
 
-This repository contains the template code for a NodeJS based Microservice of the Slidewiki 2.0 project. Please do **NOT** clone this repository and develop your application in it. Instead fork it (into the Slidewiki Organization) and develop your application there. The CI maintainer ([Roy Meissner](https://github.com/rmeissn)) will setup continuous integration and delivery for your fork. Just notify him.
+This repository contains the template code for a NodeJS based Microservice of the Slidewiki 2.0 project. Please do **NOT** clone this repository and develop your application in it. Instead fork it (following the instructions below) and develop your application there. The CI maintainer ([Roy Meissner](https://github.com/rmeissn)) will setup continuous integration and delivery for your fork. Just notify him.
 
 Remember to exchange badge urls when forking!
+
+## Forking ##
+---
+Unfortunatly Github doesn't allow someone to fork a repository into the same organization or even transfer ownership after a rename of a forked repository (shame on you, Github!). In order to fork this template, follow these easy steps:
+
+1. Create a new repository inside slidewiki organization with your desired name (e.g.: Deck-Service). Don't initiate the repository with a Readme or a license!
+2. Execute the following commands on your local machine
+3. Begin your work by altering README.md of your new service
+
+```
+# Clone the Microservice-Template to a folder named after your new service, e.g.: Deck-Service
+git clone git@github.com:slidewiki/Microservice-Template.git NAME_OF_YOUR_NEW_REPO
+cd NAME_OF_YOUR_NEW_REPO
+# Rename the actual origin and add your new repo as the default origin
+git remote rename origin template
+git remote add origin ORIGIN_OF_YOUR_NEW_REPO
+# e.g.: git remote add origin git@github.com:slidewiki/Deck-Service.git
+git push -u origin master
+```
 
 ### Install NodeJS ###
 ---

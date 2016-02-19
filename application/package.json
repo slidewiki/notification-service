@@ -8,7 +8,7 @@
   },
   "bugs": "https://github.com/slidewiki/Microservice-Template/issues",
   "author": "Roy Meissner (https://rmeissn.github.io/)",
-  "license": "GPL-3.0",
+  "license": "MPL-2.0",
   "main": "server.js",
   "scripts": {
     "clean": "rm -R ./node_modules/ ./coverage/ && docker stop SlideWikiServiceTemplateMongoDB",

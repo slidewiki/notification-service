@@ -11,7 +11,7 @@
   "license": "GPL-3.0",
   "main": "server.js",
   "scripts": {
-    "clean": "rm -R ./node_modules/ ./coverage/ && docker stop SlideWikiServiceTemplateMongoDB",
+    "clean": "rm -R ./node_modules/ ./coverage/",
     "lint": "eslint -c .eslintrc ./**/*.js",
     "pretest": "npm run lint",
     "test": "npm run test:unit && npm run test:integration",
@@ -29,12 +29,12 @@
   "dependencies": {
     "boom": "3.1.x",
     "database-cleaner": "^0.11.0",
-    "good": "6.4.x",
+    "good": "6.6.x",
     "good-console": "5.3.x",
     "hapi": "13.0.x",
     "hapi-swagger": "4.2.x",
     "inert": "3.2.x",
-    "joi": "7.2.x",
+    "joi": "8.0.x",
     "mongodb": "2.1.x",
     "vision": "4.0.x"
   },
@@ -42,14 +42,14 @@
     "node": ">=5.5.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "coveralls": "^2.11.6",
-    "database-cleaner": "^0.11.0",
-    "eslint": "^1.10.3",
-    "eslint-plugin-promise": "^1.0.8",
-    "istanbul": "^0.4.2",
-    "mocha": "^2.4.5",
-    "nodemon": "^1.8.1",
-    "sloc": "^0.1.10"
+    "chai": "^3.5.x",
+    "coveralls": "^2.11.x",
+    "database-cleaner": "^0.11.x",
+    "eslint": "^2.2.x",
+    "eslint-plugin-promise": "^1.0.x",
+    "istanbul": "^0.4.x",
+    "mocha": "^2.4.x",
+    "nodemon": "^1.9.x",
+    "sloc": "^0.1.x"
   }
 }

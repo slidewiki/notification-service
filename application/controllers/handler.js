@@ -1,9 +1,9 @@
 'use strict';
 
 //Boom gives us some predefined http codes and proper responses
-const boom = require('boom');
-//This is a simple database imitation that has to be exchanged in the future
-const db = require('../database/dbimitation');
+const boom = require('boom'),
+  db = require('../database/dbimitation'), //This is a simple database imitation that has to be exchanged in the future
+  server = require('../server');
 
 module.exports = {
   //Get Slide from database or return NOT FOUND
@@ -37,12 +37,10 @@ module.exports = {
 
   //Get all slides from database
   getSlides: function(request, reply) {
-    const promise = database_helper.getAllSlides();
-    promise.then((docs) => {
+    database_helper.getAllSlides().then((docs) => {
       return reply(docs);
-    })
-    .catch((error) => {
-      console.log('Error', error);
+    }).catch((error) => {
+      server.log('Error', error);
       reply(boom.badImplementation('Something strange happend...try to contact Santa to solve the problem...'));
     });
   }

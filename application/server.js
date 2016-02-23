@@ -6,9 +6,8 @@ This application demonstrates a serivce which returns previously inserted data f
 'use strict';
 
 //This is our webserver framework (instead of express)
-const hapi = require('hapi');
-const myRoutes = require('./routes.js');
-const co = require('./common');
+const hapi = require('hapi'),
+  co = require('./common');
 
 //Initiate the webserver
 const server = new hapi.Server();
@@ -58,7 +57,7 @@ server.register(plugins, (err) => {
     server.start(() => {
       server.log('info', 'Server started at ' + server.info.uri);
       //Register routes
-      myRoutes(server);
+      require('./routes.js');
     });
   }
 });

@@ -1,87 +1,69 @@
 'use strict';
 
-//Simple module which provides promises for a basic usage of the MongoDB
-/* eslint promise/always-return: 0*/
-
-//modules
 const Db = require('mongodb').Db,
   Server = require('mongodb').Server,
   MongoClient = require('mongodb').MongoClient,
-  config = require('../configuration.js').MongoDB;
+  config = require('../configuration.js').MongoDB,
+  co = require('../common');
 
-//private functions
-const _createDatabase_ = function(dbname, resolve, reject) {
-  dbname = typeof dbname !== 'undefined' ? dbname : config.SLIDEWIKIDATABASE;
+let dbConnection = undefined;
 
-  let db = new Db(dbname,
-    new Server(config.HOST,
-      config.PORT));
-  db.open((err, db) => {
-    if (err)
-      reject(err);
+function testDbName(name) {
+  return typeof name !== 'undefined' ? name : config.SLIDEWIKIDATABASE;
+}
+
+function testConnection(dbname) {
+  if (!co.isEmpty(dbConnection)) { //TODO test for alive
+    if (dbConnection.s.databaseName === dbname)
+      return true;
     else {
-      //insert the first object to know that the database is properly created
-      db.collection('test').insertOne({
+      dbConnection.close();
+      dbConnection = undefined;
+      return false;
+    }
+  }
+  return false;
+}
+
+module.exports = {
+  createDatabase: function(dbname) {
+    dbname = testDbName(dbname);
+
+    let db = new Db(dbname, new Server(config.HOST, config.PORT));
+    return db.open().then((db) => {
+      db.collection('test').insertOne({ //insert the first object to know that the database is properly created TODO this is not real test....could fail without your knowledge
         id: 1,
         data: {}
       });
-      resolve(db);
-    }
-  });
-};
-
-const _dropDatabase_ = function(db, resolve, reject) {
-  try {
-    const DatabaseCleaner = require('database-cleaner');
-    const databaseCleaner = new DatabaseCleaner('mongodb');
-
-    databaseCleaner.clean(db, resolve);
-  } catch (error) {
-    reject(error);
-  }
-};
-
-const _connectToDatabase_ = function(dbname, resolve, reject) {
-  dbname = typeof dbname !== 'undefined' ? dbname : config.SLIDEWIKIDATABASE;
-
-  MongoClient.connect('mongodb://' + config.HOST + ':' + config.PORT + '/' + dbname, (err, db) => {
-    if (err)
-      reject(err);
-    if (db) {
-      if (db.s.databaseName !== dbname)
-        reject(Error('Wrong Database!'));
-
-      resolve(db);
-    }
-  });
-};
-
-//create module as promise collection
-module.exports = {
-  createDatabase: function(dbname) {
-    return new Promise((resolve, reject) => {
-      _createDatabase_(dbname, resolve, reject);
+      return db;
     });
   },
-  cleanDatabase: function(db, dbname) {
-    return new Promise((resolve, reject) => {
-      //use db connection or database name
-      if (db)
-        _dropDatabase_(db, resolve, reject);
-      else {
-        module.exports.connectToDatabase(dbname)
-          .then((db2) => {
-            _dropDatabase_(db2, resolve, reject);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      }
-    });
+
+  cleanDatabase: function(dbname) {
+    this.connectToDatabase(dbname)
+      .then((db) => {
+        const DatabaseCleaner = require('database-cleaner');
+        const databaseCleaner = new DatabaseCleaner('mongodb');
+
+        return databaseCleaner.clean(db, resolve);
+      }).catch((error) => {
+        throw error;
+      });
   },
+
   connectToDatabase: function(dbname) {
-    return new Promise((resolve, reject) => {
-      _connectToDatabase_(dbname, resolve, reject);
-    });
+    dbname = testDbName(dbname);
+
+    if (testConnection(dbname))
+      return Promise.resolve(dbConnection);
+    else
+      return MongoClient.connect('mongodb://' + config.HOST + ':' + config.PORT + '/' + dbname)
+        .then((db) => {
+          if (db.s.databaseName !== dbname)
+            throw new 'Wrong Database!';
+          dbConnection = db;
+          return db;
+        });
+
   }
 };

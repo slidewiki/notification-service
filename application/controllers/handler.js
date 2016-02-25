@@ -1,47 +1,46 @@
 'use strict';
 
-//Boom gives us some predefined http codes and proper responses
-const boom = require('boom'),
-  db = require('../database/dbimitation'), //This is a simple database imitation that has to be exchanged in the future
-  server = require('../server');
+const boom = require('boom'), //Boom gives us some predefined http codes and proper responses
+  slideDB = require('../database/slideDatabase'), //Database functions specific for slides
+  co = require('../common');
 
 module.exports = {
   //Get Slide from database or return NOT FOUND
   getSlide: function(request, reply) {
-    try {
-      reply(db.get(encodeURIComponent(request.params.id)));
-    } catch (e) {
-      reply(boom.notFound());
-    }
+    slideDB.get(encodeURIComponent(request.params.id)).then((slide) => {
+      if (co.isEmpty(slide))
+        reply(boom.notFound());
+      else
+        reply(co.rewriteID(slide));
+    }).catch((error) => {
+      request.log('error', error);
+      reply(boom.badImplementation());
+    });
   },
 
   //Create Slide with new id and payload or return INTERNAL_SERVER_ERROR
   newSlide: function(request, reply) {
-    try {
-      let slide = request.payload;
-      slide.id = db.getNewID();
-      reply(db.insert(slide));
-    } catch (e) {
-      reply(boom.badImplementation('Something strange happend...try to contact Santa to solve the problem...'));
-    }
+    slideDB.insert(request.payload).then((inserted) => {
+      if (co.isEmpty(inserted.ops[0]))
+        throw inserted;
+      else
+        reply(co.rewriteID(inserted.ops[0]));
+    }).catch((error) => {
+      request.log('error', error);
+      reply(boom.badImplementation());
+    });
   },
 
   //Update Slide with id id and payload or return INTERNAL_SERVER_ERROR
-  updateSlide: function(request, reply) {
-    try {
-      reply(db.update(request.payload));
-    } catch (e) {
-      reply(boom.badImplementation('Something strange happend...try to contact Santa to solve the problem...'));
-    }
-  },
-
-  //Get all slides from database
-  getSlides: function(request, reply) {
-    database_helper.getAllSlides().then((docs) => {
-      return reply(docs);
+  newSlide: function(request, reply) {
+    slideDB.insert(request.payload).then((inserted) => {
+      if (co.isEmpty(inserted.ops[0]))
+        throw inserted;
+      else
+        reply(co.rewriteID(inserted.ops[0]));
     }).catch((error) => {
-      server.log('Error', error);
-      reply(boom.badImplementation('Something strange happend...try to contact Santa to solve the problem...'));
+      request.log('error', error);
+      reply(boom.badImplementation());
     });
   }
 };

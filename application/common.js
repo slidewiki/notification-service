@@ -8,5 +8,13 @@ module.exports = {
       toTest === '' ||
       (toTest instanceof Object && Object.keys(toTest).length === 0) ||
       (toTest instanceof Array && toTest.length === 0));
+  },
+
+  rewriteID: function(o){
+    if(!this.isEmpty(o)){
+      o.id = o._id;
+      delete o._id;
+    }
+    return o;
   }
 };

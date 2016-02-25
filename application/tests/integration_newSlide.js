@@ -5,26 +5,25 @@
 
 describe('REST API', () => {
 
-  let expect, server;
+  let server;
 
   beforeEach((done) => {
     //Clean everything up before doing new tests
     Object.keys(require.cache).forEach((key) => delete require.cache[key]);
     require('chai').should();
-    expect = require('chai').expect;
     let hapi = require('hapi');
-    let myRoutes = require('../routes.js');
     server = new hapi.Server();
     server.connection({
       host: 'localhost',
       port: 3000
     });
-    myRoutes(server);
+    require('../routes.js')(server);
     done();
   });
 
   let slide = {
     title: 'Dummy',
+    body: 'dummy',
     language: 'en'
   };
   let options = {

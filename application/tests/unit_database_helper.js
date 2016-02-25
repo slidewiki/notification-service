@@ -1,90 +1,61 @@
 // example unit tests
-/* eslint dot-notation: 0, promise/always-return: 0, no-unused-vars: 0 */
 'use strict';
 
 //Mocking is missing completely TODO add mocked objects
 
 describe('Database', () => {
-  let expect, helper, tempDatabase = 'AwesomeMoo3000';
+  let helper, tempDatabase = 'AwesomeMoo3000';
 
   //get modules
   beforeEach((done) => {
-    require('chai').should();
-    expect = require('chai').expect;
+    Object.keys(require.cache).forEach((key) => delete require.cache[key]);
     helper = require('../database/helper.js');
-    done();
-  });
-
-  //cleanup the changed databases
-  //TODO wait until database is cleaned up
-  afterEach((done) => {
-    helper.cleanDatabase(null, tempDatabase)
-      .then(() => {
-        done();
-      })
-      .catch((error) => {
-        done();
-      });
+    require('chai').should();
+    let chai = require('chai');
+    let chaiAsPromised = require('chai-as-promised');
+    chai.use(chaiAsPromised);
+    helper.cleanDatabase(tempDatabase)
+      .then(() => done())
+      .catch((error) => done(error));
   });
 
   context('when connecting to an existing database', () => {
     it('should return the correct connection object', () => {
-      return helper.connectToDatabase('local')
-        .then((db) => {
-          expect(db).to.not.equal(undefined);
-          expect(db).to.not.equal(null);
-          expect(db.s).to.not.equal(undefined);
-          expect(db.s.databaseName).to.not.equal(undefined);
-          expect(db.s.databaseName).to.equal('local');
-          db.close();
-        },
-        (error) => expect.fail('connection could not established'));
+
+      let db = helper.connectToDatabase('local');
+      return Promise.all([
+        db.should.be.fulfilled,
+        db.should.eventually.not.be.empty,
+        db.should.eventually.have.property('s').that.is.not.empty,
+        db.should.eventually.have.deep.property('s.databaseName', 'local')
+      ]);
     });
 
     it('should be possible to call cleanup', () => {
-      return helper.cleanDatabase(null, 'local')
-        .then(() => {
-          //correct
-        },
-        (error) => expect.fail('connection could not established'));
+      return helper.cleanDatabase('local').should.be.fulfilled;
     });
   });
 
   context('when connecting to a not existing database', () => {
-    it('should be an empty database', (done) => {
-      return helper.connectToDatabase('AwesomeMoo2000')
-        .then((db) => {
-          db.collections((err, collections) => {
-            expect(collections.length).to.equals(0);
-            db.close();
-            done();
-          });
-        },
-        (error) => {
-          expect.fail('connection could not established');
-          done();
-        });
+    it('should be an empty database', () => {
+      let col = helper.connectToDatabase('AwesomeMoo2000').then((db) => db.collections());
+      return Promise.all([
+        col.should.be.fulfilled,
+        col.should.eventually.have.property('length', 0)
+      ]);
     });
   });
 
   context('when creating a new database', () => {
-    it('should contain only one collection with one object', (done) => {
-      return helper.createDatabase(tempDatabase)
-        .then((db) => {
-          db.collections((err, collections) => {
-            expect(collections.length).to.equals(1);
-            db.collection('test').count((err, number) => {
-              expect(err).to.equals(null);
-              expect(number).to.equals(1);
-              db.close();
-              done();
-            });
-          });
-        },
-        (error) => {
-          expect.fail('connection to new database could not established');
-          done();
-        });
+    it('should contain only one collection with one object', () => {
+      let cols = helper.createDatabase(tempDatabase).then((db) => db.collections);
+      let col = helper.createDatabase(tempDatabase).then((db) => db.collection('test'));
+      return Promise.all([
+        cols.should.be.fulfilled,
+        cols.should.eventually.have.property('length', 1),
+        col.should.be.fulfilled,
+        col.then((col) => col.count()).should.eventually.equal(1)
+      ]);
     });
   });
 });

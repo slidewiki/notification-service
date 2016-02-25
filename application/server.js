@@ -58,7 +58,7 @@ server.register(plugins, (err) => {
     server.start(() => {
       server.log('info', 'Server started at ' + server.info.uri);
       //Register routes
-      require('./routes.js');
+      require('./routes.js')(server);
     });
   }
 });

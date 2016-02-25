@@ -32,15 +32,15 @@ module.exports = {
   },
 
   //Update Slide with id id and payload or return INTERNAL_SERVER_ERROR
-  newSlide: function(request, reply) {
-    slideDB.insert(request.payload).then((inserted) => {
-      if (co.isEmpty(inserted.ops[0]))
-        throw inserted;
+  replaceSlide: function(request, reply) {
+    slideDB.replace(encodeURIComponent(request.params.id), request.payload).then((replaced) => {
+      if (co.isEmpty(replaced.value))
+        throw replaced;
       else
-        reply(co.rewriteID(inserted.ops[0]));
+        reply(replaced.value);
     }).catch((error) => {
       request.log('error', error);
       reply(boom.badImplementation());
     });
-  }
+  },
 };

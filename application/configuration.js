@@ -15,7 +15,7 @@ for (let i in lines) {
 
 module.exports = {
   MongoDB: {
-    PORT: 27017,
+    PORT: 27018,
     HOST: host,
     NS: 'local',
     SLIDEWIKIDATABASE: 'slidewiki'

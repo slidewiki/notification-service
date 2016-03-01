@@ -9,6 +9,7 @@ app:
     - database:mongodb
   environment:
     - APPLICATION_PORT=80
+    - DATABASE_PORT=27017
     - VIRTUAL_HOST=template.experimental.build.slidewiki.org
 
 # Default Mongo Port: 27017

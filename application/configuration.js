@@ -13,9 +13,15 @@ for (let i in lines) {
   }
 }
 
+//read mongo port from ENV
+const co = require('./common');
+let port = 27017;
+if (!co.isEmpty(process.env.DATABASE_PORT))
+  port = process.env.DATABASE_PORT;
+
 module.exports = {
   MongoDB: {
-    PORT: 27018,
+    PORT: port,
     HOST: host,
     NS: 'local',
     SLIDEWIKIDATABASE: 'slidewiki'

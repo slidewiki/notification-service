@@ -1,5 +1,5 @@
 # Microservice Template #
-[![Build Status](https://snap-ci.com/slidewiki/microservice-template/branch/master/build_image)](https://snap-ci.com/slidewiki/microservice-template/branch/master)
+[![Build Status](https://orca.snap-ci.com/slidewiki/microservice-template/branch/master/build_image)](https://orca.snap-ci.com/slidewiki/microservice-template/branch/master)
 [![License](https://img.shields.io/badge/License-MPL%202.0-green.svg)](https://github.com/slidewiki/microservice-template/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/Language-Javascript%20ECMA2015-lightgrey.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Framework](https://img.shields.io/badge/Framework-NodeJS%205.7.0-blue.svg)](https://nodejs.org/)

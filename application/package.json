@@ -13,20 +13,16 @@
   "scripts": {
     "clean": "rm -R ./node_modules/ ./coverage/",
     "lint": "eslint -c .eslintrc ./**/*.js",
-    "pretest": "npm run lint",
     "test": "npm run test:unit && npm run test:integration",
-    "posttest": "npm run coverage",
-    "pretest:unit": "docker run -d --name mongotest -p 27018:27017 mongo",
     "test:unit": "mocha ./tests/unit_*.js",
-    "posttest:unit": "docker stop mongotest && docker rm mongotest",
-    "pretest:integration": "docker run -d --name mongotest -p 27018:27017 mongo",
     "test:integration": "mocha ./tests/integration_*.js",
-    "posttest:integration": "docker stop mongotest && docker rm mongotest",
-    "coverage": "npm run pretest:unit && istanbul cover _mocha --include-all-sources ./tests/*.js && npm run posttest:unit",
+    "coverage": "istanbul cover _mocha --include-all-sources ./tests/*.js",
     "coverall": "npm run coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",
     "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./",
-    "start:watch": "nodemon"
+    "start:watch": "nodemon",
+    "start:mongodb": "docker run -d --name mongotest -p 27018:27017 mongo",
+    "stop:mongodb": "docker stop mongotest && docker rm mongotest"
   },
   "dependencies": {
     "boom": "3.1.x",

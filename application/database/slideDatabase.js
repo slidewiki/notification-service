@@ -1,7 +1,7 @@
 'use strict';
 
 const helper = require('./helper'),
-  oid = require('mongodb').ObjectID;
+  slideModel = require('../models/slide.js');
 
 module.exports = {
   get: function(identifier) {
@@ -16,7 +16,23 @@ module.exports = {
     //TODO check for root and parent deck ids to be existant, otherwise create these
     return helper.connectToDatabase()
       .then((db) => db.collection('slides'))
-      .then((col) => col.insertOne(slide)); //id is created and concatinated automagically
+      .then((col) => {
+        let validated = {};
+        try {
+          validated = slideModel(slide);
+          console.log('validated:', validated);
+          console.log('errors:', slideModel.errors);
+
+          if (!validated) {
+            return;
+          }
+
+          return col.insertOne(slide);
+        } catch (e) {
+          console.log('validation failed', e);
+        }
+        return;
+      }); //id is created and concatinated automagically
   },
 
   replace: function(id, slide) {

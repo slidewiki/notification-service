@@ -21,11 +21,13 @@ module.exports = {
   //Create Slide with new id and payload or return INTERNAL_SERVER_ERROR
   newSlide: function(request, reply) {
     slideDB.insert(request.payload).then((inserted) => {
+      console.log('We have inserted', inserted.result);
       if (co.isEmpty(inserted.ops[0]))
         throw inserted;
       else
         reply(co.rewriteID(inserted.ops[0]));
     }).catch((error) => {
+      console.log('error?!', error);
       request.log('error', error);
       reply(boom.badImplementation());
     });

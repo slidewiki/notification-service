@@ -6,18 +6,20 @@ let host = 'localhost';
 const fs = require('fs');
 const lines = fs.readFileSync('/etc/hosts').toString().split('\n');
 for (let i in lines) {
-  if (lines[i].startsWith('mongodb')) {
+  if (lines[i].includes('mongodb')) {
     const entrys = lines[i].split(' ');
     host = entrys[entrys.length - 1];
-    console.log('found mongodb host', host);
+    console.log('Found mongodb host. Using ' + host + ' as database host.');
   }
 }
 
 //read mongo port from ENV
 const co = require('./common');
 let port = 27017;
-if (!co.isEmpty(process.env.DATABASE_PORT))
+if (!co.isEmpty(process.env.DATABASE_PORT)){
   port = process.env.DATABASE_PORT;
+  console.log('Using port ' + port + ' as database port.');
+}
 
 module.exports = {
   MongoDB: {

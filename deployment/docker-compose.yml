@@ -8,4 +8,4 @@ service:
   environment:
     - APPLICATION_PORT=80
     - DATABASE_PORT=27017
-    - VIRTUAL_HOST=template.30230.hostserv.eu
+    - VIRTUAL_HOST=microservicetemplate.185.101.156.130.xip.io

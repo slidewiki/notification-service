@@ -14,7 +14,7 @@ const server = new hapi.Server();
 let port2 = 3000;
 if (!co.isEmpty(process.env.APPLICATION_PORT)) {
   port2 = process.env.APPLICATION_PORT;
-  console.log('Using port ' + port + ' as application port.');
+  console.log('Using port ' + port2 + ' as application port.');
 }
 server.connection({
   //  host: 'localhost',

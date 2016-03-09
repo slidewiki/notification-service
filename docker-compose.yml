@@ -1,20 +1,11 @@
-app:
-  build: ./
+service:
+  image: slidewiki/microservicetemplate
+  restart: on-failure:5
   expose:
     - "80"
-  ports:
-    - "3000:80"
-  links:
-    - database:mongodb
+  external_links:
+    - mongodb
   environment:
     - APPLICATION_PORT=80
     - DATABASE_PORT=27017
-    - VIRTUAL_HOST=template.localhost
-
-# Default Mongo Port: 27017
-database:
-  image: mongo
-#  build: ./mongodb/
-#  volumes:
-# Save Database to HOST Filesystem
-#    - ./mongodb/database:/data/db:rw
+    - VIRTUAL_HOST=microservicetemplate.185.101.156.130.xip.io

@@ -1,7 +1,12 @@
+/*
+Controller for handling mongodb and the data model slide while providing CRUD'ish.
+*/
+
 'use strict';
 
 const helper = require('./helper'),
-  slideModel = require('../models/slide.js');
+  slideModel = require('../models/slide.js'),
+  oid = require('mongodb').ObjectID;
 
 module.exports = {
   get: function(identifier) {
@@ -17,14 +22,14 @@ module.exports = {
     return helper.connectToDatabase()
       .then((db) => db.collection('slides'))
       .then((col) => {
-        let validated = {};
+        let valid = false;
         try {
-          validated = slideModel(slide);
-          console.log('validated:', validated);
-          console.log('errors:', slideModel.errors);
+          valid = slideModel(slide);
+          console.log('validated:', valid);
+          console.log('validation errors:', slideModel.errors);
 
-          if (!validated) {
-            return;
+          if (!valid) {
+            return slideModel.errors;
           }
 
           return col.insertOne(slide);
@@ -32,14 +37,30 @@ module.exports = {
           console.log('validation failed', e);
         }
         return;
-      }); //id is created and concatinated automagically
+      }); //id is created and concatinated automatically
   },
 
   replace: function(id, slide) {
     return helper.connectToDatabase()
       .then((db) => db.collection('slides'))
-      .then((col) => col.findOneAndReplace({
-        _id: oid(id)
-      }, slide));
+      .then((col) => {
+        let valid = false;
+        try {
+          valid = slideModel(slide);
+          console.log('validated:', valid);
+          console.log('validation errors:', slideModel.errors);
+
+          if (!valid) {
+            return slideModel.errors;
+          }
+
+          return col.findOneAndReplace({
+            _id: oid(id)
+          }, slide);
+        } catch (e) {
+          console.log('validation failed', e);
+        }
+        return;
+      });
   }
 };

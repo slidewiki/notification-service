@@ -35,7 +35,8 @@ const slide = {
     },
     position: {
       type: 'number',
-      minimum: 0
+      minimum: 0,
+      maximum: 99
     },
     language: {
       type: 'string'

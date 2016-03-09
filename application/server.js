@@ -1,6 +1,6 @@
 /*
 This is a demo application implementing some interfaces as described in https://docs.google.com/document/d/1337m6i7Y0GPULKLsKpyHR4NRzRwhoxJnAZNnDFCigkc/edit#
-This application demonstrates a serivce which returns previously inserted data from a fake database. The requests have no sideeffects and there is no database involved.
+This application demonstrates a service which returns previously inserted data from a MongoDB database.
  */
 
 'use strict';
@@ -9,7 +9,7 @@ This application demonstrates a serivce which returns previously inserted data f
 const hapi = require('hapi'),
   co = require('./common');
 
-//Initiate the webserver
+//Initiate the webserver with standard or given port
 const server = new hapi.Server();
 let port2 = 3000;
 if (!co.isEmpty(process.env.APPLICATION_PORT)) {

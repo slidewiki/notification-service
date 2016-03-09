@@ -1,3 +1,7 @@
+/*
+Handles the requests by executing stuff and replying to the client. Uses promises to get stuff done.
+*/
+
 'use strict';
 
 const boom = require('boom'), //Boom gives us some predefined http codes and proper responses
@@ -13,6 +17,7 @@ module.exports = {
       else
         reply(co.rewriteID(slide));
     }).catch((error) => {
+      console.log('ERROR: ', error);
       request.log('error', error);
       reply(boom.badImplementation());
     });
@@ -21,13 +26,11 @@ module.exports = {
   //Create Slide with new id and payload or return INTERNAL_SERVER_ERROR
   newSlide: function(request, reply) {
     slideDB.insert(request.payload).then((inserted) => {
-      console.log('We have inserted', inserted.result);
       if (co.isEmpty(inserted.ops[0]))
         throw inserted;
       else
         reply(co.rewriteID(inserted.ops[0]));
     }).catch((error) => {
-      console.log('error?!', error);
       request.log('error', error);
       reply(boom.badImplementation());
     });

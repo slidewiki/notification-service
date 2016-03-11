@@ -21,7 +21,7 @@
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",
     "countLOC:details": "sloc -f cli-table -d -e node_modules\\|coverage ./",
     "start:watch": "nodemon",
-    "start:mongodb": "docker run -d --name mongotest -p 27017:27017 mongo",
+    "start:mongodb": "docker run -d --name mongotest -p 27018:27017 mongo",
     "stop:mongodb": "docker stop mongotest && docker rm mongotest"
   },
   "dependencies": {

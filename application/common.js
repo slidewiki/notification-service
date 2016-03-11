@@ -16,5 +16,30 @@ module.exports = {
       delete o._id;
     }
     return o;
+  },
+
+  parseAjvValidationErrors: function(array) {
+    const beautifyKey = (key) => {
+      if (key.startsWith('.'))
+        key = key.substring(1, key.length);
+      if (key.endsWith(']') && key.indexOf('[') !== -1)
+        key = key.substring(0, key.indexOf('['));
+      return key;
+    };
+
+    if (this.isEmpty(array))
+      return null;
+
+    return array.reduce((prev, curr) => {
+      if (curr.keyword === 'required') {
+        prev.missing[beautifyKey(curr.params.missingProperty)] = curr;
+      } else {
+        prev.wrong[beautifyKey(curr.dataPath)] = curr;
+      }
+      return prev;
+    }, {
+      missing: {},
+      wrong: {}
+    });
   }
 };

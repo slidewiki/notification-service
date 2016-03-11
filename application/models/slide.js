@@ -1,5 +1,9 @@
 'use strict';
 
+/*
+Example of an model validation with ajv.
+*/
+
 //require
 var Ajv = require('ajv');
 var ajv = Ajv({
@@ -7,11 +11,6 @@ var ajv = Ajv({
 }); // options can be passed, e.g. {allErrors: true}
 
 //build schema
-const objectid = {
-  type: 'string',
-  maxLength: 24,
-  minLength: 24
-};
 const slide = {
   type: 'object',
   properties: {

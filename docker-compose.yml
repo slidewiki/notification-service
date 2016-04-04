@@ -1,4 +1,4 @@
-service:
+template:
   image: slidewiki/microservicetemplate
   restart: on-failure:5
   expose:
@@ -8,4 +8,4 @@ service:
   environment:
     - APPLICATION_PORT=80
     - DATABASE_PORT=27017
-    - VIRTUAL_HOST=microservicetemplate.185.101.156.130.xip.io
+    - VIRTUAL_HOST=microservicetemplate.manfredfris.ch

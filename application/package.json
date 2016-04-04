@@ -25,31 +25,30 @@
     "stop:mongodb": "docker stop mongotest && docker rm mongotest"
   },
   "dependencies": {
-    "ajv": "3.8.x",
-    "boom": "3.1.x",
-    "database-cleaner": "^0.11.0",
-    "good": "6.6.x",
-    "good-console": "5.3.x",
-    "hapi": "13.0.x",
-    "hapi-swagger": "4.2.x",
-    "inert": "3.2.x",
-    "joi": "8.0.x",
-    "mongodb": "2.1.x",
-    "vision": "4.0.x"
+    "ajv": "^3.8.8",
+    "boom": "^3.1.2",
+    "database-cleaner": "^0.13.0",
+    "good": "^6.6.0",
+    "good-console": "^5.3.1",
+    "hapi": "^13.3.0",
+    "hapi-swagger": "^4.3.1",
+    "inert": "^3.2.0",
+    "joi": "^8.0.5",
+    "mongodb": "^2.1.14",
+    "vision": "^4.0.1"
   },
   "engines": {
     "node": ">=5.5.0"
   },
   "devDependencies": {
-    "chai": "^3.5.x",
-    "chai-as-promised": "^5.2.0",
-    "coveralls": "^2.11.x",
-    "database-cleaner": "^0.11.x",
-    "eslint": "^2.2.x",
-    "eslint-plugin-promise": "^1.0.x",
-    "istanbul": "^0.4.x",
-    "mocha": "^2.4.x",
-    "nodemon": "^1.9.x",
-    "sloc": "^0.1.x"
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "coveralls": "^2.11.9",
+    "eslint": "^2.6.x",
+    "eslint-plugin-promise": "^1.1.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.1",
+    "sloc": "^0.1.10"
   }
 }

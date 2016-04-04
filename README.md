@@ -2,9 +2,9 @@
 [![Build Status](https://orca.snap-ci.com/slidewiki/microservice-template/branch/master/build_image)](https://orca.snap-ci.com/slidewiki/microservice-template/branch/master)
 [![License](https://img.shields.io/badge/License-MPL%202.0-green.svg)](https://github.com/slidewiki/microservice-template/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/Language-Javascript%20ECMA2015-lightgrey.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Framework](https://img.shields.io/badge/Framework-NodeJS%205.7.0-blue.svg)](https://nodejs.org/)
-[![Webserver](https://img.shields.io/badge/Webserver-Hapi%2013.0.0-blue.svg)](http://hapijs.com/)
-[![LinesOfCode](https://img.shields.io/badge/LOC-278-lightgrey.svg)](https://github.com/slidewiki/microservice-template/blob/master/application/package.json)
+[![Framework](https://img.shields.io/badge/Framework-NodeJS%205.10.0-blue.svg)](https://nodejs.org/)
+[![Webserver](https://img.shields.io/badge/Webserver-Hapi%2013.3.0-blue.svg)](http://hapijs.com/)
+[![LinesOfCode](https://img.shields.io/badge/LOC-588-lightgrey.svg)](https://github.com/slidewiki/microservice-template/blob/master/application/package.json)
 [![Coverage Status](https://coveralls.io/repos/github/slidewiki/microservice-template/badge.svg?branch=master)](https://coveralls.io/github/slidewiki/microservice-template?branch=master)
 
 This repository contains the template code for a NodeJS based Microservice of the Slidewiki 2.0 project. Please do **NOT** clone this repository and develop your application in it. Instead fork it (following the instructions below) and develop your application there. The CI maintainer ([Roy Meissner](https://github.com/rmeissn)) will setup continuous integration and delivery for your fork. Just notify him.

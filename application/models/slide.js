@@ -5,8 +5,8 @@ Example of an model validation with ajv.
 */
 
 //require
-var Ajv = require('ajv');
-var ajv = Ajv({
+let Ajv = require('ajv');
+let ajv = Ajv({
   verbose: true
 }); // options can be passed, e.g. {allErrors: true}
 

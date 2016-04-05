@@ -54,7 +54,7 @@ describe('Database', () => {
         cols.should.be.fulfilled,
         cols.should.eventually.have.property('length', 1),
         col.should.be.fulfilled,
-        col.then((col) => col.count()).should.eventually.equal(1)
+        col.then((col) => col.count()).should.eventually.not.equal(0)
       ]);
     });
   });

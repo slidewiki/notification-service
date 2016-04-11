@@ -29,14 +29,20 @@ module.exports = {
   createDatabase: function(dbname) {
     dbname = testDbName(dbname);
 
-    let db = new Db(dbname, new Server(config.HOST, config.PORT));
-    return db.open().then((db) => {
-      db.collection('test').insertOne({ //insert the first object to know that the database is properly created TODO this is not real test....could fail without your knowledge
-        id: 1,
-        data: {}
+    let myPromise = new Promise(function(resolve, reject) {
+      let db = new Db(dbname, new Server(config.HOST, config.PORT));
+      const connection = db.open()
+      .then((connection) => {
+        connection.collection('test').insertOne({ //insert the first object to know that the database is properly created TODO this is not real test....could fail without your knowledge
+          id: 1,
+          data: {}
+        }, (data) => {
+          resolve(connection);
+        });
       });
-      return db;
     });
+
+    return myPromise;
   },
 
   cleanDatabase: function(dbname) {

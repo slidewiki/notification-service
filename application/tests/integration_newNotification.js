@@ -21,30 +21,33 @@ describe('REST API', () => {
     done();
   });
 
-  let slide = {
-    title: 'Dummy',
-    body: 'dummy',
-    language: 'en'
+  let notification = {
+    activity_type: 'add',
+    content_id: '112233445566778899000671',
+    content_kind: 'slide',
+    user_id: '000000000000000000000000',
+    subscribed_user_id: '000000000000000000000000'
   };
   let options = {
     method: 'POST',
-    url: '/slide/new',
-    payload: slide,
+    url: '/notification/new',
+    payload: notification,
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  context('when creating a slide it', () => {
+  context('when creating a notification it', () => {
     it('should reply it', (done) => {
       server.inject(options, (response) => {
         response.should.be.an('object').and.contain.keys('statusCode','payload');
+        console.log(response);
         response.statusCode.should.equal(200);
         response.payload.should.be.a('string');
         let payload = JSON.parse(response.payload);
-        payload.should.be.an('object').and.contain.keys('title', 'language');
-        payload.title.should.equal('Dummy');
-        payload.language.should.equal('en');
+        payload.should.be.an('object').and.contain.keys('content_id', 'timestamp', 'user_id', 'subscribed_user_id');
+        payload.content_id.should.equal('112233445566778899000671');
+        payload.subscribed_user_id.should.equal('000000000000000000000000');
         done();
       });
     });

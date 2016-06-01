@@ -17,6 +17,7 @@ const objectid = {
 const notification = {
   type: 'object',
   properties: {
+    activity_id: objectid,
     activity_type: {
       type: 'string',
       enum: ['translate', 'share', 'add', 'edit', 'comment', 'reply', 'use', 'react', 'rate', 'download']
@@ -67,7 +68,7 @@ const notification = {
       type: 'string'
     }
   },
-  required: ['content_id', 'user_id', 'activity_type', 'subscribed_user_id']
+  required: ['content_id', 'user_id', 'activity_id', 'activity_type', 'subscribed_user_id']
 };
 
 //export

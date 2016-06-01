@@ -59,6 +59,7 @@ module.exports = function(server) {
     config: {
       validate: {
         payload: Joi.object().keys({
+          activity_id: Joi.string().alphanum().lowercase(),
           activity_type: Joi.string(),
           user_id: Joi.string().alphanum().lowercase(),
           content_id: Joi.string().alphanum().lowercase(),
@@ -83,7 +84,7 @@ module.exports = function(server) {
           }),
           react_type: Joi.string(),
           rate_type: Joi.string()
-        }).requiredKeys('content_id', 'user_id', 'activity_type', 'subscribed_user_id'),
+        }).requiredKeys('content_id', 'user_id', 'activity_id', 'activity_type', 'subscribed_user_id'),
       },
       tags: ['api'],
       description: 'Create a new notification'
@@ -101,6 +102,7 @@ module.exports = function(server) {
           id: Joi.string().alphanum().lowercase()
         },
         payload: Joi.object().keys({
+          activity_id: Joi.string().alphanum().lowercase(),
           activity_type: Joi.string(),
           user_id: Joi.string().alphanum().lowercase(),
           content_id: Joi.string().alphanum().lowercase(),
@@ -125,7 +127,7 @@ module.exports = function(server) {
           }),
           react_type: Joi.string(),
           rate_type: Joi.string()
-        }).requiredKeys('content_id', 'user_id', 'activity_type', 'subscribed_user_id'),
+        }).requiredKeys('content_id', 'user_id', 'activity_id', 'activity_type', 'subscribed_user_id'),
       },
       tags: ['api'],
       description: 'Replace an notification'

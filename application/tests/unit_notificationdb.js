@@ -29,6 +29,7 @@ describe('Database', () => {
 
     it('should return the notification when inserting one', () => {
       let notification = {
+        activity_id:
         activity_type: 'add',
         content_id: '112233445566778899000671',
         content_kind: 'slide',
@@ -39,13 +40,14 @@ describe('Database', () => {
       return Promise.all([
         res.should.be.fulfilled.and.eventually.not.be.empty,
         res.should.eventually.have.property('ops').that.is.not.empty,
-        res.should.eventually.have.deep.property('ops[0]').that.has.all.keys('_id', 'activity_type', 'timestamp', 'content_id', 'content_kind', 'user_id', 'subscribed_user_id'),
+        res.should.eventually.have.deep.property('ops[0]').that.has.all.keys('_id', 'activity_id', 'activity_type', 'timestamp', 'content_id', 'content_kind', 'user_id', 'subscribed_user_id'),
         res.should.eventually.have.deep.property('ops[0].activity_type', notification.activity_type)
       ]);
     });
 
     it('should get an previously inserted notification', () => {
       let notification = {
+        activity_id:
         activity_type: 'add',
         content_id: '112233445566778899000671',
         content_kind: 'slide',
@@ -56,13 +58,14 @@ describe('Database', () => {
       let res = ins.then((ins) => db.get(ins.ops[0]._id));
       return Promise.all([
         res.should.be.fulfilled.and.eventually.not.be.empty,
-        res.should.eventually.have.all.keys('_id', 'activity_type', 'timestamp', 'content_id', 'content_kind', 'user_id', 'subscribed_user_id'),
+        res.should.eventually.have.all.keys('_id',  'activity_id', 'activity_type', 'timestamp', 'content_id', 'content_kind', 'user_id', 'subscribed_user_id'),
         res.should.eventually.have.property('activity_type', notification.activity_type)
       ]);
     });
 
     it('should be able to replace an previously inserted notification', () => {
       let notification = {
+        activity_id:
         activity_type: 'add',
         content_id: '112233445566778899000671',
         content_kind: 'slide',
@@ -70,6 +73,7 @@ describe('Database', () => {
         subscribed_user_id: '000000000000000000000000'
       };
       let notification2 = {
+        activity_id:
         activity_type: 'share',
         content_id: '112233445566778899000671',
         content_kind: 'slide',
@@ -81,7 +85,7 @@ describe('Database', () => {
       res = ins.then((ins) => db.get(ins.ops[0]._id));
       return Promise.all([
         res.should.be.fulfilled.and.eventually.not.be.empty,
-        res.should.eventually.have.all.keys('_id', 'activity_type', 'timestamp', 'content_id', 'content_kind', 'user_id', 'subscribed_user_id'),
+        res.should.eventually.have.all.keys('_id',  'activity_id', 'activity_type', 'timestamp', 'content_id', 'content_kind', 'user_id', 'subscribed_user_id'),
         res.should.eventually.have.property('activity_type', 'share')
       ]);
     });

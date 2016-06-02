@@ -158,7 +158,7 @@ module.exports = function(server) {
     config: {
       validate: {
         payload: {
-          content_id: Joi.string().alphanum().lowercase()
+          subscribed_user_id: Joi.string().alphanum().lowercase()
         },
       },
       tags: ['api'],

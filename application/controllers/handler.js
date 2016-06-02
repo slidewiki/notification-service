@@ -132,7 +132,7 @@ function insertAuthorData(notifications) {
 //Insert mockup data to the collection
 function insertMockupData() {
   let notification1 = {
-    activity_id: '',
+    activity_id: '000000000000000000000000',
     activity_type: 'react',
     content_id: '112233445566778899000671',
     content_kind: 'slide',
@@ -143,7 +143,7 @@ function insertMockupData() {
   };
   let ins1 = notificationsDB.insert(notification1);
   let notification2 = {
-    activity_id: '',
+    activity_id: '000000000000000000000000',
     activity_type: 'download',
     content_id: '112233445566778899000671',
     content_kind: 'slide',

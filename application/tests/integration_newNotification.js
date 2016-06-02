@@ -22,7 +22,7 @@ describe('REST API', () => {
   });
 
   let notification = {
-    activity_id: '',
+    activity_id: '000000000000000000000000',
     activity_type: 'add',
     content_id: '112233445566778899000671',
     content_kind: 'slide',

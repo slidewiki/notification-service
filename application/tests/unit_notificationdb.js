@@ -29,7 +29,7 @@ describe('Database', () => {
 
     it('should return the notification when inserting one', () => {
       let notification = {
-        activity_id: '',
+        activity_id: '000000000000000000000000',
         activity_type: 'add',
         content_id: '112233445566778899000671',
         content_kind: 'slide',
@@ -47,7 +47,7 @@ describe('Database', () => {
 
     it('should get an previously inserted notification', () => {
       let notification = {
-        activity_id: '',
+        activity_id: '000000000000000000000000',
         activity_type: 'add',
         content_id: '112233445566778899000671',
         content_kind: 'slide',
@@ -65,7 +65,7 @@ describe('Database', () => {
 
     it('should be able to replace an previously inserted notification', () => {
       let notification = {
-        activity_id: '',
+        activity_id: '000000000000000000000000',
         activity_type: 'add',
         content_id: '112233445566778899000671',
         content_kind: 'slide',
@@ -73,7 +73,7 @@ describe('Database', () => {
         subscribed_user_id: '000000000000000000000000'
       };
       let notification2 = {
-        activity_id: '',
+        activity_id: '000000000000000000000000',
         activity_type: 'share',
         content_id: '112233445566778899000671',
         content_kind: 'slide',

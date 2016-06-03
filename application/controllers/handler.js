@@ -129,48 +129,47 @@ function insertAuthorData(notifications) {
   });
 }
 
-function getFirstTwoActivities() {
-  let http = require('http');
-  const Microservices = require('../configs/microservices');
-  let options = {
-    //CHANGES FOR LOCALHOST IN PUPIN (PROXY)
-    // host: 'proxy.rcub.bg.ac.rs',
-    // port: 8080,
-    // path: 'http://activitiesservice.manfredfris.ch/activity/new',
-    // path: 'http://' + Microservices.activities.uri + '/activity/new',
-
-    // host: 'activitiesservice.manfredfris.ch',
-    host: Microservices.activities.uri,
-    port: 80,
-    path: '/activities/112233445566778899000671',
-  };
-
-  let req = http.get(options, (res) => {
-    // console.log('STATUS: ' + res.statusCode);
-    // console.log('HEADERS: ' + JSON.stringify(res.headers));
-    let body = '';
-    res.on('data', (chunk) => {
-      body += chunk;
-    });
-    res.on('end', () => {
-      let data = JSON.parse(body);
-      console.log(data);
-      return data;
-    });
-  });
-  req.on('error', (e) => {
-    console.log('problem with request: ' + e.message);
-  });
-
-
-}
+// function getFirstTwoActivities() {
+//   let http = require('http');
+//   const Microservices = require('../configs/microservices');
+//   let options = {
+//     //CHANGES FOR LOCALHOST IN PUPIN (PROXY)
+//     // host: 'proxy.rcub.bg.ac.rs',
+//     // port: 8080,
+//     // path: 'http://activitiesservice.manfredfris.ch/activity/new',
+//     // path: 'http://' + Microservices.activities.uri + '/activity/new',
+//
+//     // host: 'activitiesservice.manfredfris.ch',
+//     host: Microservices.activities.uri,
+//     port: 80,
+//     path: '/activities/112233445566778899000671',
+//   };
+// 
+//   let req = http.get(options, (res) => {
+//     // console.log('STATUS: ' + res.statusCode);
+//     // console.log('HEADERS: ' + JSON.stringify(res.headers));
+//     let body = '';
+//     res.on('data', (chunk) => {
+//       body += chunk;
+//     });
+//     res.on('end', () => {
+//       let data = JSON.parse(body);
+//       console.log(data);
+//       return data;
+//     });
+//   });
+//   req.on('error', (e) => {
+//     console.log('problem with request: ' + e.message);
+//   });
+//
+// }
 //Insert mockup data to the collection
 function insertMockupData() {
   //get real ids for the first 2 activities
   // const firstTwoActivities = getFirstTwoActivities();
   const firstTwoActivities = [
-    {activity_id: '000000000000000000000000'},
-    {activity_id: '000000000000000000000000'}
+    {activity_id: '574d7da5d46fe91000cc3a77'},
+    {activity_id: '574d7da5d46fe91000cc3a76'}
   ];
   let notification1 = {
     activity_id: firstTwoActivities[0].activity_id,

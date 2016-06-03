@@ -183,7 +183,7 @@ function insertMockupData() {
   };
   let ins1 = notificationsDB.insert(notification1);
   let notification2 = {
-    activity_id: firstTwoActivities[0].activity_id,
+    activity_id: firstTwoActivities[1].activity_id,
     activity_type: 'download',
     content_id: '112233445566778899000671',
     content_kind: 'slide',

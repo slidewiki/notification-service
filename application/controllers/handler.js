@@ -70,7 +70,7 @@ module.exports = {
 
   //Delete notifications with subscribed_user_id
   deleteNotifications: function(request, reply) {
-    notificationsDB.deleteAllWithSubscribedUserID(encodeURIComponent(request.payload.content_id)).then(() =>
+    notificationsDB.deleteAllWithSubscribedUserID(encodeURIComponent(request.payload.subscribed_user_id)).then(() =>
       reply({'msg': 'notifications were successfully deleted...'})
     ).catch((error) => {
       request.log('error', error);
@@ -144,7 +144,7 @@ function insertAuthorData(notifications) {
 //     port: 80,
 //     path: '/activities/112233445566778899000671',
 //   };
-// 
+//
 //   let req = http.get(options, (res) => {
 //     // console.log('STATUS: ' + res.statusCode);
 //     // console.log('HEADERS: ' + JSON.stringify(res.headers));

@@ -174,7 +174,7 @@ function insertMockupData() {
   let notification1 = {
     activity_id: firstTwoActivities[0].activity_id,
     activity_type: 'react',
-    content_id: '112233445566778899000671',
+    content_id: '575672ce98cc641000299b29',
     content_kind: 'slide',
     content_name: 'Introduction',
     user_id: '112233445566778899000002',
@@ -185,7 +185,7 @@ function insertMockupData() {
   let notification2 = {
     activity_id: firstTwoActivities[1].activity_id,
     activity_type: 'download',
-    content_id: '112233445566778899000671',
+    content_id: '575672ce98cc641000299b27',
     content_kind: 'slide',
     content_name: 'Introduction',
     user_id: '112233445566778899000001',

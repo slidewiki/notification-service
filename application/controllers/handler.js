@@ -142,7 +142,7 @@ function insertAuthorData(notifications) {
 //     // host: 'activitiesservice.manfredfris.ch',
 //     host: Microservices.activities.uri,
 //     port: 80,
-//     path: '/activities/112233445566778899000671',
+//     path: '/activities/575060ae4bc68d1000ea952b',
 //   };
 //
 //   let req = http.get(options, (res) => {
@@ -168,13 +168,13 @@ function insertMockupData() {
   //get real ids for the first 2 activities
   // const firstTwoActivities = getFirstTwoActivities();
   const firstTwoActivities = [
-    {activity_id: '574d7da5d46fe91000cc3a77'},
-    {activity_id: '574d7da5d46fe91000cc3a76'}
+    {activity_id: '575672ce98cc641000299b29'},
+    {activity_id: '575672ce98cc641000299b27'}
   ];
   let notification1 = {
     activity_id: firstTwoActivities[0].activity_id,
     activity_type: 'react',
-    content_id: '575672ce98cc641000299b29',
+    content_id: '575060ae4bc68d1000ea952b',
     content_kind: 'slide',
     content_name: 'Introduction',
     user_id: '112233445566778899000002',
@@ -185,7 +185,7 @@ function insertMockupData() {
   let notification2 = {
     activity_id: firstTwoActivities[1].activity_id,
     activity_type: 'download',
-    content_id: '575672ce98cc641000299b27',
+    content_id: '575060ae4bc68d1000ea952b',
     content_kind: 'slide',
     content_name: 'Introduction',
     user_id: '112233445566778899000001',

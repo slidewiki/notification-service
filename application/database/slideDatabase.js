@@ -19,7 +19,7 @@ module.exports = {
   insert: function (slide) {
     //TODO check for root and parent deck ids to be existent, otherwise create these
     return helper.connectToDatabase()
-      .then((db) => helper.insertWithAutoincrementId(db, 'slides'))
+      .then((db) => helper.getNextIncrementationValueForCollection(db, 'slides'))
       .then((newId) => {
         // console.log('newId', newId);
         return helper.connectToDatabase() //db connection have to be accessed again in order to work with more than one collection

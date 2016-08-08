@@ -61,7 +61,7 @@ describe('Database', () => {
     it('should be possible to insert documents with autoincrementation', () => {
       let dbconn = helper.connectToDatabase(tempDatabase);
       let newId = dbconn.then((con) => {
-        return helper.insertWithAutoincrementId(con, 'test');
+        return helper.getNextIncrementationValueForCollection(con, 'test');
       });
 
       return Promise.all([

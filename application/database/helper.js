@@ -122,7 +122,7 @@ module.exports = {
 
   },
 
-  insertWithAutoincrementId: function (dbconn, collectionName, fieldName) {
+  getNextIncrementationValueForCollection: function (dbconn, collectionName, fieldName) {
     return getNextId(dbconn, collectionName, fieldName);
   }
 };

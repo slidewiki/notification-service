@@ -14,6 +14,9 @@ let ajv = Ajv({
 const slide = {
   type: 'object',
   properties: {
+    _id: {
+      type: 'number'
+    },
     title: {
       type: 'string'
     },

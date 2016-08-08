@@ -7,9 +7,7 @@ describe('Database', () => {
 
   let db, helper; //expect
 
-  beforeEach((done) => {
-    //Clean everything up before doing new tests
-    Object.keys(require.cache).forEach((key) => delete require.cache[key]);
+  before((done) => {
     require('chai').should();
     let chai = require('chai');
     let chaiAsPromised = require('chai-as-promised');

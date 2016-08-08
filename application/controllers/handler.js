@@ -9,7 +9,7 @@ const boom = require('boom'), //Boom gives us some predefined http codes and pro
   co = require('../common');
 
 module.exports = {
-  //Get Slide from database or return NOT FOUND
+  //Get slide from database or return NOT FOUND
   getSlide: function(request, reply) {
     slideDB.get(encodeURIComponent(request.params.id)).then((slide) => {
       if (co.isEmpty(slide))

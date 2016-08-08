@@ -34,7 +34,17 @@ module.exports = {
       if (curr.keyword === 'required') {
         prev.missing[beautifyKey(curr.params.missingProperty)] = curr;
       } else {
-        prev.wrong[beautifyKey(curr.dataPath)] = curr;
+        let key = beautifyKey((curr.dataPath !== '') ? curr.dataPath : curr.schemaPath);
+        if (curr.dataPath === '' && curr.params.key)
+          key += ' with key ' + curr.params.key;
+
+        if (prev.wrong[key]) {
+          //already given so increment counter
+          prev.wrong[key].occurences = 1 + prev.wrong[key].occurences;
+        } else {
+          curr.occurences = 1;
+          prev.wrong[key] = curr;
+        }
       }
       return prev;
     }, {

@@ -32,7 +32,7 @@ function testConnection(dbname) {
 
 //Uses extra collection for autoincrementation
 // Code based on https://github.com/TheRoSS/mongodb-autoincrement
-// requires existing document in collection counters like: { "_id" : "slides", "seq" : 1, "field" : "_id" } <- is created if not already given
+// requires document in collection "counters" like: { "_id" : "slides", "seq" : 1, "field" : "_id" } <- is created if not already existing
 function getNextId(db, collectionName, fieldName) {
   const fieldNameCorrected = fieldName || incrementationSettings.field;
   const step = incrementationSettings.step;
@@ -43,10 +43,10 @@ function getNextId(db, collectionName, fieldName) {
       field: fieldNameCorrected
     },
         null, //no sort
-        {
-          $inc: {
-            seq: step
-          }
+      {
+        $inc: {
+          seq: step
+        }
       }, {
         upsert: true, //if there is a problem with _id insert will fail
         new: true //insert returns the updated document
@@ -62,7 +62,8 @@ function getNextId(db, collectionName, fieldName) {
       .catch((error) => {
         console.log('getNextId: ERROR', error);
         if (error.code === 11000) {
-          process.nextTick(getNextId.bind(null, db, collectionName, fieldName, callback));
+          //no distinct seq
+          reject(error);
         } else {
           reject(error);
         }

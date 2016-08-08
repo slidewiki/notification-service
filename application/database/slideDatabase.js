@@ -17,7 +17,7 @@ module.exports = {
   },
 
   insert: function (slide) {
-    //TODO check for root and parent deck ids to be existant, otherwise create these
+    //TODO check for root and parent deck ids to be existent, otherwise create these
     return helper.connectToDatabase()
       .then((db) => helper.insertWithAutoincrementId(db, 'slides'))
       .then((newId) => {

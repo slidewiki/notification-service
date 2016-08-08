@@ -36,7 +36,6 @@
     "inert": "^4.0.1",
     "joi": "^9.0.4",
     "mongodb": "^2.1.19",
-    "mongodb-autoincrement": "^1.0.1",
     "vision": "^4.1.0"
   },
   "engines": {

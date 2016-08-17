@@ -4,13 +4,17 @@
 //read mongodb URL from /etc/hosts
 let host = 'localhost';
 const fs = require('fs');
-const lines = fs.readFileSync('/etc/hosts').toString().split('\n');
-for (let i in lines) {
-  if (lines[i].includes('mongodb')) {
-    const entrys = lines[i].split(' ');
-    host = entrys[entrys.length - 1];
-    console.log('Found mongodb host. Using ' + host + ' as database host.');
+try {
+  const lines = fs.readFileSync('/etc/hosts').toString().split('\n');
+  for (let i in lines) {
+    if (lines[i].includes('mongodb')) {
+      const entrys = lines[i].split(' ');
+      host = entrys[entrys.length - 1];
+      console.log('Found mongodb host. Using ' + host + ' as database host.');
+    }
   }
+} catch (e) {
+  //Windows or no read rights (bad)
 }
 
 //read mongo port from ENV

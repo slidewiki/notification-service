@@ -54,7 +54,20 @@ describe('Database', () => {
         cols.should.be.fulfilled,
         cols.should.eventually.have.property('length', 1),
         col.should.be.fulfilled,
-        col.then((col) => col.count()).should.eventually.not.equal(0)
+        col.then((col) => col.count()).should.eventually.equal(2)
+      ]);
+    });
+
+    it('should be possible to insert documents with autoincrementation', () => {
+      let dbconn = helper.connectToDatabase(tempDatabase);
+      let newId = dbconn.then((con) => {
+        return helper.getNextIncrementationValueForCollection(con, 'test');
+      });
+
+      return Promise.all([
+        dbconn.should.be.fulfilled,
+        newId.should.be.fulfilled,
+        newId.should.eventually.equal(1)
       ]);
     });
   });

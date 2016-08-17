@@ -7,6 +7,11 @@ const Db = require('mongodb').Db,
   co = require('../common');
 
 let dbConnection = undefined;
+let incrementationSettings = {
+  collection: 'counters',
+  field: '_id',
+  step: 1
+};
 
 function testDbName(name) {
   return typeof name !== 'undefined' ? name : config.SLIDEWIKIDATABASE;
@@ -25,27 +30,70 @@ function testConnection(dbname) {
   return false;
 }
 
+//Uses extra collection for autoincrementation
+// Code based on https://github.com/TheRoSS/mongodb-autoincrement
+// requires document in collection "counters" like: { "_id" : "slides", "seq" : 1, "field" : "_id" } <- is created if not already existing
+function getNextId(db, collectionName, fieldName) {
+  const fieldNameCorrected = fieldName || incrementationSettings.field;
+  const step = incrementationSettings.step;
+
+  let myPromise = new Promise(function (resolve, reject) {
+    return db.collection(incrementationSettings.collection).findAndModify({
+      _id: collectionName,
+      field: fieldNameCorrected
+    },
+        null, //no sort
+      {
+        $inc: {
+          seq: step
+        }
+      }, {
+        upsert: true, //if there is a problem with _id insert will fail
+        new: true //insert returns the updated document
+      })
+      .then((result) => {
+        console.log('getNextId: returned result', result);
+        if (result.value && result.value.seq) {
+          resolve(result.value.seq);
+        } else {
+          resolve(result.seq);
+        }
+      })
+      .catch((error) => {
+        console.log('getNextId: ERROR', error);
+        if (error.code === 11000) {
+          //no distinct seq
+          reject(error);
+        } else {
+          reject(error);
+        }
+      });
+  });
+
+  return myPromise;
+}
+
 module.exports = {
-  createDatabase: function(dbname) {
+  createDatabase: function (dbname) {
     dbname = testDbName(dbname);
 
-    let myPromise = new Promise(function(resolve, reject) {
+    let myPromise = new Promise(function (resolve, reject) {
       let db = new Db(dbname, new Server(config.HOST, config.PORT));
       const connection = db.open()
-      .then((connection) => {
-        connection.collection('test').insertOne({ //insert the first object to know that the database is properly created TODO this is not real test....could fail without your knowledge
-          id: 1,
-          data: {}
-        }, (data) => {
-          resolve(connection);
+        .then((connection) => {
+          connection.collection('test').insertOne({ //insert the first object to know that the database is properly created TODO this is not real test....could fail without your knowledge
+            id: 1,
+            data: {}
+          }, (data) => {
+            resolve(connection);
+          });
         });
-      });
     });
 
     return myPromise;
   },
 
-  cleanDatabase: function(dbname) {
+  cleanDatabase: function (dbname) {
     dbname = testDbName(dbname);
 
     return this.connectToDatabase(dbname)
@@ -58,19 +106,23 @@ module.exports = {
       });
   },
 
-  connectToDatabase: function(dbname) {
+  connectToDatabase: function (dbname) {
     dbname = testDbName(dbname);
 
     if (testConnection(dbname))
       return Promise.resolve(dbConnection);
     else
-      return MongoClient.connect('mongodb://' + config.HOST + ':' + config.PORT + '/' + dbname)
-        .then((db) => {
-          if (db.s.databaseName !== dbname)
-            throw new 'Wrong Database!';
-          dbConnection = db;
-          return db;
-        });
+    return MongoClient.connect('mongodb://' + config.HOST + ':' + config.PORT + '/' + dbname)
+      .then((db) => {
+        if (db.s.databaseName !== dbname)
+          throw new 'Wrong Database!';
+        dbConnection = db;
+        return db;
+      });
 
+  },
+
+  getNextIncrementationValueForCollection: function (dbconn, collectionName, fieldName) {
+    return getNextId(dbconn, collectionName, fieldName);
   }
 };

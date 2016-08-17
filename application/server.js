@@ -49,7 +49,7 @@ let plugins = [
     options: {
       host: host,
       info: {
-        title: 'Example API',
+        title: 'Notification Management API',
         description: 'Powered by node, hapi, joi, hapi-swaggered, hapi-swaggered-ui and swagger-ui',
         version: '0.1.0'
       }

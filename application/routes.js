@@ -16,7 +16,7 @@ module.exports = function(server) {
     config: {
       validate: {
         params: {
-          id: Joi.string().alphanum().lowercase()
+          id: Joi.string()
         },
       },
       tags: ['api'],
@@ -43,7 +43,7 @@ module.exports = function(server) {
     config: {
       validate: {
         params: {
-          id: Joi.string().alphanum().lowercase()
+          id: Joi.string()
         },
       },
       tags: ['api'],
@@ -59,13 +59,13 @@ module.exports = function(server) {
     config: {
       validate: {
         payload: Joi.object().keys({
-          activity_id: Joi.string().alphanum().lowercase(),
+          activity_id: Joi.string(),
           activity_type: Joi.string(),
-          user_id: Joi.string().alphanum().lowercase(),
+          user_id: Joi.string(),
           content_id: Joi.string(),
           content_kind: Joi.string().valid('deck', 'slide'),
           content_name: Joi.string(),
-          subscribed_user_id: Joi.string().alphanum().lowercase(),
+          subscribed_user_id: Joi.string(),
           translation_info: Joi.object().keys({
             content_id: Joi.string(),
             language: Joi.string()
@@ -75,7 +75,7 @@ module.exports = function(server) {
             platform: Joi.string()
           }),
           comment_info: Joi.object().keys({
-            comment_id: Joi.string().alphanum().lowercase(),
+            comment_id: Joi.string(),
             text: Joi.string()
           }),
           use_info: Joi.object().keys({
@@ -99,16 +99,16 @@ module.exports = function(server) {
     config: {
       validate: {
         params: {
-          id: Joi.string().alphanum().lowercase()
+          id: Joi.string()
         },
         payload: Joi.object().keys({
-          activity_id: Joi.string().alphanum().lowercase(),
+          activity_id: Joi.string(),
           activity_type: Joi.string(),
-          user_id: Joi.string().alphanum().lowercase(),
+          user_id: Joi.string(),
           content_id: Joi.string(),
           content_kind: Joi.string().valid('deck', 'slide'),
           content_name: Joi.string(),
-          subscribed_user_id: Joi.string().alphanum().lowercase(),
+          subscribed_user_id: Joi.string(),
           translation_info: Joi.object().keys({
             content_id: Joi.string(),
             language: Joi.string()
@@ -118,7 +118,7 @@ module.exports = function(server) {
             platform: Joi.string()
           }),
           comment_info: Joi.object().keys({
-            comment_id: Joi.string().alphanum().lowercase(),
+            comment_id: Joi.string(),
             text: Joi.string()
           }),
           use_info: Joi.object().keys({
@@ -142,7 +142,7 @@ module.exports = function(server) {
     config: {
       validate: {
         payload: {
-          id: Joi.string().alphanum().lowercase()
+          id: Joi.string()
         },
       },
       tags: ['api'],
@@ -158,7 +158,7 @@ module.exports = function(server) {
     config: {
       validate: {
         payload: {
-          subscribed_user_id: Joi.string().alphanum().lowercase()
+          subscribed_user_id: Joi.string()
         },
       },
       tags: ['api'],

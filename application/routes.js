@@ -62,12 +62,12 @@ module.exports = function(server) {
           activity_id: Joi.string().alphanum().lowercase(),
           activity_type: Joi.string(),
           user_id: Joi.string().alphanum().lowercase(),
-          content_id: Joi.string().alphanum().lowercase(),
+          content_id: Joi.string(),
           content_kind: Joi.string().valid('deck', 'slide'),
           content_name: Joi.string(),
           subscribed_user_id: Joi.string().alphanum().lowercase(),
           translation_info: Joi.object().keys({
-            content_id: Joi.string().alphanum().lowercase(),
+            content_id: Joi.string(),
             language: Joi.string()
           }),
           share_info: Joi.object().keys({
@@ -79,7 +79,7 @@ module.exports = function(server) {
             text: Joi.string()
           }),
           use_info: Joi.object().keys({
-            target_id: Joi.string().alphanum().lowercase(),
+            target_id: Joi.string(),
             target_name: Joi.string()
           }),
           react_type: Joi.string(),
@@ -105,12 +105,12 @@ module.exports = function(server) {
           activity_id: Joi.string().alphanum().lowercase(),
           activity_type: Joi.string(),
           user_id: Joi.string().alphanum().lowercase(),
-          content_id: Joi.string().alphanum().lowercase(),
+          content_id: Joi.string(),
           content_kind: Joi.string().valid('deck', 'slide'),
           content_name: Joi.string(),
           subscribed_user_id: Joi.string().alphanum().lowercase(),
           translation_info: Joi.object().keys({
-            content_id: Joi.string().alphanum().lowercase(),
+            content_id: Joi.string(),
             language: Joi.string()
           }),
           share_info: Joi.object().keys({
@@ -122,7 +122,7 @@ module.exports = function(server) {
             text: Joi.string()
           }),
           use_info: Joi.object().keys({
-            target_id: Joi.string().alphanum().lowercase(),
+            target_id: Joi.string(),
             target_name: Joi.string()
           }),
           react_type: Joi.string(),

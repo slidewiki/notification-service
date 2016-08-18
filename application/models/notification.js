@@ -26,7 +26,9 @@ const notification = {
       type: 'object'
     },
     user_id: objectid,
-    content_id: objectid,
+    content_id: {
+      type: 'string'
+    },
     content_kind: {
       type: 'string',
       enum: ['deck', 'slide']
@@ -36,7 +38,9 @@ const notification = {
     },
     subscribed_user_id: objectid,
     translation_info: {
-      content_id: objectid,
+      content_id: {
+        type: 'string'
+      },
       language: {
         type: 'string'
       }
@@ -56,7 +60,9 @@ const notification = {
       }
     },
     use_info: {
-      target_id: objectid,
+      target_id: {
+        type: 'string'
+      },
       target_name: {
         type: 'string'
       }

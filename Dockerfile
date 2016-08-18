@@ -1,4 +1,4 @@
-FROM node:6.2-slim
+FROM node:6.4-slim
 MAINTAINER Roy Meissner <meissner@informatik.uni-leipzig.de>
 
 RUN mkdir /nodeApp

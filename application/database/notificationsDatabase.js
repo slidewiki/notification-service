@@ -68,7 +68,7 @@ module.exports = {
             return notificationModel.errors;
           }
 
-          return col.update({_id: oid(id)}, notification, { upsert: true });
+          return col.findOneAndUpdate({_id: oid(id)}, notification, { upsert: true, returnNewDocument: true });
         } catch (e) {
           console.log('validation failed', e);
         }

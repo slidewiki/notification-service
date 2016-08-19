@@ -168,8 +168,8 @@ function insertMockupData() {
   //get real ids for the first 2 activities
   // const firstTwoActivities = getFirstTwoActivities();
   const firstTwoActivities = [
-    {activity_id: '575672ce98cc641000299b29'},
-    {activity_id: '575672ce98cc641000299b27'}
+    {activity_id: '57b6c4eb000eee001048bd26'},
+    {activity_id: '57b6c4eb000eee001048bd25'}
   ];
   let notification1 = {
     activity_id: firstTwoActivities[0].activity_id,

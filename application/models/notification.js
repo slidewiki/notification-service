@@ -12,7 +12,7 @@ let ajv = Ajv({
 const objectid = {
   type: 'string',
   maxLength: 24,
-  minLength: 24
+  minLength: 1
 };
 const notification = {
   type: 'object',

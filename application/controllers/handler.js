@@ -8,6 +8,8 @@ const boom = require('boom'), //Boom gives us some predefined http codes and pro
   notificationsDB = require('../database/notificationsDatabase'), //Database functions specific for notifications
   co = require('../common');
 
+const Microservices = require('../configs/microservices');
+let http = require('http');
 module.exports = {
   //Get notification from database or return NOT FOUND
   getNotification: function(request, reply) {
@@ -15,11 +17,16 @@ module.exports = {
       if (co.isEmpty(notification))
         reply(boom.notFound());
       else {
-        notification.author = authorsMap.get(notification.user_id);//insert author data
-        if (notification.author === undefined) {
-          notification.author = authorsMap.get('112233445566778899000000');
-        }
-        reply(co.rewriteID(notification));
+        return insertAuthor(notification).then((notification) => {
+
+          if (notification.user_id.length === 24) {//Mockup - old kind of ids
+            notification.author = getMockupAuthor(notification.user_id);
+          }
+          reply(co.rewriteID(notification));
+        }).catch((error) => {
+          request.log('error', error);
+          reply(boom.badImplementation());
+        });
       }
     }).catch((error) => {
 
@@ -35,8 +42,12 @@ module.exports = {
       if (co.isEmpty(inserted.ops) || co.isEmpty(inserted.ops[0]))
         throw inserted;
       else {
-        inserted.ops[0].author = authorsMap.get(inserted.ops[0].user_id);//insert author data
-        reply(co.rewriteID(inserted.ops[0]));
+        return insertAuthor(inserted.ops[0]).then((notification) => {
+          reply(co.rewriteID(notification));
+        }).catch((error) => {
+          request.log('error', error);
+          reply(boom.badImplementation());
+        });
       }
     }).catch((error) => {
       request.log('error', error);
@@ -85,10 +96,29 @@ module.exports = {
       .then(() => notificationsDB.getAllFromCollection()//TODO call getAllWithSubscribedUserID(identifier)
       // .then(() => notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.id))
       .then((notifications) => {
-        insertAuthorData(notifications);
+        let arrayOfAuthorPromisses = [];
+        notifications.forEach((notification) => {
+          co.rewriteID(notification);
+          let promise = insertAuthor(notification).then((notification) => {
 
-        let jsonReply = JSON.stringify(notifications);
-        reply(jsonReply);
+            if (notification.user_id.length === 24) {//Mockup - old kind of ids
+              notification.author = getMockupAuthor(notification.user_id);//insert author data
+            }
+          }).catch((error) => {
+            request.log('error', error);
+            reply(boom.badImplementation());
+          });
+          arrayOfAuthorPromisses.push(promise);
+        });
+        Promise.all(arrayOfAuthorPromisses).then(() => {
+          let jsonReply = JSON.stringify(notifications);
+          reply(jsonReply);
+
+        }).catch((error) => {
+          request.log('error', error);
+          reply(boom.badImplementation());
+        });
+
 
       })).catch((error) => {
         request.log('error', error);
@@ -100,10 +130,29 @@ module.exports = {
   getAllNotifications: function(request, reply) {
     notificationsDB.getAllFromCollection()
       .then((notifications) => {
-        insertAuthorData(notifications);
+        let arrayOfAuthorPromisses = [];
+        notifications.forEach((notification) => {
+          co.rewriteID(notification);
+          let promise = insertAuthor(notification).then((notification) => {
 
-        let jsonReply = JSON.stringify(notifications);
-        reply(jsonReply);
+            if (notification.user_id.length === 24) {//Mockup - old kind of ids
+              notification.author = getMockupAuthor(notification.user_id);//insert author data
+            }
+          }).catch((error) => {
+            request.log('error', error);
+            reply(boom.badImplementation());
+          });
+          arrayOfAuthorPromisses.push(promise);
+        });
+
+        Promise.all(arrayOfAuthorPromisses).then(() => {
+          let jsonReply = JSON.stringify(notifications);
+          reply(jsonReply);
+
+        }).catch((error) => {
+          request.log('error', error);
+          reply(boom.badImplementation());
+        });
 
       }).catch((error) => {
         request.log('error', error);
@@ -111,6 +160,59 @@ module.exports = {
       });
   }
 };
+
+//insert author data using user microservice
+function insertAuthor(notification) {
+  let myPromise = new Promise((resolve, reject) => {
+
+    let options = {
+      host: Microservices.user.uri,
+      port: 80,
+      path: '/user/' + notification.user_id
+    };
+
+    let req = http.get(options, (res) => {
+      if (res.statusCode === '404') {//user not found
+        notification.author = {
+          id: notification.user_id,
+          username: 'unknown',
+          avatar: ''
+        };
+        resolve(notification);
+      }
+      // console.log('HEADERS: ' + JSON.stringify(res.headers));
+      res.setEncoding('utf8');
+      let body = '';
+      res.on('data', (chunk) => {
+        // console.log('Response: ', chunk);
+        body += chunk;
+      });
+      res.on('end', () => {
+        let parsed = JSON.parse(body);
+        notification.author = {
+          id: notification.user_id,
+          username: parsed.username,
+          avatar: parsed.picture
+        };
+        resolve(notification);
+      });
+    });
+    req.on('error', (e) => {
+      console.log('problem with request: ' + e.message);
+      reject(e);
+    });
+  });
+
+  return myPromise;
+}
+
+function getMockupAuthor(userId) {
+  let author = authorsMap.get(userId);//insert author data
+  if (author === undefined) {
+    author = authorsMap.get('112233445566778899000000');
+  }
+  return author;
+}
 
 //Delete all and insert mockup data
 function initMockupData(identifier) {
@@ -122,12 +224,7 @@ function initMockupData(identifier) {
   return new Promise((resolve) => {resolve (1);});
 }
 
-function insertAuthorData(notifications) {
-  notifications.forEach((notification) => {
-    co.rewriteID(notification);
-    notification.author = authorsMap.get(notification.user_id);//insert author data
-  });
-}
+
 
 // function getFirstTwoActivities() {
 //   let http = require('http');

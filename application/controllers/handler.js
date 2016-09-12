@@ -13,7 +13,7 @@ let http = require('http');
 module.exports = {
   //Get notification from database or return NOT FOUND
   getNotification: function(request, reply) {
-    notificationsDB.get(encodeURIComponent(request.params.id)).then((notification) => {
+    return notificationsDB.get(encodeURIComponent(request.params.id)).then((notification) => {
       if (co.isEmpty(notification))
         reply(boom.notFound());
       else {
@@ -37,7 +37,7 @@ module.exports = {
 
   //Create notification with new id and payload or return INTERNAL_SERVER_ERROR
   newNotification: function(request, reply) {
-    notificationsDB.insert(request.payload).then((inserted) => {
+    return notificationsDB.insert(request.payload).then((inserted) => {
       //console.log('inserted: ', inserted);
       if (co.isEmpty(inserted.ops) || co.isEmpty(inserted.ops[0]))
         throw inserted;
@@ -57,7 +57,7 @@ module.exports = {
 
   //Update notification with id id and payload or return INTERNAL_SERVER_ERROR
   updateNotification: function(request, reply) {
-    notificationsDB.replace(encodeURIComponent(request.params.id), request.payload).then((replaced) => {
+    return notificationsDB.replace(encodeURIComponent(request.params.id), request.payload).then((replaced) => {
       //console.log('updated: ', replaced);
       if (co.isEmpty(replaced.value))
         throw replaced;
@@ -71,7 +71,7 @@ module.exports = {
 
   //Delete notification with id id
   deleteNotification: function(request, reply) {
-    notificationsDB.delete(encodeURIComponent(request.payload.id)).then(() =>
+    return notificationsDB.delete(encodeURIComponent(request.payload.id)).then(() =>
       reply({'msg': 'notification is successfully deleted...'})
     ).catch((error) => {
       request.log('error', error);
@@ -81,7 +81,7 @@ module.exports = {
 
   //Delete notifications with subscribed_user_id
   deleteNotifications: function(request, reply) {
-    notificationsDB.deleteAllWithSubscribedUserID(encodeURIComponent(request.payload.subscribed_user_id)).then(() =>
+    return notificationsDB.deleteAllWithSubscribedUserID(encodeURIComponent(request.payload.subscribed_user_id)).then(() =>
       reply({'msg': 'notifications were successfully deleted...'})
     ).catch((error) => {
       request.log('error', error);
@@ -92,7 +92,7 @@ module.exports = {
   //Get All notifications from database for the id in the request
   getNotifications: function(request, reply) {
     //Clean collection and insert mockup notifications - only if request.params.id === 0
-    initMockupData(request.params.id)
+    return initMockupData(request.params.id)
       .then(() => notificationsDB.getAllFromCollection()//TODO call getAllWithSubscribedUserID(identifier)
       // .then(() => notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.id))
       .then((notifications) => {
@@ -128,7 +128,7 @@ module.exports = {
 
   //Get All notifications from database
   getAllNotifications: function(request, reply) {
-    notificationsDB.getAllFromCollection()
+    return notificationsDB.getAllFromCollection()
       .then((notifications) => {
         let arrayOfAuthorPromisses = [];
         notifications.forEach((notification) => {

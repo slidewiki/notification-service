@@ -8,4 +8,4 @@ template:
   environment:
     - APPLICATION_PORT=80
     - DATABASE_PORT=27017
-    - VIRTUAL_HOST=notificationservice.manfredfris.ch
+    - VIRTUAL_HOST=notificationservice.experimental.slidewiki.org

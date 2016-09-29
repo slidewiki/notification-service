@@ -9,3 +9,4 @@ template:
     - APPLICATION_PORT=80
     - DATABASE_PORT=27017
     - VIRTUAL_HOST=notificationservice.experimental.slidewiki.org
+    - SERVICE_URL_USER=userservice.experimental.slidewiki.org

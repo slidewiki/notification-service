@@ -1,7 +1,9 @@
 'use strict';
 
+const co = require('../common');
+
 module.exports = {
   'user': {
-    uri: 'userservice.manfredfris.ch'
+    uri: (!co.isEmpty(process.env.SERVICE_URL_USER)) ? process.env.SERVICE_URL_USER : 'userservice.experimental.slidewiki.org',
   }
 };

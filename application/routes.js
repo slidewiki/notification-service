@@ -65,6 +65,7 @@ module.exports = function(server) {
           content_id: Joi.string(),
           content_kind: Joi.string().valid('deck', 'slide'),
           content_name: Joi.string(),
+          content_owner_id: Joi.string(),
           subscribed_user_id: Joi.string(),
           translation_info: Joi.object().keys({
             content_id: Joi.string(),

@@ -36,6 +36,7 @@ const notification = {
     content_name: {
       type: 'string'
     },
+    content_owner_id: objectid,
     subscribed_user_id: objectid,
     translation_info: {
       content_id: {

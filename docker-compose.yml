@@ -8,4 +8,5 @@ template:
   environment:
     - APPLICATION_PORT=80
     - DATABASE_PORT=27017
+#     - DATABASE_URL=mongodb # use a url or the name, defined in the docker-compose file, not needed here, because of docker-compose v1
     - VIRTUAL_HOST=microservicetemplate.experimental.slidewiki.org

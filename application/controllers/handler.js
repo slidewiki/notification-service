@@ -87,8 +87,7 @@ module.exports = {
 
   //Get All notifications from database for the id in the request
   getNotifications: function(request, reply) {
-    return notificationsDB.getAllFromCollection()//TODO call getAllWithSubscribedUserID(identifier)
-    //return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.id))
+    return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.id))
       .then((notifications) => {
         let arrayOfAuthorPromisses = [];
         notifications.forEach((notification) => {

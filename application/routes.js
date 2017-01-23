@@ -59,11 +59,11 @@ module.exports = function(server) {
     config: {
       validate: {
         payload: Joi.object().keys({
-          activity_id: Joi.string(),
+          activity_id: Joi.string(),  //what is this? The _id is created by the database. It should not be possbile for clients to create their own keys...
           activity_type: Joi.string(),
           user_id: Joi.string(),
           content_id: Joi.string(),
-          content_kind: Joi.string().valid('deck', 'slide'),
+          content_kind: Joi.string().valid('deck', 'slide', 'group'),
           content_name: Joi.string(),
           content_owner_id: Joi.string(),
           subscribed_user_id: Joi.string(),

@@ -144,14 +144,6 @@ function insertAuthor(notification) {
     };
 
     let req = http.get(options, (res) => {
-      if (res.statusCode === '404') {//user not found
-        notification.author = {
-          id: notification.user_id,
-          username: 'unknown',
-          avatar: ''
-        };
-        resolve(notification);
-      }
       // console.log('HEADERS: ' + JSON.stringify(res.headers));
       res.setEncoding('utf8');
       let body = '';
@@ -160,11 +152,18 @@ function insertAuthor(notification) {
         body += chunk;
       });
       res.on('end', () => {
-        let parsed = JSON.parse(body);
+        let username = 'unknown';
+        let avatar = '';
+        if (res.statusCode === 200) {//user is found
+          let parsed = JSON.parse(body);
+          username = parsed.username;
+          avatar = parsed.picture;
+        }
+
         notification.author = {
           id: notification.user_id,
-          username: parsed.username,
-          avatar: parsed.picture
+          username: username,
+          avatar: avatar
         };
         resolve(notification);
       });

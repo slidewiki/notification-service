@@ -9,4 +9,7 @@ template:
     - APPLICATION_PORT=80
     - DATABASE_PORT=27017
     - VIRTUAL_HOST=notificationservice.experimental.slidewiki.org
+    - LETSENCRYPT_HOST=notificationservice.experimental.slidewiki.org
+    - LETSENCRYPT_EMAIL=meissner@informatik.uni-leipzig.de
     - SERVICE_URL_USER=userservice.experimental.slidewiki.org
+    - DATABASE_URL=mongodb # use a url or the name, defined in the docker-compose file

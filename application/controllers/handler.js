@@ -20,13 +20,13 @@ module.exports = {
         return insertAuthor(notification).then((notification) => {
           reply(co.rewriteID(notification));
         }).catch((error) => {
-          request.log('error', error);
+          tryRequestLog(request, 'error', error);
           reply(boom.badImplementation());
         });
       }
     }).catch((error) => {
 
-      request.log('error', error);
+      tryRequestLog(request, 'error', error);
       reply(boom.badImplementation());
     });
   },
@@ -41,12 +41,12 @@ module.exports = {
         return insertAuthor(inserted.ops[0]).then((notification) => {
           reply(co.rewriteID(notification));
         }).catch((error) => {
-          request.log('error', error);
+          tryRequestLog(request, 'error', error);
           reply(boom.badImplementation());
         });
       }
     }).catch((error) => {
-      request.log('error', error);
+      tryRequestLog(request, 'error', error);
       reply(boom.badImplementation());
     });
   },
@@ -60,7 +60,7 @@ module.exports = {
       else
         reply(replaced.value);
     }).catch((error) => {
-      request.log('error', error);
+      tryRequestLog(request, 'error', error);
       reply(boom.badImplementation());
     });
   },
@@ -70,7 +70,7 @@ module.exports = {
     return notificationsDB.delete(encodeURIComponent(request.payload.id)).then(() =>
       reply({'msg': 'notification is successfully deleted...'})
     ).catch((error) => {
-      request.log('error', error);
+      tryRequestLog(request, 'error', error);
       reply(boom.badImplementation());
     });
   },
@@ -80,7 +80,7 @@ module.exports = {
     return notificationsDB.deleteAllWithSubscribedUserID(encodeURIComponent(request.payload.subscribed_user_id)).then(() =>
       reply({'msg': 'notifications were successfully deleted...'})
     ).catch((error) => {
-      request.log('error', error);
+      tryRequestLog(request, 'error', error);
       reply(boom.badImplementation());
     });
   },
@@ -100,7 +100,7 @@ module.exports = {
           reply(jsonReply);
 
         }).catch((error) => {
-          request.log('error', error);
+          tryRequestLog(request, 'error', error);
           reply(boom.badImplementation());
         });
       });
@@ -122,12 +122,12 @@ module.exports = {
           reply(jsonReply);
 
         }).catch((error) => {
-          request.log('error', error);
+          tryRequestLog(request, 'error', error);
           reply(boom.badImplementation());
         });
 
       }).catch((error) => {
-        request.log('error', error);
+        tryRequestLog(request, 'error', error);
         reply(boom.badImplementation());
       });
   }
@@ -175,4 +175,13 @@ function insertAuthor(notification) {
   });
 
   return myPromise;
+}
+
+//This function tries to use request log and uses console.log if this doesnt work - this is the case in unit tests
+function tryRequestLog(request, message, _object) {
+  try {
+    request.log(message, _object);
+  } catch (e) {
+    console.log(message, _object);
+  }
 }

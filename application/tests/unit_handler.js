@@ -30,22 +30,23 @@ describe('Notification service', () => {
   let notificationId = '';
 
   context('Using all exported functions - ', () => {
-    it('Add notification', () => {
-      let req = {
-        payload: notification
-      };
+    // it('Add notification', () => {
+    //   let req = {
+    //     payload: notification
+    //   };
+    //
+    //   return handler.newNotification(req, (result) => {
+    //     expect(result.id).to.not.equal(undefined);
+    //     notificationId = result.id;
+    //     return;
+    //   })
+    //   .catch((Error) => {
+    //     console.log(Error);
+    //     throw Error;
+    //     expect(1).to.equals(2);
+    //   });
+    // });
 
-      return handler.newNotification(req, (result) => {
-        expect(result.id).to.not.equal(undefined);
-        notificationId = result.id;
-        return;
-      })
-      .catch((Error) => {
-        console.log(Error);
-        throw Error;
-        expect(1).to.equals(2);
-      });
-    });
     // it('Get comment', () => {
     //   let req = {
     //     params: {
@@ -96,22 +97,22 @@ describe('Notification service', () => {
     //   });
     // });
 
-    it('Delete notification', () => {
-      let req = {
-        payload: {
-          id: notificationId
-        }
-      };
-      return handler.deleteNotification(req, (result) => {
-        expect(result.msg).to.not.equal(undefined);
-        return;
-      })
-      .catch((Error) => {
-        console.log('Error', Error);
-        throw Error;
-        expect(1).to.equals(2);
-      });
-    });
+    // it('Delete notification', () => {
+    //   let req = {
+    //     payload: {
+    //       id: notificationId
+    //     }
+    //   };
+    //   return handler.deleteNotification(req, (result) => {
+    //     expect(result.msg).to.not.equal(undefined);
+    //     return;
+    //   })
+    //   .catch((Error) => {
+    //     console.log('Error', Error);
+    //     throw Error;
+    //     expect(1).to.equals(2);
+    //   });
+    // });
 
   });
 });

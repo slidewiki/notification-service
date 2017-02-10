@@ -10,6 +10,7 @@ const boom = require('boom'), //Boom gives us some predefined http codes and pro
 
 const Microservices = require('../configs/microservices');
 let http = require('http');
+let rp = require('request-promise-native');
 module.exports = {
   //Get notification from database or return NOT FOUND
   getNotification: function(request, reply) {
@@ -135,6 +136,44 @@ module.exports = {
 
 //insert author data using user microservice
 function insertAuthor(notification) {
+
+
+
+
+
+
+
+// rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
+  // let username = 'unknown';
+  // let avatar = '';
+  // if (res.statusCode === 200) {//user is found
+  //   let parsed = JSON.parse(body);
+  //   username = parsed.username;
+  //   avatar = parsed.picture;
+  // }
+  //
+  // notification.author = {
+  //   id: notification.user_id,
+  //   username: username,
+  //   avatar: avatar
+  // };
+  // resolve(notification);
+
+
+
+
+
+
+//     callback(null, {activities: activities, selector: selector, hasMore: (activities.length === 30)});
+// }).catch((err) => {
+//     console.log(err);
+//     callback(null, {activities: [], selector: selector, hasMore: false});
+// });
+
+
+
+
+
   let myPromise = new Promise((resolve, reject) => {
 
     let options = {

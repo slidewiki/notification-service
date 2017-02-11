@@ -139,80 +139,97 @@ function insertAuthor(notification) {
 
 
 
+let myPromise = new Promise((resolve, reject) => {
 
 
+  let username = 'unknown';
+  let avatar = '';
+  rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
+    console.log('Res', res);
 
+    try {
+      let parsed = JSON.parse(res);
+      username = parsed.username;
+      avatar = parsed.picture;
+    } catch(e) {
+        console.log(e); // error in the above string (in this case, yes)!
+    }
+    // if (res.statusCode === 200) {//user is found
+    //   let parsed = JSON.parse(res);
+    //   username = parsed.username;
+    //   avatar = parsed.picture;
+    // }
 
-// rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
-  // let username = 'unknown';
-  // let avatar = '';
-  // if (res.statusCode === 200) {//user is found
-  //   let parsed = JSON.parse(body);
-  //   username = parsed.username;
-  //   avatar = parsed.picture;
-  // }
-  //
-  // notification.author = {
-  //   id: notification.user_id,
-  //   username: username,
-  //   avatar: avatar
-  // };
-  // resolve(notification);
-
-
-
-
-
-
-//     callback(null, {activities: activities, selector: selector, hasMore: (activities.length === 30)});
-// }).catch((err) => {
-//     console.log(err);
-//     callback(null, {activities: [], selector: selector, hasMore: false});
-// });
-
-
-
-
-
-  let myPromise = new Promise((resolve, reject) => {
-
-    let options = {
-      host: Microservices.user.uri,
-      port: 80,
-      path: '/user/' + notification.user_id
+    notification.author = {
+      id: notification.user_id,
+      username: username,
+      avatar: avatar
     };
+    resolve(notification);
 
-    let req = http.get(options, (res) => {
-      // console.log('HEADERS: ' + JSON.stringify(res.headers));
-      res.setEncoding('utf8');
-      let body = '';
-      res.on('data', (chunk) => {
-        // console.log('Response: ', chunk);
-        body += chunk;
-      });
-      res.on('end', () => {
-        let username = 'unknown';
-        let avatar = '';
-        if (res.statusCode === 200) {//user is found
-          let parsed = JSON.parse(body);
-          username = parsed.username;
-          avatar = parsed.picture;
-        }
 
-        notification.author = {
-          id: notification.user_id,
-          username: username,
-          avatar: avatar
-        };
-        resolve(notification);
-      });
-    });
-    req.on('error', (e) => {
-      console.log('problem with request: ' + e.message);
-      reject(e);
-    });
+
+
+
+
+      // callback(null, {activities: activities, selector: selector, hasMore: (activities.length === 30)});
+  }).catch((err) => {
+      console.log('Error', err);
+      notification.author = {
+        id: notification.user_id,
+        username: username,
+        avatar: avatar
+      };
+      resolve(notification);
+      // callback(null, {activities: [], selector: selector, hasMore: false});
   });
+});
 
+
+
+
+
+  // let myPromise = new Promise((resolve, reject) => {
+  //
+  //   let options = {
+  //     host: Microservices.user.uri,
+  //     port: 80,
+  //     path: '/user/' + notification.user_id
+  //   };
+  //
+  //   let req = http.get(options, (res) => {
+  //     // console.log('HEADERS: ' + JSON.stringify(res.headers));
+  //     res.setEncoding('utf8');
+  //     let body = '';
+  //     res.on('data', (chunk) => {
+  //       // console.log('Response: ', chunk);
+  //       body += chunk;
+  //     });
+  //     res.on('end', () => {
+  //       console.log('res', res);
+  //         console.log('body', body);
+  //       let username = 'unknown';
+  //       let avatar = '';
+  //       if (res.statusCode === 200) {//user is found
+  //         let parsed = JSON.parse(body);
+  //         username = parsed.username;
+  //         avatar = parsed.picture;
+  //       }
+  //
+  //       notification.author = {
+  //         id: notification.user_id,
+  //         username: username,
+  //         avatar: avatar
+  //       };
+  //       resolve(notification);
+  //     });
+  //   });
+  //   req.on('error', (e) => {
+  //     console.log('problem with request: ' + e.message);
+  //     reject(e);
+  //   });
+  // });
+  //
   return myPromise;
 }
 

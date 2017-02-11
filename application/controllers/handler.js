@@ -139,33 +139,33 @@ function insertAuthor(notification) {
 
 
 
-let myPromise = new Promise((resolve, reject) => {
+  let myPromise = new Promise((resolve, reject) => {
 
 
-  let username = 'unknown';
-  let avatar = '';
-  rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
-    console.log('Res', res);
+    let username = 'unknown';
+    let avatar = '';
+    rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
+      console.log('Res', res);
 
-    try {
-      let parsed = JSON.parse(res);
-      username = parsed.username;
-      avatar = parsed.picture;
-    } catch(e) {
+      try {
+        let parsed = JSON.parse(res);
+        username = parsed.username;
+        avatar = parsed.picture;
+      } catch(e) {
         console.log(e); // error in the above string (in this case, yes)!
-    }
-    // if (res.statusCode === 200) {//user is found
-    //   let parsed = JSON.parse(res);
-    //   username = parsed.username;
-    //   avatar = parsed.picture;
-    // }
+      }
+      // if (res.statusCode === 200) {//user is found
+      //   let parsed = JSON.parse(res);
+      //   username = parsed.username;
+      //   avatar = parsed.picture;
+      // }
 
-    notification.author = {
-      id: notification.user_id,
-      username: username,
-      avatar: avatar
-    };
-    resolve(notification);
+      notification.author = {
+        id: notification.user_id,
+        username: username,
+        avatar: avatar
+      };
+      resolve(notification);
 
 
 
@@ -173,7 +173,7 @@ let myPromise = new Promise((resolve, reject) => {
 
 
       // callback(null, {activities: activities, selector: selector, hasMore: (activities.length === 30)});
-  }).catch((err) => {
+    }).catch((err) => {
       console.log('Error', err);
       notification.author = {
         id: notification.user_id,
@@ -182,8 +182,8 @@ let myPromise = new Promise((resolve, reject) => {
       };
       resolve(notification);
       // callback(null, {activities: [], selector: selector, hasMore: false});
+    });
   });
-});
 
 
 

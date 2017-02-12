@@ -9,7 +9,7 @@ const boom = require('boom'), //Boom gives us some predefined http codes and pro
   co = require('../common');
 
 const Microservices = require('../configs/microservices');
-let http = require('http');
+// let http = require('http');
 let rp = require('request-promise-native');
 module.exports = {
   //Get notification from database or return NOT FOUND

@@ -1,4 +1,4 @@
-template:
+notificationservice:
   image: slidewiki/notificationservice
   restart: on-failure:5
   expose:

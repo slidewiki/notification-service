@@ -36,6 +36,7 @@
     "inert": "^4.1.0",
     "joi": "^10.2.0",
     "mongodb": "^2.2.22",
+    "request": "^2.79.0",
     "request-promise-native": "^1.0.3",
     "vision": "^4.1.1"
   },

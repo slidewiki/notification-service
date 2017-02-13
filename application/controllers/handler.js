@@ -9,7 +9,8 @@ const boom = require('boom'), //Boom gives us some predefined http codes and pro
   co = require('../common');
 
 const Microservices = require('../configs/microservices');
-let http = require('http');
+// let http = require('http');
+let rp = require('request-promise-native');
 module.exports = {
   //Get notification from database or return NOT FOUND
   getNotification: function(request, reply) {
@@ -136,41 +137,31 @@ module.exports = {
 //insert author data using user microservice
 function insertAuthor(notification) {
   let myPromise = new Promise((resolve, reject) => {
+    let username = 'unknown';
+    let avatar = '';
+    rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
+      try {
+        let parsed = JSON.parse(res);
+        username = parsed.username;
+        avatar = parsed.picture;
+      } catch(e) {
+        console.log(e);
+      }
 
-    let options = {
-      host: Microservices.user.uri,
-      port: 80,
-      path: '/user/' + notification.user_id
-    };
-
-    let req = http.get(options, (res) => {
-      // console.log('HEADERS: ' + JSON.stringify(res.headers));
-      res.setEncoding('utf8');
-      let body = '';
-      res.on('data', (chunk) => {
-        // console.log('Response: ', chunk);
-        body += chunk;
-      });
-      res.on('end', () => {
-        let username = 'unknown';
-        let avatar = '';
-        if (res.statusCode === 200) {//user is found
-          let parsed = JSON.parse(body);
-          username = parsed.username;
-          avatar = parsed.picture;
-        }
-
-        notification.author = {
-          id: notification.user_id,
-          username: username,
-          avatar: avatar
-        };
-        resolve(notification);
-      });
-    });
-    req.on('error', (e) => {
-      console.log('problem with request: ' + e.message);
-      reject(e);
+      notification.author = {
+        id: notification.user_id,
+        username: username,
+        avatar: avatar
+      };
+      resolve(notification);
+    }).catch((err) => {
+      console.log('Error', err);
+      notification.author = {
+        id: notification.user_id,
+        username: username,
+        avatar: avatar
+      };
+      resolve(notification);
     });
   });
 

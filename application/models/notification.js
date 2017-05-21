@@ -47,9 +47,9 @@ const notification = {
       }
     },
     share_info: {
-      postURI: {
-        type: 'string'
-      },
+      // postURI: {
+      //   type: 'string'
+      // },
       platform: {
         type: 'string'
       }

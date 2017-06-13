@@ -1,5 +1,5 @@
 notificationservice:
-  image: slidewiki/notificationservice
+  image: slidewiki/notificationservice:latest-dev
   restart: on-failure:5
   expose:
     - "80"

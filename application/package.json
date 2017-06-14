@@ -13,9 +13,9 @@
   "scripts": {
     "clean": "rm -R ./node_modules/ ./coverage/",
     "lint": "eslint -c .eslintrc \"./**/*.js\"",
-    "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "mocha ./tests/unit_*.js",
-    "test:integration": "mocha ./tests/integration_*.js",
+    "test": "NODE_ENV=test npm run test:unit && npm run test:integration",
+    "test:unit": "NODE_ENV=test mocha ./tests/unit_*.js",
+    "test:integration": "NODE_ENV=test mocha ./tests/integration_*.js",
     "coverage": "istanbul cover _mocha --include-all-sources ./tests/*.js",
     "coverall": "npm run coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "countLOC": "sloc -f cli-table -k total,source,comment,empty -e node_modules\\|coverage ./",

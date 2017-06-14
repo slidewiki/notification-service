@@ -28,11 +28,17 @@ if (!co.isEmpty(process.env.DATABASE_PORT)){
   console.log('Using ' + port + ' as database port.');
 }
 
+let slidewikiDbName = 'slidewiki';
+if (process.env.NODE_ENV === 'test') {
+  slidewikiDbName = 'slidewiki_test';
+}
+
+
 module.exports = {
   MongoDB: {
     PORT: port,
     HOST: host,
     NS: 'local',
-    SLIDEWIKIDATABASE: 'slidewiki'
+    SLIDEWIKIDATABASE: slidewikiDbName
   }
 };

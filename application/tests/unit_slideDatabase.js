@@ -1,4 +1,5 @@
 // example unit tests
+/* eslint promise/no-callback-in-promise: "off" */
 'use strict';
 
 //Mocking is missing completely TODO add mocked objects
@@ -35,8 +36,8 @@ describe('Database', () => {
       return Promise.all([
         res.should.be.fulfilled.and.eventually.not.be.empty,
         res.should.eventually.have.property('ops').that.is.not.empty,
-        res.should.eventually.have.deep.property('ops[0]').that.has.all.keys('_id', 'title', 'body', 'language'),
-        res.should.eventually.have.deep.property('ops[0].title', slide.title)
+        res.should.eventually.have.nested.property('ops[0]').that.has.all.keys('_id', 'title', 'body', 'language'),
+        res.should.eventually.have.nested.property('ops[0]').that.has.property('.title', slide.title)
       ]);
     });
 

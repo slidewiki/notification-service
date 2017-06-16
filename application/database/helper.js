@@ -1,3 +1,4 @@
+/* eslint promise/always-return: "off" */
 'use strict';
 
 const Db = require('mongodb').Db,
@@ -37,20 +38,20 @@ function getNextId(db, collectionName, fieldName) {
   const fieldNameCorrected = fieldName || incrementationSettings.field;
   const step = incrementationSettings.step;
 
-  let myPromise = new Promise(function (resolve, reject) {
+  let myPromise = new Promise((resolve, reject) => {
     return db.collection(incrementationSettings.collection).findAndModify({
       _id: collectionName,
       field: fieldNameCorrected
     },
-        null, //no sort
-      {
-        $inc: {
-          seq: step
-        }
-      }, {
-        upsert: true, //if there is a problem with _id insert will fail
-        new: true //insert returns the updated document
-      })
+    null, //no sort
+    {
+      $inc: {
+        seq: step
+      }
+    }, {
+      upsert: true, //if there is a problem with _id insert will fail
+      new: true //insert returns the updated document
+    })
       .then((result) => {
         console.log('getNextId: returned result', result);
         if (result.value && result.value.seq) {
@@ -74,21 +75,22 @@ function getNextId(db, collectionName, fieldName) {
 }
 
 module.exports = {
+  /* eslint-disable promise/catch-or-return, no-unused-vars*/
   createDatabase: function (dbname) {
     dbname = testDbName(dbname);
-
-    let myPromise = new Promise(function (resolve, reject) {
+    let myPromise = new Promise((resolve, reject) => {
       let db = new Db(dbname, new Server(config.HOST, config.PORT));
-      const connection = db.open()
+      db.open()
         .then((connection) => {
           connection.collection('test').insertOne({ //insert the first object to know that the database is properly created TODO this is not real test....could fail without your knowledge
             id: 1,
             data: {}
-          }, (data) => {
+          }, () => {
             resolve(connection);
           });
         });
     });
+    /* eslint-enable promise/catch-or-return, no-unused-vars */
 
     return myPromise;
   },
@@ -112,13 +114,13 @@ module.exports = {
     if (testConnection(dbname))
       return Promise.resolve(dbConnection);
     else
-    return MongoClient.connect('mongodb://' + config.HOST + ':' + config.PORT + '/' + dbname)
-      .then((db) => {
-        if (db.s.databaseName !== dbname)
-          throw new 'Wrong Database!';
-        dbConnection = db;
-        return db;
-      });
+      return MongoClient.connect('mongodb://' + config.HOST + ':' + config.PORT + '/' + dbname)
+        .then((db) => {
+          if (db.s.databaseName !== dbname)
+            throw new 'Wrong Database!';
+          dbConnection = db;
+          return db;
+        });
 
   },
 

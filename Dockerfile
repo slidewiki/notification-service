@@ -11,8 +11,6 @@ WORKDIR /nodeApp
 ADD ./application/ ./
 RUN npm prune --production
 
-ADD ./application/ ./
-
 # ----------------- #
 #   Configuration   #
 # ----------------- #

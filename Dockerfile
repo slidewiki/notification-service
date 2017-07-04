@@ -8,10 +8,8 @@ WORKDIR /nodeApp
 #   Installation   #
 # ---------------- #
 
-ADD ./application/package.json ./
-RUN npm install --production
-
 ADD ./application/ ./
+RUN npm prune --production
 
 # ----------------- #
 #   Configuration   #

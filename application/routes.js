@@ -8,15 +8,15 @@ const Joi = require('joi'),
   handlers = require('./controllers/handler');
 
 module.exports = function(server) {
-  //Get notifications with subscribed_user_id id from database and return the entire list (when not available, return NOT FOUND). Validate id
+  //Get notifications with subscribed_user_id userid from database and return the entire list (when not available, return NOT FOUND). Validate id
   server.route({
     method: 'GET',
-    path: '/notifications/{id}',
+    path: '/notifications/{userid}',
     handler: handlers.getNotifications,
     config: {
       validate: {
         params: {
-          id: Joi.string()
+          userid: Joi.string()
         },
       },
       tags: ['api'],
@@ -59,7 +59,7 @@ module.exports = function(server) {
     config: {
       validate: {
         payload: Joi.object().keys({
-          activity_id: Joi.string(),  //what is this? The _id is created by the database. It should not be possbile for clients to create their own keys...
+          activity_id: Joi.string(),
           activity_type: Joi.string(),
           user_id: Joi.string(),
           content_id: Joi.string(),
@@ -163,7 +163,7 @@ module.exports = function(server) {
         },
       },
       tags: ['api'],
-      description: 'Delete all notifications for the subscribed user (example id: 112233445566778899000001)'
+      description: 'Delete all notifications for the subscribed user (example id: 16)'
     }
   });
 };

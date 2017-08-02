@@ -90,13 +90,13 @@ module.exports = {
   getNotifications: function(request, reply) {
     return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.id))
       .then((notifications) => {
-        let arrayOfAuthorPromisses = [];
+        let arrayOfAuthorPromises = [];
         notifications.forEach((notification) => {
           co.rewriteID(notification);
           let promise = insertAuthor(notification);
-          arrayOfAuthorPromisses.push(promise);
+          arrayOfAuthorPromises.push(promise);
         });
-        Promise.all(arrayOfAuthorPromisses).then(() => {
+        Promise.all(arrayOfAuthorPromises).then(() => {
           let jsonReply = JSON.stringify(notifications);
           reply(jsonReply);
 
@@ -111,14 +111,14 @@ module.exports = {
   getAllNotifications: function(request, reply) {
     return notificationsDB.getAllFromCollection()
       .then((notifications) => {
-        let arrayOfAuthorPromisses = [];
+        let arrayOfAuthorPromises = [];
         notifications.forEach((notification) => {
           co.rewriteID(notification);
           let promise = insertAuthor(notification);
-          arrayOfAuthorPromisses.push(promise);
+          arrayOfAuthorPromises.push(promise);
         });
 
-        Promise.all(arrayOfAuthorPromisses).then(() => {
+        Promise.all(arrayOfAuthorPromises).then(() => {
           let jsonReply = JSON.stringify(notifications);
           reply(jsonReply);
 

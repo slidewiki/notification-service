@@ -20,7 +20,7 @@ const notification = {
     activity_id: objectid,
     activity_type: {
       type: 'string',
-      enum: ['translate', 'share', 'add', 'edit', 'comment', 'reply', 'use', 'react', 'rate', 'download', 'fork', 'joined', 'left']
+      enum: ['translate', 'share', 'add', 'edit', 'comment', 'reply', 'use', 'react', 'rate', 'download', 'fork', 'delete', 'joined', 'left']
     },
     timestamp: {
       type: 'object'
@@ -73,6 +73,18 @@ const notification = {
     },
     rate_type:  {
       type: 'string'
+    },
+    delete_info: {
+      content_id: {
+        type: 'string'
+      },
+      content_kind: {
+        type: 'string',
+        enum: ['deck', 'slide', 'group']
+      },
+      content_name: {
+        type: 'string'
+      }
     }
   },
   required: ['content_id', 'user_id', 'activity_id', 'activity_type', 'subscribed_user_id']

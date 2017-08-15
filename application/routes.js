@@ -83,6 +83,9 @@ module.exports = function(server) {
             target_id: Joi.string(),
             target_name: Joi.string()
           }),
+          fork_info: Joi.object().keys({
+            content_id: Joi.string()
+          }),
           delete_info: Joi.object().keys({
             content_id: Joi.string(),
             content_kind: Joi.string().valid('deck', 'slide', 'group'),
@@ -130,6 +133,9 @@ module.exports = function(server) {
           use_info: Joi.object().keys({
             target_id: Joi.string(),
             target_name: Joi.string()
+          }),
+          fork_info: Joi.object().keys({
+            content_id: Joi.string()
           }),
           delete_info: Joi.object().keys({
             content_id: Joi.string(),

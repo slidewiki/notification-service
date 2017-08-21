@@ -24,6 +24,22 @@ module.exports = function(server) {
     }
   });
 
+  //Get notifications count with subscribed_user_id userid from database
+  server.route({
+    method: 'GET',
+    path: '/notifications/count/{userid}',
+    handler: handlers.getNotificationsCount,
+    config: {
+      validate: {
+        params: {
+          userid: Joi.string()
+        },
+      },
+      tags: ['api'],
+      description: 'Get notifications count'
+    }
+  });
+
   //Get all notifications from database and return the entire list (when not available, return NOT FOUND).
   server.route({
     method: 'GET',

@@ -88,7 +88,7 @@ module.exports = {
 
   //Get All notifications from database for the id in the request
   getNotifications: function(request, reply) {
-    return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.id))
+    return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.userid))
       .then((notifications) => {
         let arrayOfAuthorPromises = [];
         notifications.forEach((notification) => {
@@ -104,6 +104,17 @@ module.exports = {
           tryRequestLog(request, 'error', error);
           reply(boom.badImplementation());
         });
+      });
+  },
+
+  //Get the number of notifications from database for the id in the request
+  getNotificationsCount: function(request, reply) {
+    return notificationsDB.getCountAllWithUserID(encodeURIComponent(request.params.userid))
+      .then((count) => {
+        reply (count);
+      }).catch((error) => {
+        tryRequestLog(request, 'error', error);
+        reply(boom.badImplementation());
       });
   },
 

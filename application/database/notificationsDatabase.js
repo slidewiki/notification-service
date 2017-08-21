@@ -26,6 +26,12 @@ module.exports = {
       .then((stream) => stream.toArray());
   },
 
+  getCountAllWithUserID: function(identifier) {
+    return helper.connectToDatabase()
+      .then((db) => db.collection(collectionName))
+      .then((col) => col.count({ subscribed_user_id: identifier }));
+  },
+
   getAllFromCollection: function() {
     return helper.connectToDatabase()
       .then((db) => db.collection(collectionName))

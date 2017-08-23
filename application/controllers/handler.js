@@ -107,8 +107,8 @@ module.exports = {
       });
   },
 
-  //Get the number of notifications from database for the id in the request
-  getNotificationsCount: function(request, reply) {
+  //Get the number of new notifications from database for the id in the request
+  getNewNotificationsCount: function(request, reply) {
     return notificationsDB.getCountAllWithUserID(encodeURIComponent(request.params.userid))
       .then((count) => {
         reply (count);

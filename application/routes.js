@@ -27,8 +27,8 @@ module.exports = function(server) {
   //Get notifications count with subscribed_user_id userid from database
   server.route({
     method: 'GET',
-    path: '/notifications/count/{userid}',
-    handler: handlers.getNotificationsCount,
+    path: '/notifications/countnew/{userid}',
+    handler: handlers.getNewNotificationsCount,
     config: {
       validate: {
         params: {
@@ -36,7 +36,7 @@ module.exports = function(server) {
         },
       },
       tags: ['api'],
-      description: 'Get notifications count'
+      description: 'Get number of new notifications'
     }
   });
 

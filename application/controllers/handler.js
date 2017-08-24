@@ -11,7 +11,7 @@ const boom = require('boom'), //Boom gives us some predefined http codes and pro
 const Microservices = require('../configs/microservices');
 // let http = require('http');
 let rp = require('request-promise-native');
-module.exports = {
+let self = module.exports = {
   //Get notification from database or return NOT FOUND
   getNotification: function(request, reply) {
     return notificationsDB.get(encodeURIComponent(request.params.id)).then((notification) => {
@@ -88,34 +88,37 @@ module.exports = {
 
   //Get All notifications from database for the id in the request
   getNotifications: function(request, reply) {
-    return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.userid))
-      .then((notifications) => {
-        let arrayOfAuthorPromises = [];
-        notifications.forEach((notification) => {
-          co.rewriteID(notification);
-          let promise = insertAuthor(notification);
-          arrayOfAuthorPromises.push(promise);
-        });
-        Promise.all(arrayOfAuthorPromises).then(() => {
-          let jsonReply = JSON.stringify(notifications);
-          reply(jsonReply);
-
+    const metaonly = request.query.metaonly;
+    if (metaonly === 'true') {
+      return notificationsDB.getCountAllWithUserID(encodeURIComponent(request.params.userid))
+        .then((count) => {
+          reply ({count: count});
         }).catch((error) => {
           tryRequestLog(request, 'error', error);
           reply(boom.badImplementation());
         });
-      });
-  },
+    } else if (request.params.userid === '-1') {
+      self.getAllNotifications(request, reply);
+    } else {
+      return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.userid))
+        .then((notifications) => {
+          let arrayOfAuthorPromises = [];
+          notifications.forEach((notification) => {
+            co.rewriteID(notification);
+            let promise = insertAuthor(notification);
+            arrayOfAuthorPromises.push(promise);
+          });
+          Promise.all(arrayOfAuthorPromises).then(() => {
+            let jsonReply = (metaonly === undefined) ? JSON.stringify(notifications) : JSON.stringify({items: notifications, count: notifications.length});//BACKWARD COMPATIBILITY FOR OLD PLATFORM VERSION WHICH DOES NOT SEND metaonly parameter
 
-  //Get the number of new notifications from database for the id in the request
-  getNewNotificationsCount: function(request, reply) {
-    return notificationsDB.getCountAllWithUserID(encodeURIComponent(request.params.userid))
-      .then((count) => {
-        reply (count);
-      }).catch((error) => {
-        tryRequestLog(request, 'error', error);
-        reply(boom.badImplementation());
-      });
+            reply(jsonReply);
+
+          }).catch((error) => {
+            tryRequestLog(request, 'error', error);
+            reply(boom.badImplementation());
+          });
+        });
+    }
   },
 
   //Get All notifications from database

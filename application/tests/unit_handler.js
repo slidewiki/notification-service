@@ -42,8 +42,8 @@ describe('Notification service', () => {
       })
       .catch((Error) => {
         console.log(Error);
-        throw Error;
         expect(1).to.equals(2);
+        throw Error;
       });
     });
 
@@ -109,8 +109,8 @@ describe('Notification service', () => {
       })
       .catch((Error) => {
         console.log('Error', Error);
-        throw Error;
         expect(1).to.equals(2);
+        throw Error;
       });
     });
 

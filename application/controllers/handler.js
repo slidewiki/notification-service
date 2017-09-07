@@ -109,8 +109,7 @@ let self = module.exports = {
             arrayOfAuthorPromises.push(promise);
           });
           Promise.all(arrayOfAuthorPromises).then(() => {
-            let jsonReply = (metaonly === undefined) ? JSON.stringify(notifications) : JSON.stringify({items: notifications, count: notifications.length});//BACKWARD COMPATIBILITY FOR OLD PLATFORM VERSION WHICH DOES NOT SEND metaonly parameter
-
+            let jsonReply = JSON.stringify({items: notifications, count: notifications.length});
             reply(jsonReply);
 
           }).catch((error) => {

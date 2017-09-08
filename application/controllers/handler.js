@@ -34,6 +34,7 @@ let self = module.exports = {
 
   //Create notification with new id and payload or return INTERNAL_SERVER_ERROR
   newNotification: function(request, reply) {
+    request.payload.new = true;
     return notificationsDB.insert(request.payload).then((inserted) => {
       //console.log('inserted: ', inserted);
       if (co.isEmpty(inserted.ops) || co.isEmpty(inserted.ops[0]))
@@ -66,6 +67,25 @@ let self = module.exports = {
     });
   },
 
+  //Mark notification as read (set new to false)
+  markAsReadNotification: function(request, reply) {
+    const query = {
+      _id: request.params.id//oid(request.params.id)
+      //encodeURIComponent(request.params.id)
+    };
+
+    return notificationsDB.partlyUpdate(query, {
+      $set: {
+        new: false
+      }
+    }).then(() => {
+      reply({'msg': 'notification is successfully marked as read...'})
+    }).catch((error) => {
+      tryRequestLog(request, 'error', error);
+      reply(boom.badImplementation());
+    });
+  },
+
   //Delete notification with id id
   deleteNotification: function(request, reply) {
     return notificationsDB.delete(encodeURIComponent(request.payload.id)).then(() =>
@@ -90,7 +110,7 @@ let self = module.exports = {
   getNotifications: function(request, reply) {
     const metaonly = request.query.metaonly;
     if (metaonly === 'true') {
-      return notificationsDB.getCountAllWithUserID(encodeURIComponent(request.params.userid))
+      return notificationsDB.getCountNewWithUserID(encodeURIComponent(request.params.userid))
         .then((count) => {
           reply ({count: count});
         }).catch((error) => {
@@ -103,13 +123,17 @@ let self = module.exports = {
       return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.userid))
         .then((notifications) => {
           let arrayOfAuthorPromises = [];
+          countNew = 0;
           notifications.forEach((notification) => {
+            if (notification.new) {
+              countNew++;
+            }
             co.rewriteID(notification);
             let promise = insertAuthor(notification);
             arrayOfAuthorPromises.push(promise);
           });
           Promise.all(arrayOfAuthorPromises).then(() => {
-            let jsonReply = JSON.stringify({items: notifications, count: notifications.length});
+            let jsonReply = JSON.stringify({items: notifications, count: countNew});
             reply(jsonReply);
 
           }).catch((error) => {

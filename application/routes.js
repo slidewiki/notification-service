@@ -27,6 +27,22 @@ module.exports = function(server) {
     }
   });
 
+  //Mark notification as read (set new to false)
+  server.route({
+    method: 'GET',
+    path: '/notification/markasread/{id}',
+    handler: handlers.markAsReadNotification,
+    config: {
+      validate: {
+        params: {
+          id: Joi.string().description('The id of the notification')
+        }
+      },
+      tags: ['api'],
+      description: 'Mark notification as read'
+    }
+  });
+
   //Get notification with id id from database and return it (when not available, return NOT FOUND). Validate id
   // server.route({
   //   method: 'GET',

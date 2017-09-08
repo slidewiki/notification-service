@@ -79,7 +79,7 @@ let self = module.exports = {
         new: false
       }
     }).then(() => {
-      reply({'msg': 'notification is successfully marked as read...'})
+      reply({'msg': 'notification is successfully marked as read...'});
     }).catch((error) => {
       tryRequestLog(request, 'error', error);
       reply(boom.badImplementation());

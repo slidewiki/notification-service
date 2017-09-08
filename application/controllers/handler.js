@@ -152,30 +152,45 @@ function insertAuthor(notification) {
   let myPromise = new Promise((resolve, reject) => {
     let username = 'unknown';
     let avatar = '';
-    rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
-      try {
-        let parsed = JSON.parse(res);
-        username = parsed.username;
-        avatar = parsed.picture;
-      } catch(e) {
-        console.log(e);
-      }
+    if (notification.user_id === undefined || notification.user_id === 'undefined' || notification.user_id === '0') {
+      notification.author = {
+        id: notification.user_id,
+        username: username,
+        avatar: avatar
+      };
+      resolve(notification);
+    } else {
+      rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
+        try {
+          let parsed = JSON.parse(res);
+          username = parsed.username;
+          avatar = parsed.picture;
+        } catch(e) {
+          console.log(e);
+          notification.author = {
+            id: notification.user_id,
+            username: username,
+            avatar: avatar
+          };
+          resolve(notification);
+        }
 
-      notification.author = {
-        id: notification.user_id,
-        username: username,
-        avatar: avatar
-      };
-      resolve(notification);
-    }).catch((err) => {
-      console.log('Error', err);
-      notification.author = {
-        id: notification.user_id,
-        username: username,
-        avatar: avatar
-      };
-      resolve(notification);
-    });
+        notification.author = {
+          id: notification.user_id,
+          username: username,
+          avatar: avatar
+        };
+        resolve(notification);
+      }).catch((err) => {
+        console.log('Error', err);
+        notification.author = {
+          id: notification.user_id,
+          username: username,
+          avatar: avatar
+        };
+        resolve(notification);
+      });
+    }
   });
 
   return myPromise;

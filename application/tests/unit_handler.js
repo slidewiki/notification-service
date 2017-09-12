@@ -40,11 +40,11 @@ describe('Notification service', () => {
         notificationId = result.id;
         return;
       })
-      .catch((Error) => {
-        console.log(Error);
-        expect(1).to.equals(2);
-        throw Error;
-      });
+        .catch((Error) => {
+          console.log(Error);
+          expect(1).to.equals(2);
+          throw Error;
+        });
     });
 
     // it('Get comment', () => {
@@ -107,11 +107,11 @@ describe('Notification service', () => {
         expect(result.msg).to.not.equal(undefined);
         return;
       })
-      .catch((Error) => {
-        console.log('Error', Error);
-        expect(1).to.equals(2);
-        throw Error;
-      });
+        .catch((Error) => {
+          console.log('Error', Error);
+          expect(1).to.equals(2);
+          throw Error;
+        });
     });
 
   });

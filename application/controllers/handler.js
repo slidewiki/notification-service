@@ -123,7 +123,7 @@ let self = module.exports = {
       return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.userid))
         .then((notifications) => {
           let arrayOfAuthorPromises = [];
-          countNew = 0;
+          let countNew = 0;
           notifications.forEach((notification) => {
             if (notification.new) {
               countNew++;

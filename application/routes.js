@@ -30,12 +30,15 @@ module.exports = function(server) {
   //Mark notification as read (set new to false)
   server.route({
     method: 'GET',
-    path: '/notification/markasread/{id}',
-    handler: handlers.markAsReadNotification,
+    path: '/notification/mark/{id}',
+    handler: handlers.markNotification,
     config: {
       validate: {
         params: {
           id: Joi.string().description('The id of the notification')
+        },
+        query: {
+          read: Joi.boolean().description('Set to true to mark the notification as read')
         }
       },
       tags: ['api'],

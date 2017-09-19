@@ -46,7 +46,9 @@ module.exports = {
       .then((db) => db.collection(collectionName))
       .then((col) => {
         let valid = false;
-        notification.timestamp = new Date();
+        if (!notification.timestamp) {//if timestamp has not already been defined
+          notification.timestamp = new Date();
+        }
         try {
           valid = notificationModel(notification);
           if (!valid) {

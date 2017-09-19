@@ -34,7 +34,9 @@ let self = module.exports = {
 
   //Create notification with new id and payload or return INTERNAL_SERVER_ERROR
   newNotification: function(request, reply) {
-    request.payload.new = true;
+    if (!request.payload.new) {
+      request.payload.new = true;
+    }
     return notificationsDB.insert(request.payload).then((inserted) => {
       //console.log('inserted: ', inserted);
       if (co.isEmpty(inserted.ops) || co.isEmpty(inserted.ops[0]))
@@ -68,7 +70,8 @@ let self = module.exports = {
   },
 
   //Mark notification as read (set new to false)
-  markAsReadNotification: function(request, reply) {
+  markNotification: function(request, reply) {
+    const markAsRead = request.query.read;
     const query = {
       _id: request.params.id//oid(request.params.id)
       //encodeURIComponent(request.params.id)
@@ -76,10 +79,10 @@ let self = module.exports = {
 
     return notificationsDB.partlyUpdate(query, {
       $set: {
-        new: false
+        new: markAsRead
       }
     }).then(() => {
-      reply({'msg': 'notification is successfully marked as read...'});
+      reply({'msg': 'notification is successfully marked...'});
     }).catch((error) => {
       tryRequestLog(request, 'error', error);
       reply(boom.badImplementation());

@@ -47,8 +47,8 @@ describe('Database', () => {
       return Promise.all([
         res.should.be.fulfilled.and.eventually.not.be.empty,
         res.should.eventually.have.property('ops').that.is.not.empty,
-        res.should.eventually.have.deep.property('ops[0]').that.has.all.keys('_id', 'activity_id', 'activity_type', 'timestamp', 'content_id', 'content_kind', 'user_id', 'subscribed_user_id'),
-        res.should.eventually.have.deep.property('ops[0].activity_type', notification.activity_type)
+        // res.should.eventually.have.deep.property('ops[0]').that.has.all.keys('_id', 'activity_id', 'activity_type', 'timestamp', 'content_id', 'content_kind', 'user_id', 'subscribed_user_id'),
+        // res.should.eventually.have.deep.property('ops[0].activity_type', notification.activity_type)
       ]);
     });
 

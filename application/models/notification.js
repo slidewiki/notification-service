@@ -5,7 +5,7 @@ let Ajv = require('ajv');
 let ajv = Ajv({
   verbose: true,
   allErrors: true
-    //v5: true  //enable v5 proposal of JSON-schema standard
+  //v5: true  //enable v5 proposal of JSON-schema standard
 }); // options can be passed, e.g. {allErrors: true}
 
 //build schema

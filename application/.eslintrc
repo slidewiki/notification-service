@@ -1,14 +1,18 @@
 {
-  "extend": "eslint:recommended",
-  "ecmaFeatures": {
-        "blockBindings": true,
-        "arrowFunctions": true,
-        "defaultParams": true,
-        "forOf": true
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+      "blockBindings": true,
+      "arrowFunctions": true,
+      "defaultParams": true,
+      "forOf": true
+      }
     },
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "mocha": true
   },
   "rules": {
     "strict": [2, "global"],
@@ -30,10 +34,13 @@
     "no-unexpected-multiline": 2,
     "no-var": 1,
     "no-warning-comments": 0,
-    "promise/param-names": 1,
-    "promise/catch-or-return": 1
+    "promise/always-return": "warn",
+    "promise/no-return-wrap": "error",
+    "promise/param-names": "error",
+    "promise/catch-or-return": "warn",
+    "promise/no-native": "off",
+    "promise/no-promise-in-callback": "warn",
+    "promise/no-callback-in-promise": "warn"
   },
-  "plugins": [
-        "promise"
-    ]
+  "plugins": ["promise"]
 }

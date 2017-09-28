@@ -1,4 +1,4 @@
-FROM node:6.9-slim
+FROM node:6.11-slim
 MAINTAINER Roy Meissner <meissner@informatik.uni-leipzig.de>
 
 RUN mkdir /nodeApp
@@ -8,10 +8,8 @@ WORKDIR /nodeApp
 #   Installation   #
 # ---------------- #
 
-ADD ./application/package.json ./
-RUN npm install --production
-
 ADD ./application/ ./
+RUN npm prune --production
 
 # ----------------- #
 #   Configuration   #

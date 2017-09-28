@@ -9,7 +9,7 @@ WORKDIR /nodeApp
 # ---------------- #
 
 ADD ./application/ ./
-RUN rm -rf ./node_modules && npm update --production
+RUN npm prune --production && npm update --production
 
 # ----------------- #
 #   Configuration   #

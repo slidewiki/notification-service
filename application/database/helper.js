@@ -44,14 +44,14 @@ function getNextId(db, collectionName, fieldName) {
       field: fieldNameCorrected
     },
     null, //no sort
-      {
-        $inc: {
-          seq: step
-        }
-      }, {
-        upsert: true, //if there is a problem with _id insert will fail
-        new: true //insert returns the updated document
-      })
+    {
+      $inc: {
+        seq: step
+      }
+    }, {
+      upsert: true, //if there is a problem with _id insert will fail
+      new: true //insert returns the updated document
+    })
       .then((result) => {
         console.log('getNextId: returned result', result);
         if (result.value && result.value.seq) {

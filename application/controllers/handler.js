@@ -159,7 +159,7 @@ function insertAuthor(notification) {
       };
       resolve(notification);
     } else if (notification.user_id === undefined || notification.user_id === 'undefined') {
-      console.log('Error user_id', activity.user_id);
+      console.log('Error user_id', notification.user_id);
       notification.author = {
         id: 'undefined',
         username: 'unknown'

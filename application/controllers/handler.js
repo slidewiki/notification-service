@@ -151,15 +151,23 @@ let self = module.exports = {
 //insert author data using user microservice
 function insertAuthor(notification) {
   let myPromise = new Promise((resolve, reject) => {
-    let username = 'unknown';
-    if (notification.user_id === undefined || notification.user_id === 'undefined' || notification.user_id === '0') {
+
+    if (notification.user_id === '0') {
       notification.author = {
-        id: notification.user_id,
-        username: username
+        id: '0',
+        username: 'Guest'
+      };
+      resolve(notification);
+    } else if (notification.user_id === undefined || notification.user_id === 'undefined') {
+      console.log('Error user_id', activity.user_id);
+      notification.author = {
+        id: 'undefined',
+        username: 'unknown'
       };
       resolve(notification);
     } else {
       rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
+        let username = '';
         try {
           let parsed = JSON.parse(res);
           username = parsed.username;
@@ -167,7 +175,7 @@ function insertAuthor(notification) {
           console.log(e);
           notification.author = {
             id: notification.user_id,
-            username: username
+            username: 'user ' + notification.user_id
           };
           resolve(notification);
         }
@@ -177,11 +185,12 @@ function insertAuthor(notification) {
           username: username
         };
         resolve(notification);
+
       }).catch((err) => {
         console.log('Error', err);
         notification.author = {
           id: notification.user_id,
-          username: username
+          username: 'user ' + notification.user_id
         };
         resolve(notification);
       });

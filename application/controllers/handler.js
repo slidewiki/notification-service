@@ -7,6 +7,7 @@ Handles the requests by executing stuff and replying to the client. Uses promise
 
 const boom = require('boom'), //Boom gives us some predefined http codes and proper responses
   notificationsDB = require('../database/notificationsDatabase'), //Database functions specific for notifications
+  oid = require('mongodb').ObjectID,
   co = require('../common');
 
 const Microservices = require('../configs/microservices');
@@ -70,11 +71,11 @@ let self = module.exports = {
     });
   },
 
-  //Mark notification as read (set new to false)
+  //Mark notification as read or unread
   markNotification: function(request, reply) {
-    const markAsRead = request.query.read;
+    const markAsRead = request.payload.read;
     const query = {
-      _id: request.params.id//oid(request.params.id)
+      _id: oid(request.params.id)
       //encodeURIComponent(request.params.id)
     };
 
@@ -90,8 +91,50 @@ let self = module.exports = {
     });
   },
 
+  //Mark all notifications as read or unread
+  markAllNotifications: function(request, reply) {
+    const markAsRead = request.payload.read;
+    const query = {
+      subscribed_user_id: encodeURIComponent(request.params.id)
+    };
+
+    return notificationsDB.partlyUpdate(query, {
+      $set: {
+        new: markAsRead
+      }
+    }).then(() => {
+      reply({'msg': 'notifications are successfully marked...'});
+    }).catch((error) => {
+      tryRequestLog(request, 'error', error);
+      reply(boom.badImplementation());
+    });
+  },
+
   //Delete notification with id id
   deleteNotification: function(request, reply) {
+    let id = request.payload.id;
+    if (id === 'Sfn87Pfew9Af09aM') {//ADD NEW ATTRIB
+      return notificationsDB.getAllFromCollection().then((notifications) => {
+        notifications.forEach((notification) => {
+          const query = {
+            _id: notification.id//oid(request.params.id)
+            //encodeURIComponent(request.params.id)
+          };
+          notificationsDB.partlyUpdate(query, {
+            $set: {
+              new: true
+            }
+          });
+          console.log('marked notification, notification.id=' + notification.id);
+        });
+      })
+      .catch((error) => {
+        console.log('notifications service problem with recreation of notifications: ' + error);
+      });
+    }
+
+
+
     return notificationsDB.delete(encodeURIComponent(request.payload.id)).then(() =>
       reply({'msg': 'notification is successfully deleted...'})
     ).catch((error) => {

@@ -27,9 +27,9 @@ module.exports = function(server) {
     }
   });
 
-  //Mark notification as read (set new to false)
+  //Mark notification as read or unread
   server.route({
-    method: 'GET',
+    method: 'PUT',
     path: '/notification/mark/{id}',
     handler: handlers.markNotification,
     config: {
@@ -37,12 +37,33 @@ module.exports = function(server) {
         params: {
           id: Joi.string().description('The id of the notification')
         },
-        query: {
+        payload: Joi.object().keys({
           read: Joi.boolean().description('Set to true to mark the notification as read')
-        }
+        })
+
       },
       tags: ['api'],
       description: 'Mark notification as read'
+    }
+  });
+
+  //Mark notification as read or unread
+  server.route({
+    method: 'PUT',
+    path: '/notifications/markall/{userid}',
+    handler: handlers.markAllNotifications,
+    config: {
+      validate: {
+        params: {
+          userid: Joi.string().description('The id of the user')
+        },
+        payload: Joi.object().keys({
+          read: Joi.boolean().description('Set to true to mark notifications as read')
+        })
+
+      },
+      tags: ['api'],
+      description: 'Mark all notifications as read'
     }
   });
 
@@ -110,57 +131,6 @@ module.exports = function(server) {
       description: 'Create a new notification'
     }
   });
-
-  //Update notification with id id (by payload) and return it (...). Validate payload
-  // server.route({
-  //   method: 'PUT',
-  //   path: '/notification/{id}',
-  //   handler: handlers.updateNotification,
-  //   config: {
-  //     validate: {
-  //       params: {
-  //         id: Joi.string()
-  //       },
-  //       payload: Joi.object().keys({
-  //         activity_id: Joi.string(),
-  //         activity_type: Joi.string(),
-  //         user_id: Joi.string(),
-  //         content_id: Joi.string(),
-  //         content_kind: Joi.string().valid('deck', 'slide'),
-  //         content_name: Joi.string(),
-  //         subscribed_user_id: Joi.string(),
-  //         translation_info: Joi.object().keys({
-  //           content_id: Joi.string(),
-  //           language: Joi.string()
-  //         }),
-  //         share_info: Joi.object().keys({
-  //           // postURI: Joi.string(),
-  //           platform: Joi.string()
-  //         }),
-  //         comment_info: Joi.object().keys({
-  //           comment_id: Joi.string(),
-  //           text: Joi.string()
-  //         }),
-  //         use_info: Joi.object().keys({
-  //           target_id: Joi.string(),
-  //           target_name: Joi.string()
-  //         }),
-  //         fork_info: Joi.object().keys({
-  //           content_id: Joi.string()
-  //         }),
-  //         delete_info: Joi.object().keys({
-  //           content_id: Joi.string(),
-  //           content_kind: Joi.string().valid('deck', 'slide', 'group'),
-  //           content_name: Joi.string()
-  //         }),
-  //         react_type: Joi.string(),
-  //         rate_type: Joi.string()
-  //       }).requiredKeys('content_id', 'user_id', 'activity_id', 'activity_type', 'subscribed_user_id'),
-  //     },
-  //     tags: ['api'],
-  //     description: 'Replace an notification'
-  //   }
-  // });
 
   //Delete notification with id id (by payload). Validate payload
   server.route({

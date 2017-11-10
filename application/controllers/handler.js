@@ -127,8 +127,7 @@ let self = module.exports = {
           });
           console.log('marked notification, notification.id=' + notification.id);
         });
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.log('notifications service problem with recreation of notifications: ' + error);
       });
     }

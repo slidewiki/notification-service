@@ -117,7 +117,7 @@ let self = module.exports = {
       return notificationsDB.getAllFromCollection().then((notifications) => {
         notifications.forEach((notification) => {
           const query = {
-            _id: notification.id//oid(request.params.id)
+            _id: notification._id//oid(request.params.id)
             //encodeURIComponent(request.params.id)
           };
           notificationsDB.partlyUpdate(query, {
@@ -125,7 +125,7 @@ let self = module.exports = {
               new: true
             }
           });
-          console.log('marked notification, notification.id=' + notification.id);
+          console.log('marked notification, notification.id=' + notification._id);
         });
       }).catch((error) => {
         console.log('notifications service problem with recreation of notifications: ' + error);

@@ -17,6 +17,9 @@ const objectid = {
 const notification = {
   type: 'object',
   properties: {
+    new: {
+      type: 'boolean'
+    },
     activity_id: objectid,
     activity_type: {
       type: 'string',

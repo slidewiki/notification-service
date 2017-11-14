@@ -26,10 +26,10 @@ module.exports = {
       .then((stream) => stream.toArray());
   },
 
-  getCountAllWithUserID: function(identifier) {
+  getCountNewWithUserID: function(identifier) {
     return helper.connectToDatabase()
       .then((db) => db.collection(collectionName))
-      .then((col) => col.count({ subscribed_user_id: identifier }));
+      .then((col) => col.count({ subscribed_user_id: identifier, new: true }));
   },
 
   getAllFromCollection: function() {
@@ -46,7 +46,9 @@ module.exports = {
       .then((db) => db.collection(collectionName))
       .then((col) => {
         let valid = false;
-        notification.timestamp = new Date();
+        if (!notification.timestamp) {//if timestamp has not already been defined
+          notification.timestamp = new Date();
+        }
         try {
           valid = notificationModel(notification);
           if (!valid) {
@@ -80,6 +82,12 @@ module.exports = {
         }
         return;
       });
+  },
+
+  partlyUpdate: (findQuery, updateQuery, params = undefined) => {
+    return helper.connectToDatabase()
+      .then((db) => db.collection(collectionName))
+      .then((col) => col.update(findQuery, updateQuery, params));
   },
 
   delete: function(identifier) {

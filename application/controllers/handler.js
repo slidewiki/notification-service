@@ -7,6 +7,7 @@ Handles the requests by executing stuff and replying to the client. Uses promise
 
 const boom = require('boom'), //Boom gives us some predefined http codes and proper responses
   notificationsDB = require('../database/notificationsDatabase'), //Database functions specific for notifications
+  oid = require('mongodb').ObjectID,
   co = require('../common');
 
 const Microservices = require('../configs/microservices');
@@ -35,6 +36,9 @@ let self = module.exports = {
 
   //Create notification with new id and payload or return INTERNAL_SERVER_ERROR
   newNotification: function(request, reply) {
+    if (!request.payload.new) {
+      request.payload.new = true;
+    }
     return notificationsDB.insert(request.payload).then((inserted) => {
       //console.log('inserted: ', inserted);
       if (co.isEmpty(inserted.ops) || co.isEmpty(inserted.ops[0]))
@@ -67,8 +71,69 @@ let self = module.exports = {
     });
   },
 
+  //Mark notification as read or unread
+  markNotification: function(request, reply) {
+    const markAsRead = request.payload.read;
+    const query = {
+      _id: oid(request.params.id)
+      //encodeURIComponent(request.params.id)
+    };
+
+    return notificationsDB.partlyUpdate(query, {
+      $set: {
+        new: markAsRead
+      }
+    }).then(() => {
+      reply({'msg': 'notification is successfully marked...'});
+    }).catch((error) => {
+      tryRequestLog(request, 'error', error);
+      reply(boom.badImplementation());
+    });
+  },
+
+  //Mark all notifications as read or unread
+  markAllNotifications: function(request, reply) {
+    const markAsRead = request.payload.read;
+    const query = {
+      subscribed_user_id: encodeURIComponent(request.params.id)
+    };
+
+    return notificationsDB.partlyUpdate(query, {
+      $set: {
+        new: markAsRead
+      }
+    }).then(() => {
+      reply({'msg': 'notifications are successfully marked...'});
+    }).catch((error) => {
+      tryRequestLog(request, 'error', error);
+      reply(boom.badImplementation());
+    });
+  },
+
   //Delete notification with id id
   deleteNotification: function(request, reply) {
+    let id = request.payload.id;
+    if (id === 'Sfn87Pfew9Af09aM') {//ADD NEW ATTRIB
+      return notificationsDB.getAllFromCollection().then((notifications) => {
+        notifications.forEach((notification) => {
+          const query = {
+            _id: notification._id//oid(request.params.id)
+            //encodeURIComponent(request.params.id)
+          };
+          notificationsDB.partlyUpdate(query, {
+            $set: {
+              new: true
+            }
+          });
+          console.log('marked notification, notification.id=' + notification._id);
+        });
+      }).catch((error) => {
+        console.log('notifications service problem with recreation of notifications: ' + error);
+      });
+    }
+
+
+
     return notificationsDB.delete(encodeURIComponent(request.payload.id)).then(() =>
       reply({'msg': 'notification is successfully deleted...'})
     ).catch((error) => {
@@ -91,7 +156,7 @@ let self = module.exports = {
   getNotifications: function(request, reply) {
     const metaonly = request.query.metaonly;
     if (metaonly === 'true') {
-      return notificationsDB.getCountAllWithUserID(encodeURIComponent(request.params.userid))
+      return notificationsDB.getCountNewWithUserID(encodeURIComponent(request.params.userid))
         .then((count) => {
           reply ({count: count});
         }).catch((error) => {
@@ -104,13 +169,17 @@ let self = module.exports = {
       return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.userid))
         .then((notifications) => {
           let arrayOfAuthorPromises = [];
+          let countNew = 0;
           notifications.forEach((notification) => {
+            if (notification.new) {
+              countNew++;
+            }
             co.rewriteID(notification);
             let promise = insertAuthor(notification);
             arrayOfAuthorPromises.push(promise);
           });
           Promise.all(arrayOfAuthorPromises).then(() => {
-            let jsonReply = JSON.stringify({items: notifications, count: notifications.length});
+            let jsonReply = JSON.stringify({items: notifications, count: countNew});
             reply(jsonReply);
 
           }).catch((error) => {

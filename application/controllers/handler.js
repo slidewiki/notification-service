@@ -36,7 +36,7 @@ let self = module.exports = {
 
   //Create notification with new id and payload or return INTERNAL_SERVER_ERROR
   newNotification: function(request, reply) {
-    if (!request.payload.new) {
+    if (request.payload.new === undefined) {
       request.payload.new = true;
     }
     return notificationsDB.insert(request.payload).then((inserted) => {
@@ -81,7 +81,7 @@ let self = module.exports = {
 
     return notificationsDB.partlyUpdate(query, {
       $set: {
-        new: markAsRead
+        new: !markAsRead
       }
     }).then(() => {
       reply({'msg': 'notification is successfully marked...'});
@@ -95,14 +95,14 @@ let self = module.exports = {
   markAllNotifications: function(request, reply) {
     const markAsRead = request.payload.read;
     const query = {
-      subscribed_user_id: encodeURIComponent(request.params.id)
+      subscribed_user_id: encodeURIComponent(request.params.userid)
     };
 
     return notificationsDB.partlyUpdate(query, {
       $set: {
-        new: markAsRead
+        new: !markAsRead
       }
-    }).then(() => {
+    }, {multi: true} ).then(() => {
       reply({'msg': 'notifications are successfully marked...'});
     }).catch((error) => {
       tryRequestLog(request, 'error', error);

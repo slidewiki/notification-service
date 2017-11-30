@@ -99,6 +99,8 @@ module.exports = function(server) {
           content_name: Joi.string(),
           content_owner_id: Joi.string(),
           subscribed_user_id: Joi.string(),
+          timestamp: Joi.string(),
+          new: Joi.boolean(),
           translation_info: Joi.object().keys({
             content_id: Joi.string(),
             language: Joi.string()

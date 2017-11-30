@@ -48,6 +48,8 @@ module.exports = {
         let valid = false;
         if (!notification.timestamp) {//if timestamp has not already been defined
           notification.timestamp = new Date();
+        } else {
+          notification.timestamp = new Date(notification.timestamp);
         }
         try {
           valid = notificationModel(notification);

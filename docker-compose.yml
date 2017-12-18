@@ -1,5 +1,5 @@
 template:
-  image: slidewiki/microservicetemplate
+  image: slidewiki/microservicetemplate:latest-dev
   restart: on-failure:5
   expose:
     - "80"

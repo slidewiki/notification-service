@@ -1,4 +1,4 @@
-FROM node:6-slim
+FROM node:8-slim
 MAINTAINER Roy Meissner <meissner@informatik.uni-leipzig.de>
 
 ARG BUILD_ENV=local

@@ -112,28 +112,6 @@ let self = module.exports = {
 
   //Delete notification with id id
   deleteNotification: function(request, reply) {
-    let id = request.payload.id;
-    if (id === 'Sfn87Pfew9Af09aM') {//ADD NEW ATTRIB
-      return notificationsDB.getAllFromCollection().then((notifications) => {
-        notifications.forEach((notification) => {
-          const query = {
-            _id: notification._id//oid(request.params.id)
-            //encodeURIComponent(request.params.id)
-          };
-          notificationsDB.partlyUpdate(query, {
-            $set: {
-              new: true
-            }
-          });
-          console.log('marked notification, notification.id=' + notification._id);
-        });
-      }).catch((error) => {
-        console.log('notifications service problem with recreation of notifications: ' + error);
-      });
-    }
-
-
-
     return notificationsDB.delete(encodeURIComponent(request.payload.id)).then(() =>
       reply({'msg': 'notification is successfully deleted...'})
     ).catch((error) => {

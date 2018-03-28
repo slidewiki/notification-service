@@ -117,6 +117,9 @@ module.exports = function(server) {
             target_id: Joi.string(),
             target_name: Joi.string().allow('')
           }),
+          exam_info: Joi.object().keys({
+            score: Joi.number()
+          }),
           fork_info: Joi.object().keys({
             content_id: Joi.string()
           }),

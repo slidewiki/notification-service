@@ -108,6 +108,14 @@ module.exports = {
       }));
   },
 
+  deleteAllOfType: function(activityTypeArray) {
+    return helper.connectToDatabase()
+      .then((db) => db.collection(collectionName))
+      .then((col) => col.remove({
+        activity_type: { $in: activityTypeArray }
+      }));
+  },
+
   deleteAll: function() {
     return helper.connectToDatabase()
       .then((db) => db.collection(collectionName))

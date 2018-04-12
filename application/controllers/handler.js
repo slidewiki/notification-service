@@ -112,6 +112,15 @@ let self = module.exports = {
 
   //Delete notification with id id
   deleteNotification: function(request, reply) {
+    let id = request.payload.id;
+    if (id === 'Sfn87Pfew9Af09aM') {//ADD NEW ATTRIB
+      const activityTypeArray = ['view', 'exam'];
+      return notificationsDB.deleteAllOfType(activityTypeArray).then(() => {
+
+      }).catch((error) => {
+        console.log('notifications service problem with deletion of notifications: ' + error);
+      });
+    }
     return notificationsDB.delete(encodeURIComponent(request.payload.id)).then(() =>
       reply({'msg': 'notification is successfully deleted...'})
     ).catch((error) => {

@@ -20,12 +20,16 @@ let self = module.exports = {
       if (co.isEmpty(notification))
         reply(boom.notFound());
       else {
-        return insertAuthor(notification).then((notification) => {
+        if (notification.author !== undefined) {//author is already set (by the activities service)
           reply(co.rewriteID(notification));
-        }).catch((error) => {
-          tryRequestLog(request, 'error', error);
-          reply(boom.badImplementation());
-        });
+        } else {
+          return insertAuthor(notification).then((notification) => {
+            reply(co.rewriteID(notification));
+          }).catch((error) => {
+            tryRequestLog(request, 'error', error);
+            reply(boom.badImplementation());
+          });
+        }
       }
     }).catch((error) => {
 
@@ -155,17 +159,14 @@ let self = module.exports = {
     } else {
       return notificationsDB.getAllWithSubscribedUserID(encodeURIComponent(request.params.userid))
         .then((notifications) => {
-          let arrayOfAuthorPromises = [];
           let countNew = 0;
           notifications.forEach((notification) => {
             if (notification.new) {
               countNew++;
             }
             co.rewriteID(notification);
-            let promise = insertAuthor(notification);
-            arrayOfAuthorPromises.push(promise);
           });
-          Promise.all(arrayOfAuthorPromises).then(() => {
+          insertAuthors(notifications).then((notifications) => {
             let jsonReply = JSON.stringify({items: notifications, count: countNew});
             reply(jsonReply);
 
@@ -181,14 +182,11 @@ let self = module.exports = {
   getAllNotifications: function(request, reply) {
     return notificationsDB.getAllFromCollection()
       .then((notifications) => {
-        let arrayOfAuthorPromises = [];
         notifications.forEach((notification) => {
           co.rewriteID(notification);
-          let promise = insertAuthor(notification);
-          arrayOfAuthorPromises.push(promise);
         });
 
-        Promise.all(arrayOfAuthorPromises).then(() => {
+        insertAuthors(notifications).then((notifications) => {
           let jsonReply = JSON.stringify(notifications);
           reply(jsonReply);
 
@@ -249,6 +247,84 @@ function insertAuthor(notification) {
           username: 'user ' + notification.user_id
         };
         resolve(notification);
+      });
+    }
+  });
+
+  return myPromise;
+}
+
+//insert author data to an array of notifications using user microservice
+function insertAuthors(notifications) {
+  let myPromise = new Promise((resolve, reject) => {
+
+    //Create array of user ids
+    let arrayOfUserIds = [];
+    notifications.forEach((notification) => {
+      const id = notification.user_id;
+      if (id !== '0' && !arrayOfUserIds.includes(id)) {
+        arrayOfUserIds.push(id);
+      }
+    });
+
+    if (arrayOfUserIds.length === 0) {
+      notifications.forEach((notification) => {
+        notification.author = {
+          id: '0',
+          username: 'Guest'
+        };
+      });
+      resolve(notifications);
+    } else {
+
+      let data = JSON.stringify(arrayOfUserIds);
+      rp.post({uri: Microservices.user.uri + '/users', body:data}).then((res) => {
+        try {
+          let userDataArray = JSON.parse(res);
+
+          userDataArray.forEach((userData) => {
+            let userId = userData._id;
+            let username = userData.username;
+            notifications.forEach((notification) => {
+              if (notification.user_id === userId) {
+                notification.author = {
+                  id: notification.user_id,
+                  username: username
+                };
+              }
+            });
+          });
+
+          notifications.forEach((notification) => {
+            if (notification.author === undefined) {
+              notification.author = {
+                id: notification.user_id,
+                username: 'Guest'
+              };
+            }
+          });
+          resolve(notifications);
+
+        } catch(e) {
+          console.log(e);
+          notifications.forEach((notification) => {
+            notification.author = {
+              id: notification.user_id,
+              username: 'user ' + notification.user_id
+            };
+          });
+          resolve(notifications);
+        }
+
+      }).catch((err) => {
+        console.log('Error', err);
+        notifications.forEach((notification) => {
+          notification.author = {
+            id: notification.user_id,
+            username: 'user ' + notification.user_id
+          };
+        });
+        resolve(notifications);
       });
     }
   });

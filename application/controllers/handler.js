@@ -261,7 +261,7 @@ function insertAuthors(notifications) {
     //Create array of user ids
     let arrayOfUserIds = [];
     notifications.forEach((notification) => {
-      const id = notification.user_id;
+      const id = parseInt(notification.user_id);
       if (id !== '0' && !arrayOfUserIds.includes(id)) {
         arrayOfUserIds.push(id);
       }

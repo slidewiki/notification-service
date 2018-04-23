@@ -262,7 +262,7 @@ function insertAuthors(notifications) {
     let arrayOfUserIds = [];
     notifications.forEach((notification) => {
       const id = parseInt(notification.user_id);
-      if (id !== '0' && !arrayOfUserIds.includes(id)) {
+      if (id !== 0 && !arrayOfUserIds.includes(id)) {
         arrayOfUserIds.push(id);
       }
     });
@@ -286,7 +286,7 @@ function insertAuthors(notifications) {
             let userId = userData._id;
             let username = userData.username;
             notifications.forEach((notification) => {
-              if (notification.user_id === userId) {
+              if (parseInt(notification.user_id) === userId) {
                 notification.author = {
                   id: notification.user_id,
                   username: username

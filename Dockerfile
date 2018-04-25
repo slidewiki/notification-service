@@ -1,5 +1,5 @@
 FROM node:6-slim
-MAINTAINER Roy Meissner <meissner@informatik.uni-leipzig.de>
+MAINTAINER Dejan Paunovic <dejan.paunovic@pupin.rs>
 
 ARG BUILD_ENV=local
 ENV BUILD_ENV ${BUILD_ENV}

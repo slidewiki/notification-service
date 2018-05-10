@@ -111,7 +111,8 @@ module.exports = function(server) {
           }),
           comment_info: Joi.object().keys({
             comment_id: Joi.string(),
-            text: Joi.string()
+            text: Joi.string(),
+            parent_comment_owner_id: Joi.string()
           }),
           use_info: Joi.object().keys({
             target_id: Joi.string(),

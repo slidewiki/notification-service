@@ -1,4 +1,4 @@
-FROM node:6-slim
+FROM node:8-slim
 MAINTAINER Dejan Paunovic <dejan.paunovic@pupin.rs>
 
 ARG BUILD_ENV=local

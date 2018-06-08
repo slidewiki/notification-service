@@ -124,6 +124,10 @@ module.exports = {
 
   },
 
+  getCollection: function(name) {
+    return module.exports.connectToDatabase().then((db) => db.collection(name));
+  },
+
   getNextIncrementationValueForCollection: function (dbconn, collectionName, fieldName) {
     return getNextId(dbconn, collectionName, fieldName);
   }

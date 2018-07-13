@@ -15,12 +15,28 @@ module.exports = function(server) {
     handler: handlers.getTemplate,
     config: {
       validate: {
-        /*params: {
+        params: {
           id: Joi.string().alphanum().lowercase()
-        },*/
+        }
       },
       tags: ['api'],
       description: 'Get a template'
+    }
+  });
+
+  //Get templates with user-id id from database and return it (when not available, return NOT FOUND). Validate id
+  server.route({
+    method: 'GET',
+    path: '/user/{id}/templates',
+    handler: handlers.getTemplatesByUser,
+    config: {
+      validate: {
+        params: {
+          id: Joi.string().alphanum().lowercase()
+        }
+      },
+      tags: ['api'],
+      description: 'Get a templates of a user'
     }
   });
 
@@ -60,6 +76,22 @@ module.exports = function(server) {
       },
       tags: ['api'],
       description: 'Replace a template'
+    }
+  });
+
+  // Delete template with id id
+  server.route({
+    method: 'DELETE',
+    path: '/template/{id}',
+    handler: handlers.deleteTemplate,
+    config: {
+      validate: {
+        params: {
+          id: Joi.string().alphanum().lowercase()
+        }
+      },
+      tags: ['api'],
+      description: 'Delete a template'
     }
   });
 };

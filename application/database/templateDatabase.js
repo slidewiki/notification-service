@@ -20,6 +20,16 @@ module.exports = {
       });
   },
 
+  getByUser: function (userIdentifier) {
+    return helper.connectToDatabase()
+      .then((db) => db.collection(templateCol))
+      .then((col) => {
+        return col.find({
+          user_id: parseInt(userIdentifier)
+        });
+      });
+  },
+
   insert: function (template) {
     return helper.connectToDatabase()
       .then((db) => helper.getNextIncrementationValueForCollection(db, templateCol))
@@ -64,6 +74,18 @@ module.exports = {
           console.log('validation failed', e);
         }
         return;
+      });
+  },
+
+  deleteTemplate: (id) => {
+    return  helper.connectToDatabase()
+      .then((db) => db.collection(templateCol))
+      .then((col) => {
+        let del_id = parseInt(id);
+        return col.deleteOne({_id: del_id}, (err, obj) => {
+          if (err) throw err;
+        });
+
       });
   }
 };

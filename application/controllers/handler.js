@@ -23,6 +23,25 @@ module.exports = {
     });
   },
 
+  //Get templates of a User from database or return NOT FOUND
+  getTemplatesByUser: function(request, reply) {
+    templateDB.getByUser(encodeURIComponent(request.params.id)).then((templates) => {
+      if (co.isEmpty(templates))
+        reply(boom.notFound());
+      else {
+        //reply(co.rewriteID(template));
+        templates.toArray((err, tempArray) => {
+          if (err) request.log('error', err);
+          else reply(tempArray);
+          //return result;
+        });
+      }
+    }).catch((error) => {
+      request.log('error', error);
+      reply(boom.badImplementation());
+    });
+  },
+
   //Create Template with new id and payload or return INTERNAL_SERVER_ERROR
   newTemplate: function(request, reply) {
     templateDB.insert(request.payload).then((inserted) => {
@@ -36,7 +55,7 @@ module.exports = {
     });
   },
 
-  //Update Slide with id id and payload or return INTERNAL_SERVER_ERROR
+  //Update template with id id and payload or return INTERNAL_SERVER_ERROR
   replaceTemplate: function(request, reply) {
     templateDB.replace(encodeURIComponent(request.params.id), request.payload).then((replaced) => {
       if (co.isEmpty(replaced.value))
@@ -48,4 +67,14 @@ module.exports = {
       reply(boom.badImplementation());
     });
   },
+
+  // Delete template with id id
+  deleteTemplate: (request, reply) => {
+    templateDB.deleteTemplate(encodeURIComponent(request.params.id)).then(() => {
+      reply({erased: 1});
+    }).catch((error) => {
+      request.log('error', error);
+      reply(boom.badImplementation());
+    });
+  }
 };

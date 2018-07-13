@@ -5,35 +5,38 @@ Controller for handling mongodb and the data model slide while providing CRUD'is
 'use strict';
 
 const helper = require('./helper'),
-  slideModel = require('../models/slide.js');
+  templateModel = require('../models/template.js');
+
+const templateCol = 'templates';
 
 module.exports = {
   get: function (identifier) {
     return helper.connectToDatabase()
-      .then((db) => db.collection('slides'))
-      .then((col) => col.findOne({
-        _id: identifier
-      }));
+      .then((db) => db.collection(templateCol))
+      .then((col) => {
+        return col.findOne({
+          _id: parseInt(identifier)
+        });
+      });
   },
 
-  insert: function (slide) {
-    //TODO check for root and parent deck ids to be existent, otherwise create these
+  insert: function (template) {
     return helper.connectToDatabase()
-      .then((db) => helper.getNextIncrementationValueForCollection(db, 'slides'))
+      .then((db) => helper.getNextIncrementationValueForCollection(db, templateCol))
       .then((newId) => {
-        // console.log('newId', newId);
+
         return helper.connectToDatabase() //db connection have to be accessed again in order to work with more than one collection
-          .then((db2) => db2.collection('slides'))
+          .then((db2) => db2.collection(templateCol))
           .then((col) => {
             let valid = false;
-            slide._id = newId;
+            template._id = newId;
+            template.user_id = parseInt(template.user_id);
             try {
-              valid = slideModel(slide);
-              // console.log('validated slidemodel', valid);
+              valid = templateModel(template);
               if (!valid) {
-                return slideModel.errors;
+                return templateModel.errors;
               }
-              return col.insertOne(slide);
+              return col.insertOne(template);
             } catch (e) {
               console.log('validation failed', e);
             }
@@ -42,19 +45,21 @@ module.exports = {
       });
   },
 
-  replace: function (id, slide) {
+  replace: function (id, template) {
     return helper.connectToDatabase()
-      .then((db) => db.collection('slides'))
+      .then((db) => db.collection(templateCol))
       .then((col) => {
         let valid = false;
         try {
-          valid = slideModel(slide);
+          template._id = parseInt(id);
+          template.user_id = parseInt(template.user_id);
+          valid = templateModel(template);
           if (!valid) {
-            return slideModel.errors;
+            return template.errors;
           }
           return col.findOneAndReplace({
-            _id: id
-          }, slide);
+            _id: template._id
+          }, template);
         } catch (e) {
           console.log('validation failed', e);
         }

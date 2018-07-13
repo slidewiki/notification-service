@@ -12,7 +12,7 @@ const hapi = require('hapi'),
 //Initiate the webserver with standard or given port
 const server = new hapi.Server({ connections: {routes: {validate: { options: {convert : false}}}}});
 
-let port = (!co.isEmpty(process.env.APPLICATION_PORT)) ? process.env.APPLICATION_PORT : 3000;
+let port = (!co.isEmpty(process.env.APPLICATION_PORT)) ? process.env.APPLICATION_PORT : 3500;
 server.connection({
   port: port
 });
@@ -49,7 +49,7 @@ let plugins = [
     options: {
       host: host,
       info: {
-        title: 'Example API',
+        title: 'Template service API',
         description: 'Powered by node, hapi, joi, hapi-swaggered, hapi-swaggered-ui and swagger-ui',
         version: '0.1.0'
       }
@@ -66,15 +66,16 @@ server.register(plugins, (err) => {
     global.process.exit();
   } else {
     // create any indexes before starting the server
-    createIndexes().catch((err) => {
-      console.warn('error creating the indexes on the database collection:');
-      console.warn(err.message);
-    }).then(() => {
+    createIndexes().then(() => {
       server.start(() => {
         server.log('info', 'Server started at ' + server.info.uri);
         //Register routes
         require('./routes.js')(server);
       });
+      return;
+    }).catch((err) => {
+      console.warn('error creating the indexes on the database collection:');
+      console.warn(err.message);
     });
   }
 });

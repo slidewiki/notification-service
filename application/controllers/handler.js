@@ -6,26 +6,26 @@ Handles the requests by executing stuff and replying to the client. Uses promise
 'use strict';
 
 const boom = require('boom'), //Boom gives us some predefined http codes and proper responses
-  slideDB = require('../database/slideDatabase'), //Database functions specific for slides
+  templateDB = require('../database/templateDatabase'), //Database functions specific for slides
   co = require('../common');
 
 module.exports = {
-  //Get slide from database or return NOT FOUND
-  getSlide: function(request, reply) {
-    slideDB.get(encodeURIComponent(request.params.id)).then((slide) => {
-      if (co.isEmpty(slide))
+  //Get template from database or return NOT FOUND
+  getTemplate: function(request, reply) {
+    templateDB.get(encodeURIComponent(request.params.id)).then((template) => {
+      if (co.isEmpty(template))
         reply(boom.notFound());
       else
-        reply(co.rewriteID(slide));
+        reply(co.rewriteID(template));
     }).catch((error) => {
       request.log('error', error);
       reply(boom.badImplementation());
     });
   },
 
-  //Create Slide with new id and payload or return INTERNAL_SERVER_ERROR
-  newSlide: function(request, reply) {
-    slideDB.insert(request.payload).then((inserted) => {
+  //Create Template with new id and payload or return INTERNAL_SERVER_ERROR
+  newTemplate: function(request, reply) {
+    templateDB.insert(request.payload).then((inserted) => {
       if (co.isEmpty(inserted.ops[0]))
         throw inserted;
       else
@@ -37,8 +37,8 @@ module.exports = {
   },
 
   //Update Slide with id id and payload or return INTERNAL_SERVER_ERROR
-  replaceSlide: function(request, reply) {
-    slideDB.replace(encodeURIComponent(request.params.id), request.payload).then((replaced) => {
+  replaceTemplate: function(request, reply) {
+    templateDB.replace(encodeURIComponent(request.params.id), request.payload).then((replaced) => {
       if (co.isEmpty(replaced.value))
         throw replaced;
       else

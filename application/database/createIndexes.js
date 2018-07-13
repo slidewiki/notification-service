@@ -9,7 +9,7 @@ const helper = require('./helper');
 module.exports = function() {
 
 
-  return helper.getCollection('decks').then((templates) => {
+  return helper.getCollection('templates').then((templates) => {
     return templates.createIndexes([
       { key: {'_id': 1, 'user_id': 1} }
     ]);

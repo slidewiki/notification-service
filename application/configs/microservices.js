@@ -4,6 +4,16 @@ const co = require('../common');
 
 module.exports = {
   'deck': {
+    uri: (!co.isEmpty(process.env.SERVICE_URL_DECK)) ? process.env.SERVICE_URL_DECK : 'https://deckservice.experimental.slidewiki.org'
+  },
+  'user': {
+    uri: (!co.isEmpty(process.env.SERVICE_URL_USER)) ? process.env.SERVICE_URL_USER : 'https://userservice.experimental.slidewiki,org'
+  }
+};
+
+/*
+module.exports = {
+  'deck': {
     uri: (!co.isEmpty(process.env.SERVICE_URL_DECK)) ? process.env.SERVICE_URL_DECK : 'http://deckservice'
   },
   'discussion': {
@@ -34,3 +44,4 @@ module.exports = {
     uri: (!co.isEmpty(process.env.SERVICE_URL_IMPORT)) ? process.env.SERVICE_URL_IMPORT : 'http://importservice'
   }
 };
+*/

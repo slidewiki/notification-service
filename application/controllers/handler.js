@@ -262,7 +262,7 @@ function insertAuthors(notifications) {
     let arrayOfUserIds = [];
     notifications.forEach((notification) => {
       const id = parseInt(notification.user_id);
-      if (id !== 0 && !arrayOfUserIds.includes(id)) {
+      if (id !== 0 && id !== null && !arrayOfUserIds.includes(id)) {
         arrayOfUserIds.push(id);
       }
     });

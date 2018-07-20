@@ -222,9 +222,11 @@ function insertAuthor(notification) {
     } else {
       rp.get({uri: Microservices.user.uri + '/user/' + notification.user_id}).then((res) => {
         let username = '';
+        let displayName = undefined;
         try {
           let parsed = JSON.parse(res);
           username = parsed.username;
+          displayName = parsed.displayName;
         } catch(e) {
           console.log(e);
           notification.author = {
@@ -236,7 +238,8 @@ function insertAuthor(notification) {
 
         notification.author = {
           id: notification.user_id,
-          username: username
+          username: username,
+          displayName: displayName
         };
         resolve(notification);
 
@@ -287,11 +290,13 @@ function insertAuthors(notifications) {
           userDataArray.forEach((userData) => {
             let userId = userData._id;
             let username = userData.username;
+            let displayName = userData.displayName;
             notifications.forEach((notification) => {
               if (parseInt(notification.user_id) === userId) {
                 notification.author = {
                   id: notification.user_id,
-                  username: username
+                  username: username,
+                  displayName: displayName
                 };
               }
             });

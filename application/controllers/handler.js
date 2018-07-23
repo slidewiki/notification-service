@@ -6,45 +6,26 @@ Handles the requests by executing stuff and replying to the client. Uses promise
 'use strict';
 
 const boom = require('boom'), //Boom gives us some predefined http codes and proper responses
-  templateDB = require('../database/templateDatabase'), //Database functions specific for slides
+  slideDB = require('../database/slideDatabase'), //Database functions specific for slides
   co = require('../common');
 
 module.exports = {
-  //Get template from database or return NOT FOUND
-  getTemplate: function(request, reply) {
-    templateDB.get(encodeURIComponent(request.params.id)).then((template) => {
-      if (co.isEmpty(template))
+  //Get slide from database or return NOT FOUND
+  getSlide: function(request, reply) {
+    slideDB.get(encodeURIComponent(request.params.id)).then((slide) => {
+      if (co.isEmpty(slide))
         reply(boom.notFound());
       else
-        reply(co.rewriteID(template));
+        reply(co.rewriteID(slide));
     }).catch((error) => {
       request.log('error', error);
       reply(boom.badImplementation());
     });
   },
 
-  //Get templates of a User from database or return NOT FOUND
-  getTemplatesByUser: function(request, reply) {
-    templateDB.getByUser(encodeURIComponent(request.params.id)).then((templates) => {
-      if (co.isEmpty(templates))
-        reply(boom.notFound());
-      else {
-        //reply(co.rewriteID(template));
-        templates.toArray((err, tempArray) => {
-          if (err) request.log('error', err);
-          else reply(tempArray);
-          //return result;
-        });
-      }
-    }).catch((error) => {
-      request.log('error', error);
-      reply(boom.badImplementation());
-    });
-  },
-
-  //Create Template with new id and payload or return INTERNAL_SERVER_ERROR
-  newTemplate: function(request, reply) {
-    templateDB.insert(request.payload).then((inserted) => {
+  //Create Slide with new id and payload or return INTERNAL_SERVER_ERROR
+  newSlide: function(request, reply) {
+    slideDB.insert(request.payload).then((inserted) => {
       if (co.isEmpty(inserted.ops[0]))
         throw inserted;
       else
@@ -55,9 +36,9 @@ module.exports = {
     });
   },
 
-  //Update template with id id and payload or return INTERNAL_SERVER_ERROR
-  replaceTemplate: function(request, reply) {
-    templateDB.replace(encodeURIComponent(request.params.id), request.payload).then((replaced) => {
+  //Update Slide with id id and payload or return INTERNAL_SERVER_ERROR
+  replaceSlide: function(request, reply) {
+    slideDB.replace(encodeURIComponent(request.params.id), request.payload).then((replaced) => {
       if (co.isEmpty(replaced.value))
         throw replaced;
       else
@@ -67,14 +48,4 @@ module.exports = {
       reply(boom.badImplementation());
     });
   },
-
-  // Delete template with id id
-  deleteTemplate: (request, reply) => {
-    templateDB.deleteTemplate(encodeURIComponent(request.params.id)).then(() => {
-      reply({erased: 1});
-    }).catch((error) => {
-      request.log('error', error);
-      reply(boom.badImplementation());
-    });
-  }
 };

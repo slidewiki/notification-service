@@ -49,7 +49,7 @@ let plugins = [
     options: {
       host: host,
       info: {
-        title: 'Template service API',
+        title: 'Example API',
         description: 'Powered by node, hapi, joi, hapi-swaggered, hapi-swaggered-ui and swagger-ui',
         version: '0.1.0'
       }
@@ -66,16 +66,15 @@ server.register(plugins, (err) => {
     global.process.exit();
   } else {
     // create any indexes before starting the server
-    createIndexes().then(() => {
+    createIndexes().catch((err) => {
+      console.warn('error creating the indexes on the database collection:');
+      console.warn(err.message);
+    }).then(() => {
       server.start(() => {
         server.log('info', 'Server started at ' + server.info.uri);
         //Register routes
         require('./routes.js')(server);
       });
-      return;
-    }).catch((err) => {
-      console.warn('error creating the indexes on the database collection:');
-      console.warn(err.message);
     });
   }
 });

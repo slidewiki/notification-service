@@ -65,6 +65,14 @@ module.exports = {
       }); //id is created and concatenated automatically
   },
 
+  insertMany: function(notifications) {
+    return helper.connectToDatabase()
+      .then((db) => db.collection(collectionName))
+      .then((col) => {
+        return col.insertMany(notifications, { forceServerObjectId: true });
+      }); //id is created and concatenated automatically
+  },
+
   replace: function(id, notification) {
     return helper.connectToDatabase()
       .then((db) => db.collection(collectionName))

@@ -138,6 +138,61 @@ module.exports = function(server) {
     }
   });
 
+  //Create new notifications (by payload). Validate payload
+  server.route({
+    method: 'POST',
+    path: '/notifications/new',
+    handler: handlers.newNotifications,
+    config: {
+      validate: {
+        payload: Joi.array().items(Joi.object().keys({
+          activity_id: Joi.string(),
+          activity_type: Joi.string(),
+          user_id: Joi.string(),
+          content_id: Joi.string(),
+          content_kind: Joi.string().valid('deck', 'slide', 'group'),
+          content_name: Joi.string(),
+          content_owner_id: Joi.string(),
+          subscribed_user_ids: Joi.array().items(Joi.string()),
+          timestamp: Joi.string(),
+          new: Joi.boolean(),
+          translation_info: Joi.object().keys({
+            content_id: Joi.string(),
+            language: Joi.string()
+          }),
+          share_info: Joi.object().keys({
+            // postURI: Joi.string(),
+            platform: Joi.string()
+          }),
+          comment_info: Joi.object().keys({
+            comment_id: Joi.string(),
+            text: Joi.string(),
+            parent_comment_owner_id: Joi.string()
+          }),
+          use_info: Joi.object().keys({
+            target_id: Joi.string(),
+            target_name: Joi.string().allow('')
+          }),
+          exam_info: Joi.object().keys({
+            score: Joi.number()
+          }),
+          fork_info: Joi.object().keys({
+            content_id: Joi.string()
+          }),
+          delete_info: Joi.object().keys({
+            content_id: Joi.string(),
+            content_kind: Joi.string().valid('deck', 'slide', 'group'),
+            content_name: Joi.string()
+          }),
+          react_type: Joi.string(),
+          rate_type: Joi.string()
+        }).requiredKeys('content_id', 'user_id', 'activity_id', 'activity_type', 'subscribed_user_ids')),
+      },
+      tags: ['api'],
+      description: 'Create a new notification'
+    }
+  });
+
   //Delete notification with id id (by payload). Validate payload
   server.route({
     method: 'DELETE',

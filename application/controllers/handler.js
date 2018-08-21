@@ -8,6 +8,7 @@ Handles the requests by executing stuff and replying to the client. Uses promise
 const boom = require('boom'), //Boom gives us some predefined http codes and proper responses
   notificationsDB = require('../database/notificationsDatabase'), //Database functions specific for notifications
   oid = require('mongodb').ObjectID,
+  notificationModel = require('../models/notification.js'),
   co = require('../common');
 
 const Microservices = require('../configs/microservices');
@@ -54,6 +55,49 @@ let self = module.exports = {
           tryRequestLog(request, 'error', error);
           reply(boom.badImplementation());
         });
+      }
+    }).catch((error) => {
+      tryRequestLog(request, 'error', error);
+      reply(boom.badImplementation());
+    });
+  },
+
+  //Create notification with new id and payload or return INTERNAL_SERVER_ERROR
+  newNotifications: function(request, reply) {
+    let payloadNotifications = request.payload;
+    let notifications = [];
+    payloadNotifications.forEach((notification) => {
+      if (notification.new === undefined) {
+        notification.new = true;
+      }
+      if (!notification.timestamp) {//if timestamp has not already been defined
+        notification.timestamp = new Date();
+      } else {
+        notification.timestamp = new Date(notification.timestamp);
+      }
+      let user_ids = notification.subscribed_user_ids;
+      delete notification.subscribed_user_ids;
+      user_ids.forEach((user_id) => {
+        notification.subscribed_user_id = user_id;
+        let valid = false;
+        try {
+          valid = notificationModel(notification);
+          if (!valid) {
+            return notificationModel.errors;
+          }
+          notifications.push(notification);
+        } catch (e) {
+          console.log('validation failed', e);
+        }
+      });
+    });
+
+    return notificationsDB.insertMany(notifications).then((inserted) => {
+      //console.log('inserted: ', inserted);
+      if (co.isEmpty(inserted.ops) || co.isEmpty(inserted.ops[0]))
+        throw inserted;
+      else {
+        reply({'msg': 'notifications are successfully added...'});
       }
     }).catch((error) => {
       tryRequestLog(request, 'error', error);

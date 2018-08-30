@@ -7,7 +7,7 @@ const Db = require('mongodb').Db,
   config = require('../configuration.js').MongoDB,
   co = require('../common');
 
-let dbConnection = undefined;
+let dbConnection = null;
 let incrementationSettings = {
   collection: 'counters',
   field: '_id',
@@ -24,7 +24,7 @@ function testConnection(dbname) {
       return true;
     else {
       dbConnection.close();
-      dbConnection = undefined;
+      dbConnection = null;
       return false;
     }
   }
@@ -118,8 +118,31 @@ module.exports = {
         .then((db) => {
           if (db.s.databaseName !== dbname)
             throw new 'Wrong Database!';
+
+          // log connection status and reset connection once reconnect fails
+          db.on('close', (err) => {
+            if (err) {
+              console.warn(err.message);
+            }
+          });
+          db.on('reconnect', (payload) => {
+            console.warn(payload ? `reconnected to ${payload.s.host}:${payload.s.port}`: 'reconnected to mongodb');
+          });
+          // HACK This is an undocumented event name, but it's there and it works
+          // best solution so far, and even if it's removed in the future, it will not break anything else
+          // (it will just not do what we'd like to do)
+          db.on('reconnectFailed', (err) => {
+            console.warn(err.message);
+            // connection is useless now, let's remove it and let the service retry getting a new one
+            dbConnection = null;
+          });
+
           dbConnection = db;
           return db;
+        }).catch((err) => {
+          // if we can't get a connection we should just exit!
+          console.error(err.message);
+          process.exit(-1);
         });
 
   },

@@ -85,12 +85,6 @@ let self = module.exports = {
           content_id: notification.content_id,
           content_kind: notification.content_kind,
           content_owner_id: notification.content_owner_id,
-          translation_info: notification.translation_info,
-          share_info: notification.share_info,
-          comment_info: notification.comment_info,
-          use_info: notification.use_info,
-          react_type: notification.react_type,
-          rate_type:  notification.rate_type,
           activity_id: notification.activity_id,
           subscribed_user_id: user_id
         };

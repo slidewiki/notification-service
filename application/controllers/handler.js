@@ -79,6 +79,7 @@ let self = module.exports = {
       user_ids.forEach((user_id) => {
         let newNotification = {
           activity_type: notification.activity_type,
+          timestamp: notification.timestamp,
           user_id: notification.user_id,
           content_id: notification.content_id,
           content_kind: notification.content_kind,

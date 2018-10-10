@@ -76,16 +76,30 @@ let self = module.exports = {
         notification.timestamp = new Date(notification.timestamp);
       }
       let user_ids = notification.subscribed_user_ids;
-      delete notification.subscribed_user_ids;
       user_ids.forEach((user_id) => {
-        notification.subscribed_user_id = user_id;
+        let newNotification = {
+          activity_type: notification.activity_type,
+          user_id: notification.user_id,
+          content_id: notification.content_id,
+          content_kind: notification.content_kind,
+          content_name: notification.content_name,
+          content_owner_id: notification.content_owner_id,
+          translation_info: notification.translation_info,
+          share_info: notification.share_info,
+          comment_info: notification.comment_info,
+          use_info: notification.use_info,
+          react_type: notification.react_type,
+          rate_type:  notification.rate_type,
+          activity_id: notification.activity_id,
+          subscribed_user_id: user_id
+        };
         let valid = false;
         try {
-          valid = notificationModel(notification);
+          valid = notificationModel(newNotification);
           if (!valid) {
             return notificationModel.errors;
           }
-          notifications.push(notification);
+          notifications.push(newNotification);
         } catch (e) {
           console.log('validation failed', e);
         }

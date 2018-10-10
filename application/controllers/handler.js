@@ -95,25 +95,25 @@ let self = module.exports = {
           subscribed_user_id: user_id
         };
 
-        if (notification.content_name) {
+        if (notification.content_name !== undefined && notification.content_name !== null) {
           newNotification.content_name = notification.content_name;
         }
-        if (notification.translation_info) {
+        if (notification.translation_info !== undefined && notification.translation_info !== null) {
           newNotification.translation_info = notification.translation_info;
         }
-        if (notification.share_info) {
+        if (notification.share_info !== undefined && notification.share_info !== null) {
           newNotification.share_info = notification.share_info;
         }
-        if (notification.comment_info) {
+        if (notification.comment_info !== undefined && notification.comment_info !== null) {
           newNotification.comment_info = notification.comment_info;
         }
-        if (notification.use_info) {
+        if (notification.use_info !== undefined && notification.use_info !== null) {
           newNotification.use_info = notification.use_info;
         }
-        if (notification.react_type) {
+        if (notification.react_type !== undefined && notification.react_type !== null) {
           newNotification.react_type = notification.react_type;
         }
-        if (notification.rate_type) {
+        if (notification.rate_type !== undefined && notification.rate_type !== null) {
           newNotification.rate_type = notification.rate_type;
         }
         let valid = false;

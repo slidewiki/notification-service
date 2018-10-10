@@ -82,7 +82,6 @@ let self = module.exports = {
           user_id: notification.user_id,
           content_id: notification.content_id,
           content_kind: notification.content_kind,
-          content_name: notification.content_name,
           content_owner_id: notification.content_owner_id,
           translation_info: notification.translation_info,
           share_info: notification.share_info,
@@ -93,6 +92,28 @@ let self = module.exports = {
           activity_id: notification.activity_id,
           subscribed_user_id: user_id
         };
+
+        if (notification.content_name) {
+          newNotification.content_name = notification.content_name;
+        }
+        if (notification.translation_info) {
+          newNotification.translation_info = notification.translation_info;
+        }
+        if (notification.share_info) {
+          newNotification.share_info = notification.share_info;
+        }
+        if (notification.comment_info) {
+          newNotification.comment_info = notification.comment_info;
+        }
+        if (notification.use_info) {
+          newNotification.use_info = notification.use_info;
+        }
+        if (notification.react_type) {
+          newNotification.react_type = notification.react_type;
+        }
+        if (notification.rate_type) {
+          newNotification.rate_type = notification.rate_type;
+        }
         let valid = false;
         try {
           valid = notificationModel(newNotification);

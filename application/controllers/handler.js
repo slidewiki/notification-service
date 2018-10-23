@@ -84,6 +84,7 @@ let self = module.exports = {
           user_id: notification.user_id,
           content_id: notification.content_id,
           content_kind: notification.content_kind,
+          content_root_id: notification.content_root_id,
           content_owner_id: notification.content_owner_id,
           activity_id: notification.activity_id,
           subscribed_user_id: user_id

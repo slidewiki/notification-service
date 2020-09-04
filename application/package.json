@@ -35,7 +35,7 @@
     "hapi-swagger": "^7.6.0",
     "inert": "^4.2.0",
     "joi": "^10.6.0",
-    "mongodb": "^2.2.28",
+    "mongodb": "^3.6.1",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3",
     "vision": "^4.1.0"
